@@ -32,17 +32,26 @@
     else img.addEventListener('error', hide);
   });
 
-  /* ---------- 3D-Viewer (Holster) erst nach Klick laden ---------- */
+  /* ---------- 3D-Viewer (Holster): lädt, sobald er ins Bild scrollt ---------- */
   document.querySelectorAll('.viewer').forEach(function (v) {
+    var status = v.querySelector('.viewer-status');
     var btn = v.querySelector('.viewer-start');
-    btn.addEventListener('click', function () {
-      btn.hidden = true;
-      var status = v.querySelector('.viewer-status');
-      status.hidden = false;
+    var started = false;
+    function start() {
+      if (started) return;
+      started = true; btn.hidden = true; status.hidden = false;
       import('./holster-viewer.js').then(function (mod) { mod.mount(v); }).catch(function () {
         status.textContent = 'Der 3D-Viewer konnte nicht geladen werden.';
       });
-    });
+    }
+    btn.addEventListener('click', start);
+    // Im Datensparmodus oder ohne IntersectionObserver erst nach Klick laden
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (saveData || !('IntersectionObserver' in window)) { status.hidden = true; btn.hidden = false; return; }
+    var io = new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) { io.disconnect(); start(); }
+    }, { rootMargin: '300px 0px' });
+    io.observe(v);
   });
 
   /* ---------- YouTube erst nach Klick laden ---------- */
