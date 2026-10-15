@@ -35,10 +35,11 @@ cd public && python3 -m http.server 8000
 
 Der Container lauscht auf `127.0.0.1:8104`. Im Reverse Proxy die Hauptdomain (`oualid.de`) auf diesen Port zeigen lassen.
 
+## Cosplay-Foto
+
+Einfach als `public/img/cosplay.jpg` hochladen (Hochformat, ideal 3:4, z. B. 1125 × 1500).
+Solange die Datei fehlt, zeigt die Seite einen Platzhalter.
+
 ## Noch offen
 
-- **Cosplay-Foto:** als `public/img/cosplay.jpg` ablegen, in `index.html` das `<img>` einkommentieren und den Platzhalter löschen.
-- **Trailer:** YouTube-ID bei `data-youtube-id=""` in `index.html` eintragen. Das Video lädt erst nach Klick.
-- **LinkedIn:** Profil-URL in `index.html` (Abschnitt Kontakt) eintragen und die Zeile einkommentieren.
-- **Impressum:** Anschrift in `impressum.html` eintragen.
 - **Zertifikate:** im Lebenslauf ergänzen, sobald vorhanden.

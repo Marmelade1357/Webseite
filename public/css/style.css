@@ -159,7 +159,9 @@ pre { margin: 0; font: inherit; }
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(180deg, transparent 70%, rgba(11,15,20,.55));
 }
-.photo-placeholder { height: 100%; display: grid; place-items: center; color: var(--muted); }
+.photo-placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+.photo-frame img { position: relative; z-index: 1; }
+.photo-frame.missing img { display: none; }
 .photo figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; }
 .photo figcaption::before { content: "// "; color: var(--green); }
 

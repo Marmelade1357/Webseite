@@ -18,6 +18,13 @@
     a.textContent = '"' + addr + '"';
   });
 
+  /* ---------- Cosplay-Foto: Platzhalter zeigen, solange img/cosplay.jpg fehlt ---------- */
+  document.querySelectorAll('.photo-frame img').forEach(function (img) {
+    function missing() { img.parentNode.classList.add('missing'); }
+    if (img.complete && img.naturalWidth === 0) missing();
+    else img.addEventListener('error', missing);
+  });
+
   /* ---------- YouTube erst nach Klick laden ---------- */
   document.querySelectorAll('.video[data-youtube-id]').forEach(function (box) {
     var id = (box.dataset.youtubeId || '').trim();
