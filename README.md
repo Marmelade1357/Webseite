@@ -48,7 +48,7 @@ Solange die Datei fehlt, zeigt die Seite einen Platzhalter.
 
 ## 3D-Viewer (Holster)
 
-- Modell: `public/3d/holster.glb`, erzeugt aus der Bambu-Studio-Datei in `modelle/holster/teile/`
+- Modell: `public/3d/holster.glb`, erzeugt aus der Bambu-Studio-Datei (Original liegt nicht im Repo)
   (Holster und Ringe in Originalauflösung, Rückteil auf 8 % vereinfacht, Charges zusammengesetzt).
 - Code: `public/js/holster-viewer.js`, Three.js liegt lokal unter `public/vendor/three/` (MIT-Lizenz).
 - Lädt erst nach Klick auf „In 3D ansehen“.
