@@ -1,5 +1,8 @@
 # Hinweise für Claude
 
+- **Immer direkt auf `main` committen und pushen.** Keine eigenen Branches und keine Pull Requests,
+  der Nutzer möchte nur einen Branch im Blick behalten.
+
 - Wenn der Nutzer Dateien liefern soll (Bilder, Modelle, Videos …), immer zuerst die
   passende Ordnerstruktur im Repo anlegen (mit `.gitkeep` und einer kurzen `LIESMICH.md`,
   was wohin gehört), sodass er die Dateien nur noch hineinlegen muss.
