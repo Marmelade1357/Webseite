@@ -15,7 +15,22 @@
   document.querySelectorAll('a.mail').forEach(function (a) {
     var addr = a.dataset.u + '@' + a.dataset.d;
     a.href = 'mailto:' + addr;
-    a.textContent = '"' + addr + '"';
+    a.textContent = addr;
+  });
+
+  /* ---------- E-Mail-Adresse kopieren ---------- */
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    var link = btn.previousElementSibling;
+    btn.addEventListener('click', function () {
+      var addr = (link.getAttribute('href') || '').replace(/^mailto:/, '');
+      if (!addr || addr.charAt(0) === '#') return;
+      var done = function () {
+        btn.classList.add('is-done'); btn.textContent = 'Kopiert';
+        setTimeout(function () { btn.classList.remove('is-done'); btn.textContent = 'Kopieren'; }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(addr).then(done, function () {});
+      else { var t = document.createElement('textarea'); t.value = addr; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} t.remove(); }
+    });
   });
 
   /* ---------- Cosplay-Foto: Platzhalter zeigen, solange img/cosplay.jpg fehlt ---------- */
@@ -85,32 +100,89 @@
       var hay = (li.textContent + ' ' + (li.dataset.tags || '')).toLowerCase();
       var hit = !q || hay.indexOf(q) !== -1;
       li.hidden = !hit;
+      if (hit) li.classList.add('is-in');
       if (hit) n++;
     });
-    $('#grep-count').textContent = q ? n + ' Treffer' : '';
+    $('#grep-count').textContent = q ? n + ' Treffer' : items.length + ' Einträge';
     $('#grep-empty').hidden = n !== 0;
   }
-  if (grepInput) grepInput.addEventListener('input', grep);
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip[data-filter]'));
+  function syncChips() {
+    var q = grepInput.value.trim().toLowerCase();
+    chips.forEach(function (c) { c.classList.toggle('is-active', c.dataset.filter === q); });
+  }
+  if (grepInput) grepInput.addEventListener('input', function () { grep(); syncChips(); });
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () { grepInput.value = c.dataset.filter; grep(); syncChips(); });
+  });
+  if (grepInput) grep();
 
-  /* ---------- tmux-Leiste: aktiver Abschnitt + Uhr ---------- */
+  /* ---------- Navigation: aktiver Abschnitt ---------- */
   var navLinks = {};
-  document.querySelectorAll('.tmux a').forEach(function (a) { navLinks[a.getAttribute('href').slice(1)] = a; });
+  document.querySelectorAll('.site-nav a[href^="#"]').forEach(function (a) { navLinks[a.getAttribute('href').slice(1)] = a; });
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
+    var navIo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.toggle('active', k === e.target.id); });
+        Object.keys(navLinks).forEach(function (k) {
+          var on = k === e.target.id;
+          navLinks[k].classList.toggle('active', on);
+          if (on) navLinks[k].setAttribute('aria-current', 'true'); else navLinks[k].removeAttribute('aria-current');
+        });
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    Object.keys(navLinks).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+    Object.keys(navLinks).forEach(function (id) { var sec = document.getElementById(id); if (sec) navIo.observe(sec); });
   }
-  var clock = $('#clock');
-  function tick() {
-    var d = new Date();
-    clock.textContent = d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) + ' ' +
-      d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+
+  /* ---------- Mobiles Menü ---------- */
+  var toggle = $('.nav-toggle'), nav = $('#site-nav');
+  function setMenu(open) {
+    toggle.setAttribute('aria-expanded', String(open));
+    nav.classList.toggle('is-open', open);
   }
-  if (clock) { tick(); setInterval(tick, 15000); }
+  if (toggle && nav) {
+    toggle.addEventListener('click', function () { setMenu(toggle.getAttribute('aria-expanded') !== 'true'); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); toggle.focus(); } });
+  }
+
+  /* ---------- Header-Zustand + Scroll-Fortschritt ---------- */
+  var header = $('.site-header'), bar = $('#progress-bar'), ticking = false;
+  function onScroll() {
+    ticking = false;
+    var y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
+    header.classList.toggle('is-scrolled', y > 8);
+    if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
+    // Ganz unten erreicht der letzte Abschnitt nie die Bildschirmmitte: dann Kontakt markieren
+    if (max > 0 && y >= max - 4 && navLinks.kontakt) {
+      Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.toggle('active', k === 'kontakt'); });
+    }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- Einblenden beim Scrollen ---------- */
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('is-in'); });
+  } else {
+    var revIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); revIo.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    reveals.forEach(function (el) { revIo.observe(el); });
+  }
+
+  /* ---------- Lichtreflex auf Karten (nur Maus, nicht bei reduzierter Bewegung) ---------- */
+  if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.addEventListener('pointermove', function (e) {
+      var card = e.target.closest && e.target.closest('.card');
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
 
   /* ---------- Interaktive Konsole ---------- */
   var con = $('#console'), out = $('#console-out'), form = $('#console-form'), input = $('#console-input');
@@ -144,7 +216,7 @@
     whoami: function () { print('oualid: Einzelhandel bei Tag, Spiele, KI und 3D-Druck bei Nacht.'); },
     about: function () { print('Öffne about.md …'); go('about'); },
     interessen: function () { print('spieleentwicklung/  ki/  3d-druck/  cosplay/  tinkering/  brettspiele/'); go('interessen'); },
-    projekte: function () { print('14 Einträge. Tipp: unten mit grep filtern.'); go('projekte'); },
+    projekte: function () { print('14 Einträge. Tipp: oben in der Liste mit grep filtern.'); go('projekte'); },
     cv: function () { print('git log --graph lebenslauf'); go('cv'); },
     kontakt: function () { print('Öffne kontakt.json …'); go('kontakt'); },
     'last-arrow': function () {

@@ -15,41 +15,67 @@
 <meta property="og:image:alt" content="Terminalfenster mit dem Text: Oualid Fauzi. Ich lese mich ein. Dann beiße ich mich fest.">
 <meta property="og:locale" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0f14">
+<meta name="theme-color" content="#0f1113">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.min.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
-<a class="skip" href="#about">Zum Inhalt springen</a>
-<div class="crt" aria-hidden="true"></div>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
-<!-- tmux-artige Statusleiste als Navigation (oben fixiert) -->
-<nav class="tmux" aria-label="Hauptnavigation">
-  <span class="tmux-session">[duckpi]</span>
-  <ul>
-    <li><a href="#about">1:about</a></li>
-    <li><a href="#interessen">2:interessen</a></li>
-    <li><a href="#last-arrow">3:last-arrow</a></li>
-    <li><a href="#projekte">4:projekte</a></li>
-    <li><a href="#cv">5:cv</a></li>
-    <li><a href="#kontakt">6:kontakt</a></li>
-  </ul>
-  <span class="tmux-clock" id="clock" aria-hidden="true"></span>
-</nav>
+<!-- ============================ NAVIGATION ============================ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top" aria-label="Oualid Fauzi, zum Seitenanfang">
+      <span class="brand-mark" aria-hidden="true">&gt;_</span>
+      <span class="brand-name">oualid<span class="brand-host">@duckpi</span></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle-bars" aria-hidden="true"></span><span class="nav-toggle-label">Menü</span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="#last-arrow">Last Arrow</a></li>
+        <li><a href="#projekte">Projekte</a></li>
+        <li><a href="#about">Über mich</a></li>
+        <li><a href="#cv">Lebenslauf</a></li>
+        <li><a class="nav-cta" href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
 <!-- ============================ HERO ============================ -->
-<header class="hero" id="top">
-  <div class="wrap">
-    <div class="window">
-      <div class="window-bar" aria-hidden="true">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="window-title">oualid@duckpi: ~</span>
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-head">
+      <p class="eyebrow" data-reveal><span class="status-dot" aria-hidden="true"></span>Oualid Fauzi · Bonn</p>
+      <h1 id="hero-title" class="hero-title" data-reveal style="--d:1">Ich lese mich ein.<br>Dann beiße ich mich <em>fest.</em></h1>
+    </div>
+    <div class="hero-copy">
+      <p class="hero-lead" data-reveal style="--d:2">Ich baue Spiele, 3D-Web-Apps und alles, was mich gerade packt: vom Browser-Kartenspiel für den Spieleabend bis zur Burgverteidigung in der Unreal Engine. Tagsüber bin ich Kaufmann im Einzelhandel bei der Telekom.</p>
+      <div class="hero-actions" data-reveal style="--d:3">
+        <a class="btn btn-primary" href="#projekte">Projekte entdecken <span class="btn-arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="#cv">Lebenslauf</a>
       </div>
+      <ul class="hero-meta" data-reveal style="--d:4" aria-label="Kurz zusammengefasst">
+        <li><span class="mono-label">aktuell</span> Last Arrow · Unreal Engine 5.8</li>
+        <li><span class="mono-label">projekte</span> 14 Einträge</li>
+        <li><span class="mono-label">drucker</span> Bambu Lab H2S</li>
+      </ul>
+    </div>
 
-      <div class="window-body">
+    <!-- Terminal mit neofetch und interaktiver Konsole (js/main.js) -->
+    <div class="terminal" data-reveal style="--d:2">
+      <div class="terminal-bar" aria-hidden="true">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="terminal-title">oualid@duckpi: ~</span>
+      </div>
+      <div class="terminal-body">
         <ol class="boot" aria-label="Startsequenz">
           <li><span class="ok">[  OK  ]</span> Kaffee aufgesetzt.</li>
           <li><span class="ok">[  OK  ]</span> Neugier geladen.</li>
@@ -57,18 +83,16 @@
           <li><span class="warn">[ WARN ]</span> Kobolde vor dem Burgtor gesichtet.</li>
           <li><span class="ok">[  OK  ]</span> Bogen gespannt.</li>
         </ol>
-
         <p class="cmd"><span class="ps1">oualid@duckpi:~$</span> neofetch</p>
         <div class="neofetch">
 <pre class="duck" aria-hidden="true">
       __
-  ___( o)>
+  ___( o)&gt;
   \ &lt;_. )
    `---'
 </pre>
           <dl>
             <div class="nf-head"><span class="hl">oualid</span>@<span class="hl">duckpi</span></div>
-            <div class="nf-rule" aria-hidden="true">-------------</div>
             <div><dt>Name</dt><dd>Oualid Fauzi</dd></div>
             <div><dt>Ort</dt><dd>Bonn</dd></div>
             <div><dt>Beruf</dt><dd>Kaufmann im Einzelhandel @ Telekom</dd></div>
@@ -78,17 +102,13 @@
             <div><dt>Stack</dt><dd>C++ · Node.js · Three.js · Socket.IO · Docker</dd></div>
             <div><dt>Host</dt><dd>Raspberry Pi „duckpi“</dd></div>
             <div><dt>Modus</dt><dd>festgebissen</dd></div>
-            <div class="swatches" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </dl>
         </div>
 
-        <h1 class="hero-title">Ich lese mich ein.<br>Dann beiße ich mich <span class="glitch" data-text="fest.">fest.</span></h1>
-
-        <!-- Interaktive Konsole: wird von js/main.js aktiviert -->
         <div class="console" id="console" hidden>
           <div class="console-out" id="console-out" aria-live="polite"></div>
           <form class="console-in" id="console-form" autocomplete="off">
-            <label for="console-input"><span class="ps1">oualid@duckpi:~$</span></label>
+            <label for="console-input"><span class="ps1">~$</span><span class="visually-hidden">Befehl eingeben</span></label>
             <input id="console-input" type="text" spellcheck="false" autocapitalize="off" placeholder="help eintippen und Enter drücken">
           </form>
           <div class="console-chips" aria-label="Schnellbefehle">
@@ -102,300 +122,402 @@
       </div>
     </div>
   </div>
-</header>
-
-<main>
-<!-- ============================ ABOUT ============================ -->
-<section id="about" class="sec">
-  <div class="wrap">
-    <p class="cmd"><span class="ps1">~$</span> cat about.md</p>
-    <h2 class="sec-title"><span class="num">01</span>Über mich</h2>
-    <div class="about">
-      <div class="about-text">
-        <p class="lead">Ich bin Oualid aus Bonn. Tagsüber berate ich bei der Telekom Kundinnen und Kunden. Abends und am Wochenende baue ich Dinge.</p>
-        <p>Ein großer Teil davon sind Brett- und Kartenspiele, die ich für Spieleabende mit Freunden programmiert habe: mit eigenem Server, Bots, Wiederverbindung und teilweise 3D-Tisch. Alles läuft in Docker-Containern auf meinem Raspberry Pi. Gerade sitze ich an meinem ersten großen Spiel in der Unreal Engine: <a href="#last-arrow">Last Arrow</a>.</p>
-        <p>Mein Muster ist immer dasselbe: Ich stoße auf ein Thema, lese mich schnell ein und beiße mich dann richtig fest, bis etwas Fertiges dabei herauskommt. Das gilt für Code genauso wie für KI, 3D-Druck oder ein Cosplay, das ich selbst finishe.</p>
-        <p>Mein Mandalorian-Cosplay ist so ein Fall: Die komplette Rüstung habe ich selbst gedruckt und gefinisht. Einzelne Teile, die es so nicht gab, habe ich selbst konstruiert, zum Beispiel das Grav-Charge-Holster. Das gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a> zum Nachdrucken, und daneben kannst du es dir in 3D ansehen.</p>
-      </div>
-      <div class="about-media">
-      <!-- Cosplay-Foto: einfach als public/img/cosplay.jpg hochladen. Solange die Datei fehlt, zeigt die Seite den Platzhalter. -->
-      <figure class="photo">
-        <div class="photo-frame">
-          <img src="img/cosplay.jpg" alt="Oualid als Mandalorian mit Grogu in der Umhängetasche, Rüstung selbst gedruckt und gefinisht" width="960" height="1280" loading="lazy">
-          <div class="photo-placeholder" aria-hidden="true">
-<pre>
- +-----------------+
- |                 |
- |   cosplay.jpg   |
- |    folgt ...    |
- |                 |
- +-----------------+
-</pre>
-          </div>
-        </div>
-        <figcaption>Mandalorian, Rüstung komplett selbst gedruckt und gefinisht</figcaption>
-      </figure>
-      <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt, sobald er ins Bild scrollt. -->
-      <figure class="viewer" id="holster-3d" data-model="3d/holster.glb">
-        <div class="viewer-stage">
-          <button type="button" class="viewer-start" hidden>▶ In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
-          <p class="viewer-status">Lade 3D-Modell …</p>
-        </div>
-        <div class="viewer-ui">
-          <button type="button" data-act="assemble">Zusammenbauen</button>
-          <button type="button" data-act="explode">Zerlegen</button>
-          <label><span class="muted">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
-          <button type="button" data-act="color">Farbe</button>
-        </div>
-        <figcaption>Grav-Charge-Holster in 3D, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
-      </figure>
-      </div>
-    </div>
-  </div>
 </section>
 
-<!-- ============================ INTERESSEN ============================ -->
-<section id="interessen" class="sec">
-  <div class="wrap">
-    <p class="cmd"><span class="ps1">~$</span> ls ~/interessen/</p>
-    <h2 class="sec-title"><span class="num">02</span>Woran ich mich festbeiße</h2>
-    <ul class="dirs">
-      <li><span class="dir">spieleentwicklung/</span><p>Vom Browser-Kartenspiel bis zum Ego-Shooter in Unreal Engine 5. Regeln sauber abbilden und dann testen, bis sie halten.</p></li>
-      <li><span class="dir">ki/</span><p>KI als Werkzeug zum Bauen, Lernen und Ausprobieren: Code, 3D-Modelle, Ideen. Und die Frage, was als Nächstes möglich wird.</p></li>
-      <li><span class="dir">3d-druck/</span><p>Vom digitalen Modell zum echten Teil: konstruieren, drucken, nachbearbeiten, finishen. Aktuell auf einem Bambu Lab H2S. Eigene Modelle veröffentliche ich auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a>.</p></li>
-      <li><span class="dir">cosplay/</span><p>Kostüme und Props, bei denen das Finish den Unterschied macht. Zuletzt: eine komplett selbst gedruckte Mandalorian-Rüstung, mit selbst konstruiertem Grav-Charge-Holster.</p></li>
-      <li><span class="dir">tinkering/</span><p>Basteln, ausprobieren, Dinge zusammenstecken, die eigentlich nicht zusammengehören. Der Raspberry Pi läuft rund um die Uhr.</p></li>
-      <li><span class="dir">brettspiele/</span><p>Spieleabende mit Freunden und die Lust, die Lieblingsspiele digital nachzubauen.</p></li>
-    </ul>
-  </div>
-</section>
+<main id="inhalt">
 
 <!-- ============================ LAST ARROW ============================ -->
-<section id="last-arrow" class="sec la">
+<section id="last-arrow" class="section la" aria-labelledby="la-title">
   <div class="wrap">
-    <p class="cmd"><span class="ps1">~$</span> man last-arrow</p>
-    <h2 class="sec-title"><span class="num">03</span>Last Arrow</h2>
-    <p class="la-claim">„Halte die Burg, solange du kannst: Ein Bogen, ein Schatz, unendlich viele Kobolde, und nach jedem Boss wächst deine Festung mit.“</p>
+    <header class="sec-head" data-reveal>
+      <p class="kicker"><span class="kicker-idx">01</span> Ausgewähltes Projekt <span class="kicker-cmd">man last-arrow</span></p>
+    </header>
 
-    <div class="la-grid">
-      <div class="la-media">
-        <!-- Trailer: YouTube-Video-ID in data-youtube-id eintragen (z. B. data-youtube-id="dQw4w9WgXcQ").
-             Das Video wird erst nach Klick geladen (youtube-nocookie.com), vorher geht keine Anfrage an Google. -->
+    <div class="la-hero">
+      <div class="la-copy" data-reveal>
+        <p class="badge badge-live"><span class="status-dot" aria-hidden="true"></span>In Entwicklung</p>
+        <h2 id="la-title" class="la-title">Last Arrow</h2>
+        <p class="la-sub">Verteidige deine Burg im Ego-Shooter.</p>
+        <blockquote class="la-claim">„Halte die Burg, solange du kannst: Ein Bogen, ein Schatz, unendlich viele Kobolde, und nach jedem Boss wächst deine Festung mit.“</blockquote>
+        <p class="la-desc">Burgverteidigung aus der Ich-Perspektive. Du stehst mit Bogen und Pfeilen auf deinem Schlosshof und hältst Welle um Welle von Kobolden auf, die deine Schatztruhe plündern wollen. Nach jedem Boss wächst deine Burg. Jeder Run ist endlos, und die Gegner werden immer härter.</p>
+        <ul class="stat-row" aria-label="Technik">
+          <li><strong>UE 5.8</strong><span>Unreal Engine 5.8 in C++</span></li>
+          <li><strong>165</strong><span>automatische Tests für Spielregeln, Waffen und Systeme</span></li>
+          <li><strong>Server ↔ Client</strong><span>Server rechnet, Clients zeigen: saubere Trennung von Logik und Darstellung</span></li>
+          <li><strong>Offline</strong><span>komplett offline: kein Konto, kein Server, kein Internet nötig</span></li>
+        </ul>
+      </div>
+
+      <div class="la-media" data-reveal style="--d:1">
+        <!-- Trailer: YouTube-Video-ID in data-youtube-id. Das Video wird erst nach Klick geladen (youtube-nocookie.com). -->
         <div class="video" data-youtube-id="XlC_0HXG0ws">
-          <div class="video-empty">
-            <span class="badge">Trailer folgt</span>
-          </div>
+          <div class="video-empty"><span class="badge">Trailer folgt</span></div>
         </div>
-
         <div class="game-box">
           <div class="game-head">
-            <span>mini-last-arrow.js</span>
-            <span class="muted">Browser-Teaser, nicht das echte Spiel</span>
+            <span class="mono-label">mini-last-arrow.js</span>
+            <span class="game-note">Browser-Teaser, nicht das echte Spiel</span>
           </div>
           <canvas id="mini-game" width="640" height="300" aria-label="Kleines Browser-Minispiel: Kobolde anklicken, bevor sie die Schatztruhe erreichen"></canvas>
-          <p class="game-help muted">Klicke oder tippe auf die Kobolde, bevor sie die Truhe erreichen. Nach jedem Boss wächst die Burg.</p>
+          <p class="game-help">Klicke oder tippe auf die Kobolde, bevor sie die Truhe erreichen. Nach jedem Boss wächst die Burg.</p>
         </div>
       </div>
+    </div>
 
-      <div class="man">
-        <h3>NAME</h3>
-        <p><b>last-arrow</b>: Verteidige deine Burg im Ego-Shooter.</p>
-
-        <h3>BESCHREIBUNG</h3>
-        <p>Burgverteidigung aus der Ich-Perspektive. Du stehst mit Bogen und Pfeilen auf deinem Schlosshof und hältst Welle um Welle von Kobolden auf, die deine Schatztruhe plündern wollen. Nach jedem Boss wächst deine Burg. Jeder Run ist endlos, und die Gegner werden immer härter.</p>
-
-        <h3>SPIELGEFÜHL</h3>
+    <div class="bento la-bento">
+      <article class="card span-6" data-reveal>
+        <h3 class="card-title">Spielgefühl</h3>
         <dl class="opts">
-          <dt>--bogen</dt><dd>Spannen, zielen, Schwachstellen treffen für mehr Schaden.</dd>
-          <dt>--burg</dt><dd>Wächst nach jedem Boss: mehr Mauern, mehr Tore, begehbare Türme mit Treppen, größere Ecktürme.</dd>
-          <dt>--begehbar</dt><dd>Durch die eigenen Tore laufen, auf die Mauern steigen, von den Türmen schießen.</dd>
-          <dt>--schatz</dt><dd>Die Truhe ist Ziel und Konto zugleich. Fällt sie, ist der Run vorbei.</dd>
+          <div><dt>--bogen</dt><dd>Spannen, zielen, Schwachstellen treffen für mehr Schaden.</dd></div>
+          <div><dt>--burg</dt><dd>Wächst nach jedem Boss: mehr Mauern, mehr Tore, begehbare Türme mit Treppen, größere Ecktürme.</dd></div>
+          <div><dt>--begehbar</dt><dd>Durch die eigenen Tore laufen, auf die Mauern steigen, von den Türmen schießen.</dd></div>
+          <div><dt>--schatz</dt><dd>Die Truhe ist Ziel und Konto zugleich. Fällt sie, ist der Run vorbei.</dd></div>
         </dl>
-
-        <h3>WAFFEN &amp; WIRTSCHAFT</h3>
-        <dl class="opts">
-          <dt>händler</dt><dd>Waffen am Stand im Burghof kaufen, ausbauen oder wieder verkaufen.</dd>
-          <dt>slots</dt><dd>Drei Waffenplätze: der Standardbogen plus zwei gekaufte Waffen.</dd>
-          <dt>armbrust</dt><dd>Mit sichtbarer Sehne spannen, Bolzen einlegen.</dd>
-          <dt>muskete</dt><dd>Mit dem Ladestock nachladen, Kobolde per Rückstoß zurückschleudern.</dd>
-          <dt>geheimwaffe</dt><dd>Ein Sturmgewehr mit Magazin und Hülsen, nur per Geheimcode. Als Gag gedacht.</dd>
-          <dt>karten</dt><dd>Nach jeder Runde Verbesserungen wählen, die Werte und Effekte verändern.</dd>
-          <dt>goldmine</dt><dd>Minen im Schlosshof bauen. Das Gold geht in neue Waffen und Türme.</dd>
-          <dt>türme</dt><dd>Über das Turmkommando Verteidigungstürme bauen und verbessern.</dd>
+      </article>
+      <article class="card span-6" data-reveal style="--d:1">
+        <h3 class="card-title">Waffen &amp; Wirtschaft</h3>
+        <dl class="opts opts-2col">
+          <div><dt>händler</dt><dd>Waffen am Stand im Burghof kaufen, ausbauen oder wieder verkaufen.</dd></div>
+          <div><dt>slots</dt><dd>Drei Waffenplätze: der Standardbogen plus zwei gekaufte Waffen.</dd></div>
+          <div><dt>armbrust</dt><dd>Mit sichtbarer Sehne spannen, Bolzen einlegen.</dd></div>
+          <div><dt>muskete</dt><dd>Mit dem Ladestock nachladen, Kobolde per Rückstoß zurückschleudern.</dd></div>
+          <div><dt>geheimwaffe</dt><dd>Ein Sturmgewehr mit Magazin und Hülsen, nur per Geheimcode. Als Gag gedacht.</dd></div>
+          <div><dt>karten</dt><dd>Nach jeder Runde Verbesserungen wählen, die Werte und Effekte verändern.</dd></div>
+          <div><dt>goldmine</dt><dd>Minen im Schlosshof bauen. Das Gold geht in neue Waffen und Türme.</dd></div>
+          <div><dt>türme</dt><dd>Über das Turmkommando Verteidigungstürme bauen und verbessern.</dd></div>
         </dl>
-
-        <h3>GEGNER</h3>
+      </article>
+      <article class="card span-6" data-reveal>
+        <h3 class="card-title">Gegner</h3>
         <p>Animierte Kobolde in mehreren Typen, darunter Läufer aus verschiedenen Richtungen und schwere Gegner wie der Sturmbock. Bosse schalten den nächsten Burgausbau frei. Treffer wirken: Gegner zucken zurück, stürzen und werden von der Muskete umgeworfen.</p>
-
-        <h3>WELT</h3>
+      </article>
+      <article class="card span-6" data-reveal style="--d:1">
+        <h3 class="card-title">Welt</h3>
         <p>Warme, farbenfrohe Märchenwelt mit Sonne, Wetter, Wald, Bergen und Wiesen. Burghof mit Haus, Marktstand, Fahnen, Fackeln und Torbannern. Burg, Gegner und Effekte entstehen fast alle im Spiel selbst. Für Marktstand, Häuser, Truhe, Goldmine und Bogen kamen KI-generierte 3D-Modelle zum Einsatz, die ich für die Engine aufbereitet habe.</p>
-
-        <h3>TECHNIK</h3>
-        <ul class="facts">
-          <li><b>Unreal Engine 5.8</b> in C++</li>
-          <li><b>Server rechnet, Clients zeigen</b>: saubere Trennung von Logik und Darstellung</li>
-          <li><b>165 automatische Tests</b> für Spielregeln, Waffen und Systeme</li>
-          <li><b>Komplett offline</b>: kein Konto, kein Server, kein Internet nötig</li>
-        </ul>
-
-        <h3>STATUS</h3>
-        <p><span class="badge live">in Entwicklung</span></p>
-      </div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ============================ PROJEKTE ============================ -->
-<section id="projekte" class="sec">
+<section id="projekte" class="section" aria-labelledby="proj-title">
   <div class="wrap">
-    <p class="cmd"><span class="ps1">~$</span> ls -la ~/projekte</p>
-    <h2 class="sec-title"><span class="num">04</span>Projekte</h2>
-    <p class="sec-intro">Die meisten davon sind Brett- und Kartenspiele für Spieleabende mit Freunden. Alle laufen im Browser auf Handy, Tablet oder PC, mit Räumen per 4-stelligem Code, Bots für fehlende Mitspieler und Wiederverbindung nach Abbrüchen. Jedes Projekt hat seinen eigenen Docker-Container auf dem Pi.</p>
+    <header class="sec-head sec-head-split" data-reveal>
+      <div>
+        <p class="kicker"><span class="kicker-idx">02</span> Projekte <span class="kicker-cmd">ls -la ~/projekte</span></p>
+        <h2 id="proj-title" class="sec-title">Gebaut für Spieleabende, Neugier und den eigenen Pi.</h2>
+      </div>
+      <p class="sec-lead">Die meisten davon sind Brett- und Kartenspiele für Spieleabende mit Freunden. Alle laufen im Browser auf Handy, Tablet oder PC, mit Räumen per 4-stelligem Code, Bots für fehlende Mitspieler und Wiederverbindung nach Abbrüchen. Jedes Projekt hat seinen eigenen Docker-Container auf dem Pi.</p>
+    </header>
 
-    <form class="grep" role="search" onsubmit="return false">
-      <label for="grep-input"><span class="ps1">~$</span> ls | grep -i</label>
-      <input id="grep-input" type="search" placeholder="z. B. 3d, karten, react" autocomplete="off" spellcheck="false">
-      <span class="grep-count muted" id="grep-count" aria-live="polite"></span>
-    </form>
+    <div class="filter" data-reveal>
+      <form class="grep" role="search" onsubmit="return false">
+        <label for="grep-input"><span class="mono-label">ls | grep -i</span></label>
+        <input id="grep-input" type="search" placeholder="z. B. 3d, karten, react" autocomplete="off" spellcheck="false">
+      </form>
+      <div class="chips" aria-label="Schnellfilter">
+        <button type="button" class="chip is-active" data-filter="">Alle</button>
+        <button type="button" class="chip" data-filter="3d">3D</button>
+        <button type="button" class="chip" data-filter="karten">Karten</button>
+        <button type="button" class="chip" data-filter="rollen">Rollen</button>
+        <button type="button" class="chip" data-filter="web">Web &amp; Tools</button>
+      </div>
+      <span class="grep-count" id="grep-count" aria-live="polite"></span>
+    </div>
 
-    <ul class="projects" id="projects">
-      <li data-tags="spiele 3d würfel bluff threejs">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">liars-dice/</span><span class="pdesc">Würfel-Bluffspiel auf einer 3D-Pirateninsel</span></summary>
-          <img class="shot" src="img/projekte/liars-dice.webp" alt="Liar's Dice: 3D-Tisch auf der Pirateninsel mit Bot-Piraten" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Das Würfelspiel aus <i>Fluch der Karibik</i> in der Ich-Perspektive: Du sitzt am Tisch auf einer Pirateninsel mit Palmen, Lagerfeuer, Schiffen am Horizont und einem Papagei. Mit Charakter-Editor für die eigene Piratenfigur und einer Aufdeck-Animation, bei der jeder Würfel einzeln mitgezählt wird.</p>
-          <p class="tags"><span>Three.js</span><span>Socket.IO</span><span>Node.js</span></p>
-        </details>
+    <ul class="bento projects" id="projects">
+      <li class="proj span-8 tall" data-tags="spiele 3d würfel bluff threejs" data-reveal>
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/liars-dice.webp" alt="Liar's Dice: 3D-Tisch auf der Pirateninsel mit Bot-Piraten" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">liars-dice/</p>
+            <h3 class="card-title">Liar's Dice</h3>
+            <p class="card-lede">Würfel-Bluffspiel auf einer 3D-Pirateninsel</p>
+            <p>Das Würfelspiel aus <i>Fluch der Karibik</i> in der Ich-Perspektive: Du sitzt am Tisch auf einer Pirateninsel mit Palmen, Lagerfeuer, Schiffen am Horizont und einem Papagei. Mit Charakter-Editor für die eigene Piratenfigur und einer Aufdeck-Animation, bei der jeder Würfel einzeln mitgezählt wird.</p>
+            <ul class="tags"><li>Three.js</li><li>Socket.IO</li><li>Node.js</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele 3d brettspiel monopoly threejs">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">monopoly/</span><span class="pdesc">Monopoly in Entenhausen, mit 3D-Ansicht</span></summary>
-          <img class="shot" src="img/projekte/monopoly.webp" alt="Monopoly Entenhausen in der 3D-Ansicht" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Vollständiges Regelwerk mit Auktionen, Bauen, Hypotheken und Knast. Die Straßen spielen auf Entenhausen an: Geldspeicher, Bruchbude, Panzerknacker-Knast. Getestet unter anderem mit 40 automatischen Bot-Partien und Invarianten-Checks.</p>
-          <p class="tags"><span>Three.js</span><span>Socket.IO</span><span>Tests</span></p>
-        </details>
+      <li class="proj span-4" data-tags="web 3d iphone threejs vergleich live" data-reveal style="--d:1">
+        <article class="card card-media is-live">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/iphone.webp" alt="iPhone-Vergleich: zwei Geräte maßstabsgetreu im 3D-Showroom" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">iphone-vergleich/ <span class="live-pill">live</span></p>
+            <h3 class="card-title">iPhone-Vergleich</h3>
+            <p class="card-lede">Alle iPhones seit 2007 maßstabsgetreu in 3D</p>
+            <p>Bis zu vier Geräte nebeneinander, frei drehbar, mit drückbaren Tasten, Farben und Speichervarianten. Preise wahlweise inflationsbereinigt, dazu eine Vergleichstabelle mit allen Maßen und Daten.</p>
+            <ul class="tags"><li>Three.js</li><li>nginx</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://iphone.oualid.de/" rel="noopener">iphone.oualid.de <span aria-hidden="true">↗</span></a></p>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele 3d karten uno threejs">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">uno-no-mercy/</span><span class="pdesc">Alle 168 Karten, 3D-Tisch mit fliegenden Karten</span></summary>
-          <img class="shot" src="img/projekte/uno.webp" alt="Uno No Mercy auf dem 3D-Tisch" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Uno in der gnadenlosen Variante: Ziehkarten stapeln, Wild +10, Farbroulette. Wahlweise auf einem 3D-Holztisch mit freier Kamera oder in 2D.</p>
-          <p class="tags"><span>Three.js</span><span>Socket.IO</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele 3d brettspiel monopoly threejs tests" data-reveal>
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/monopoly.webp" alt="Monopoly Entenhausen in der 3D-Ansicht" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">monopoly/</p>
+            <h3 class="card-title">Monopoly</h3>
+            <p class="card-lede">Monopoly in Entenhausen, mit 3D-Ansicht</p>
+            <p>Vollständiges Regelwerk mit Auktionen, Bauen, Hypotheken und Knast. Die Straßen spielen auf Entenhausen an: Geldspeicher, Bruchbude, Panzerknacker-Knast. Getestet unter anderem mit 40 automatischen Bot-Partien und Invarianten-Checks.</p>
+            <ul class="tags"><li>Three.js</li><li>Socket.IO</li><li>Tests</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele karten poker">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">poker/</span><span class="pdesc">No-Limit Texas Hold'em für 2 bis 8 Spieler</span></summary>
-          <img class="shot" src="img/projekte/poker.webp" alt="Poker-Tisch mit Bots, Pot und Setz-Buttons" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Komplette Setzrunden-Logik mit serverseitiger Prüfung, Side Pots bei mehreren All-ins und Elimination-Modus, in dem Ausgeschiedene als Zuschauer weiterschauen.</p>
-          <p class="tags"><span>Socket.IO</span><span>Node.js</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele 3d karten uno threejs" data-reveal style="--d:1">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/uno.webp" alt="Uno No Mercy auf dem 3D-Tisch" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">uno-no-mercy/</p>
+            <h3 class="card-title">Uno No Mercy</h3>
+            <p class="card-lede">Alle 168 Karten, 3D-Tisch mit fliegenden Karten</p>
+            <p>Uno in der gnadenlosen Variante: Ziehkarten stapeln, Wild +10, Farbroulette. Wahlweise auf einem 3D-Holztisch mit freier Kamera oder in 2D.</p>
+            <ul class="tags"><li>Three.js</li><li>Socket.IO</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele karten munchkin tests">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">munchkin/</span><span class="pdesc">355 Karten, Kampf-Mathematik, 17 Testdateien</span></summary>
-          <img class="shot" src="img/projekte/munchkin.webp" alt="Munchkin: Spielfeld mit Handkarten und Ausrüstung" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Das Kartenspiel mit Grundspiel und zwei Erweiterungen. Der Server verwaltet Stapel, Phasen, Kämpfe, Stufen und Ausrüstung. Die Kartendaten habe ich aus den eigenen Spieldateien aufbereitet.</p>
-          <p class="tags"><span>Socket.IO</span><span>Tests</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele karten munchkin tests" data-reveal style="--d:2">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/munchkin.webp" alt="Munchkin: Spielfeld mit Handkarten und Ausrüstung" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">munchkin/</p>
+            <h3 class="card-title">Munchkin</h3>
+            <p class="card-lede">355 Karten, Kampf-Mathematik, 17 Testdateien</p>
+            <p>Das Kartenspiel mit Grundspiel und zwei Erweiterungen. Der Server verwaltet Stapel, Phasen, Kämpfe, Stufen und Ausrüstung. Die Kartendaten habe ich aus den eigenen Spieldateien aufbereitet.</p>
+            <ul class="tags"><li>Socket.IO</li><li>Tests</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele karten wizard stiche">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">wizard/</span><span class="pdesc">Stichspiel mit Vorhersagen und Trumpf</span></summary>
-          <img class="shot" src="img/projekte/wizard.webp" alt="Wizard: Vorhersage-Phase mit Trumpf" width="1280" height="800" loading="lazy" decoding="async">
-          <p>60 Karten, Rundenzahl je nach Spielerzahl, automatische Trumpf-Ermittlung und Punkteabrechnung.</p>
-          <p class="tags"><span>Socket.IO</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele karten poker" data-reveal>
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/poker.webp" alt="Poker-Tisch mit Bots, Pot und Setz-Buttons" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">poker/</p>
+            <h3 class="card-title">Poker</h3>
+            <p class="card-lede">No-Limit Texas Hold'em für 2 bis 8 Spieler</p>
+            <p>Komplette Setzrunden-Logik mit serverseitiger Prüfung, Side Pots bei mehreren All-ins und Elimination-Modus, in dem Ausgeschiedene als Zuschauer weiterschauen.</p>
+            <ul class="tags"><li>Socket.IO</li><li>Node.js</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele rollen widerstand bluff">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">widerstand/</span><span class="pdesc">Geheime Rollen, Abstimmungen, Missionen</span></summary>
-          <img class="shot" src="img/projekte/widerstand.webp" alt="Der Widerstand: Abstimmung über ein Team" width="1280" height="800" loading="lazy" decoding="async">
-          <p>The Resistance für 5 bis 10 Spieler. Rollen werden privat aufs eigene Gerät verteilt, Spione erkennen sich beim Start gegenseitig.</p>
-          <p class="tags"><span>Socket.IO</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele karten wizard stiche" data-reveal style="--d:1">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/wizard.webp" alt="Wizard: Vorhersage-Phase mit Trumpf" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">wizard/</p>
+            <h3 class="card-title">Wizard</h3>
+            <p class="card-lede">Stichspiel mit Vorhersagen und Trumpf</p>
+            <p>60 Karten, Rundenzahl je nach Spielerzahl, automatische Trumpf-Ermittlung und Punkteabrechnung.</p>
+            <ul class="tags"><li>Socket.IO</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele rollen tempel">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">tempel-des-schreckens/</span><span class="pdesc">Abenteurer gegen Wächterinnen, 3 bis 10 Spieler</span></summary>
-          <img class="shot" src="img/projekte/tempel.webp" alt="Tempel des Schreckens: Schatzkammern der Spieler" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Geheime Teams, Schatzkammern und Feuerfallen, verteilt nach den Tabellen aus dem offiziellen Regelwerk.</p>
-          <p class="tags"><span>Socket.IO</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele rollen widerstand bluff" data-reveal style="--d:2">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/widerstand.webp" alt="Der Widerstand: Abstimmung über ein Team" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">widerstand/</p>
+            <h3 class="card-title">Der Widerstand</h3>
+            <p class="card-lede">Geheime Rollen, Abstimmungen, Missionen</p>
+            <p>The Resistance für 5 bis 10 Spieler. Rollen werden privat aufs eigene Gerät verteilt, Spione erkennen sich beim Start gegenseitig.</p>
+            <ul class="tags"><li>Socket.IO</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele karten bluff lügen">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">bluff/</span><span class="pdesc">Lügen, das Kartenspiel, am runden Tisch</span></summary>
-          <img class="shot" src="img/projekte/bluff.webp" alt="Bluff: runder Tisch mit verdeckt gelegter Karte" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Karten verdeckt legen, ehrlich oder gelogen, und im richtigen Moment „Bluff!“ rufen. Mit einstellbarem Deck und automatischer 4er-Ablage.</p>
-          <p class="tags"><span>Socket.IO</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele rollen tempel" data-reveal>
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/tempel.webp" alt="Tempel des Schreckens: Schatzkammern der Spieler" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">tempel-des-schreckens/</p>
+            <h3 class="card-title">Tempel des Schreckens</h3>
+            <p class="card-lede">Abenteurer gegen Wächterinnen, 3 bis 10 Spieler</p>
+            <p>Geheime Teams, Schatzkammern und Feuerfallen, verteilt nach den Tabellen aus dem offiziellen Regelwerk.</p>
+            <ul class="tags"><li>Socket.IO</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="spiele brettspiel">
-        <details>
-          <summary><span class="perm">drwx------</span><span class="pname">der-eiserne-thron/</span><span class="pdesc">Brettspiel-Umsetzung für private Runden</span></summary>
-          <p>Ein privates Projekt für den eigenen Spieleabend.</p>
-        </details>
+      <li class="proj span-4" data-tags="spiele karten bluff lügen" data-reveal style="--d:1">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/bluff.webp" alt="Bluff: runder Tisch mit verdeckt gelegter Karte" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">bluff/</p>
+            <h3 class="card-title">Bluff</h3>
+            <p class="card-lede">Lügen, das Kartenspiel, am runden Tisch</p>
+            <p>Karten verdeckt legen, ehrlich oder gelogen, und im richtigen Moment „Bluff!“ rufen. Mit einstellbarem Deck und automatischer 4er-Ablage.</p>
+            <ul class="tags"><li>Socket.IO</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="web 3d iphone threejs vergleich live" class="live-item">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">iphone-vergleich/</span><span class="pdesc">Alle iPhones seit 2007 maßstabsgetreu in 3D</span></summary>
-          <img class="shot" src="img/projekte/iphone.webp" alt="iPhone-Vergleich: zwei Geräte maßstabsgetreu im 3D-Showroom" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Bis zu vier Geräte nebeneinander, frei drehbar, mit drückbaren Tasten, Farben und Speichervarianten. Preise wahlweise inflationsbereinigt, dazu eine Vergleichstabelle mit allen Maßen und Daten.</p>
-          <p class="tags"><span>Three.js</span><span>nginx</span></p>
-          <p><a class="run" href="https://iphone.oualid.de/" rel="noopener">./iphone-vergleich --open ↗</a></p>
-        </details>
+      <li class="proj span-4" data-tags="web nginx docker hub" data-reveal style="--d:2">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/spielehub.webp" alt="Spielehub: Startseite mit allen Spielen" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">spielehub/</p>
+            <h3 class="card-title">Spielehub</h3>
+            <p class="card-lede">Eine Startseite für alle Spiele-Server</p>
+            <p>Bündelt alle Spiele unter einer Adresse. nginx leitet jeden Pfad an den passenden Container weiter, inklusive WebSocket-Upgrade für die Live-Verbindungen.</p>
+            <ul class="tags"><li>nginx</li><li>Docker</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="web react typescript sqlite tool">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">monitoring-shop/</span><span class="pdesc">Absatz-Monitoring fürs Team, mit Echtzeit-Chat</span></summary>
-          <p>Jede Person trägt ihre Absätze pro Produkt ein, am Desktop im Wochen-Grid, mobil mit großem Plus-Minus-Regler. Admins sehen alles zentral. Dazu Team-Chat und Direktnachrichten in Echtzeit.</p>
-          <p class="tags"><span>React</span><span>TypeScript</span><span>Tailwind</span><span>SQLite</span></p>
-        </details>
+      <li class="proj span-8" data-tags="web react typescript sqlite tool" data-reveal>
+        <article class="card card-text">
+          <div class="card-body">
+            <p class="card-path">monitoring-shop/</p>
+            <h3 class="card-title">Monitoring-Shop</h3>
+            <p class="card-lede">Absatz-Monitoring fürs Team, mit Echtzeit-Chat</p>
+            <p>Jede Person trägt ihre Absätze pro Produkt ein, am Desktop im Wochen-Grid, mobil mit großem Plus-Minus-Regler. Admins sehen alles zentral. Dazu Team-Chat und Direktnachrichten in Echtzeit.</p>
+            <ul class="tags"><li>React</li><li>TypeScript</li><li>Tailwind</li><li>SQLite</li></ul>
+          </div>
+        </article>
       </li>
-      <li data-tags="3d-druck cosplay makerworld modell 3d viewer">
-        <details>
-          <summary><span class="perm">-rw-r--r--</span><span class="pname">grav-charge-holster.3mf</span><span class="pdesc">Mandalorian-Holster, selbst konstruiert, auf MakerWorld</span></summary>
-          <p><a class="run" href="#holster-3d">3D-Ansicht neben dem Cosplay-Foto ↑</a></p>
-          <p>Das Grav-Charge-Holster aus meinem Mandalorian-Cosplay als druckbares Modell. Zum Ansehen und Nachdrucken auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a>.</p>
-          <p class="tags"><span>3D-Druck</span><span>Bambu Lab H2S</span><span>Cosplay</span><span>Three.js</span></p>
-        </details>
+      <li class="proj span-4" data-tags="3d-druck cosplay makerworld modell 3d viewer" data-reveal style="--d:1">
+        <article class="card card-text card-accent">
+          <div class="card-body">
+            <p class="card-path">grav-charge-holster.3mf</p>
+            <h3 class="card-title">Grav-Charge-Holster</h3>
+            <p class="card-lede">Mandalorian-Holster, selbst konstruiert, auf MakerWorld</p>
+            <p>Das Grav-Charge-Holster aus meinem Mandalorian-Cosplay als druckbares Modell. Zum Ansehen und Nachdrucken auf MakerWorld.</p>
+            <ul class="tags"><li>3D-Druck</li><li>Bambu Lab H2S</li><li>Cosplay</li><li>Three.js</li></ul>
+            <p class="card-links">
+              <a class="link-arrow" href="#holster-3d">3D-Ansicht <span aria-hidden="true">↓</span></a>
+              <a class="link-arrow" href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld <span aria-hidden="true">↗</span></a>
+            </p>
+          </div>
+        </article>
       </li>
-      <li data-tags="web nginx docker hub">
-        <details>
-          <summary><span class="perm">drwxr-xr-x</span><span class="pname">spielehub/</span><span class="pdesc">Eine Startseite für alle Spiele-Server</span></summary>
-          <img class="shot" src="img/projekte/spielehub.webp" alt="Spielehub: Startseite mit allen Spielen" width="1280" height="800" loading="lazy" decoding="async">
-          <p>Bündelt alle Spiele unter einer Adresse. nginx leitet jeden Pfad an den passenden Container weiter, inklusive WebSocket-Upgrade für die Live-Verbindungen.</p>
-          <p class="tags"><span>nginx</span><span>Docker</span></p>
-        </details>
+      <li class="proj span-4" data-tags="spiele brettspiel privat" data-reveal style="--d:2">
+        <article class="card card-text card-private">
+          <div class="card-body">
+            <p class="card-path">der-eiserne-thron/ <span class="perm">drwx------</span></p>
+            <h3 class="card-title">Der Eiserne Thron</h3>
+            <p class="card-lede">Brettspiel-Umsetzung für private Runden</p>
+            <p>Ein privates Projekt für den eigenen Spieleabend.</p>
+          </div>
+        </article>
       </li>
     </ul>
-    <p class="grep-empty muted" id="grep-empty" hidden>grep: keine Treffer.</p>
+    <p class="grep-empty" id="grep-empty" hidden><span class="mono-label">grep:</span> keine Treffer.</p>
+  </div>
+</section>
+
+<!-- ============================ ÜBER MICH ============================ -->
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="wrap">
+    <header class="sec-head" data-reveal>
+      <p class="kicker"><span class="kicker-idx">03</span> Über mich <span class="kicker-cmd">cat about.md</span></p>
+      <h2 id="about-title" class="sec-title">Ich bin Oualid aus Bonn. Tagsüber berate ich bei der Telekom Kundinnen und Kunden. Abends und am Wochenende baue ich Dinge.</h2>
+    </header>
+    <div class="about-cols">
+      <p data-reveal>Ein großer Teil davon sind Brett- und Kartenspiele, die ich für Spieleabende mit Freunden programmiert habe: mit eigenem Server, Bots, Wiederverbindung und teilweise 3D-Tisch. Alles läuft in Docker-Containern auf meinem Raspberry Pi. Gerade sitze ich an meinem ersten großen Spiel in der Unreal Engine: <a href="#last-arrow">Last Arrow</a>.</p>
+      <p data-reveal style="--d:1">Mein Muster ist immer dasselbe: Ich stoße auf ein Thema, lese mich schnell ein und beiße mich dann richtig fest, bis etwas Fertiges dabei herauskommt. Das gilt für Code genauso wie für KI, 3D-Druck oder ein Cosplay, das ich selbst finishe.</p>
+      <p data-reveal style="--d:2">Mein Mandalorian-Cosplay ist so ein Fall: Die komplette Rüstung habe ich selbst gedruckt und gefinisht. Einzelne Teile, die es so nicht gab, habe ich selbst konstruiert, zum Beispiel das Grav-Charge-Holster. Das gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a> zum Nachdrucken, und daneben kannst du es dir in 3D ansehen.</p>
+    </div>
+
+    <div class="about-media">
+      <!-- Cosplay-Foto: public/img/cosplay.jpg. Solange die Datei fehlt, zeigt die Seite den Platzhalter. -->
+      <figure class="photo" data-reveal>
+        <div class="photo-frame">
+          <img src="img/cosplay.jpg" alt="Oualid als Mandalorian mit Grogu in der Umhängetasche, Rüstung selbst gedruckt und gefinisht" width="960" height="1280" loading="lazy" decoding="async">
+          <div class="photo-placeholder" aria-hidden="true"><span class="mono-label">cosplay.jpg folgt …</span></div>
+        </div>
+        <figcaption><span class="mono-label">foto</span> Mandalorian, Rüstung komplett selbst gedruckt und gefinisht</figcaption>
+      </figure>
+      <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt, sobald er ins Bild scrollt. -->
+      <figure class="viewer" id="holster-3d" data-model="3d/holster.glb" data-reveal style="--d:1">
+        <div class="viewer-stage">
+          <button type="button" class="viewer-start" hidden>In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
+          <p class="viewer-status">Lade 3D-Modell …</p>
+        </div>
+        <div class="viewer-ui">
+          <button type="button" data-act="assemble">Zusammenbauen</button>
+          <button type="button" data-act="explode">Zerlegen</button>
+          <label><span class="mono-label">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
+          <button type="button" data-act="color">Farbe</button>
+        </div>
+        <figcaption><span class="mono-label">3d</span> Grav-Charge-Holster, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ INTERESSEN & FÄHIGKEITEN ============================ -->
+<section id="interessen" class="section" aria-labelledby="int-title">
+  <div class="wrap">
+    <header class="sec-head" data-reveal>
+      <p class="kicker"><span class="kicker-idx">04</span> Interessen &amp; Fähigkeiten <span class="kicker-cmd">ls ~/interessen/</span></p>
+      <h2 id="int-title" class="sec-title">Woran ich mich festbeiße</h2>
+    </header>
+    <ul class="bento interests">
+      <li class="card span-6 card-feature" data-reveal>
+        <p class="card-path">~/spieleentwicklung/</p>
+        <h3 class="card-title">Spieleentwicklung</h3>
+        <p>Vom Browser-Kartenspiel bis zum Ego-Shooter in Unreal Engine 5. Regeln sauber abbilden und dann testen, bis sie halten.</p>
+      </li>
+      <li class="card span-3" data-reveal style="--d:1">
+        <p class="card-path">~/ki/</p>
+        <h3 class="card-title">KI</h3>
+        <p>KI als Werkzeug zum Bauen, Lernen und Ausprobieren: Code, 3D-Modelle, Ideen. Und die Frage, was als Nächstes möglich wird.</p>
+      </li>
+      <li class="card span-3" data-reveal style="--d:2">
+        <p class="card-path">~/3d-druck/</p>
+        <h3 class="card-title">3D-Druck</h3>
+        <p>Vom digitalen Modell zum echten Teil: konstruieren, drucken, nachbearbeiten, finishen. Aktuell auf einem Bambu Lab H2S. Eigene Modelle veröffentliche ich auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a>.</p>
+      </li>
+      <li class="card span-4" data-reveal>
+        <p class="card-path">~/cosplay/</p>
+        <h3 class="card-title">Cosplay</h3>
+        <p>Kostüme und Props, bei denen das Finish den Unterschied macht. Zuletzt: eine komplett selbst gedruckte Mandalorian-Rüstung, mit selbst konstruiertem Grav-Charge-Holster.</p>
+      </li>
+      <li class="card span-4" data-reveal style="--d:1">
+        <p class="card-path">~/tinkering/</p>
+        <h3 class="card-title">Tinkering</h3>
+        <p>Basteln, ausprobieren, Dinge zusammenstecken, die eigentlich nicht zusammengehören. Der Raspberry Pi läuft rund um die Uhr.</p>
+      </li>
+      <li class="card span-4" data-reveal style="--d:2">
+        <p class="card-path">~/brettspiele/</p>
+        <h3 class="card-title">Brettspiele</h3>
+        <p>Spieleabende mit Freunden und die Lust, die Lieblingsspiele digital nachzubauen.</p>
+      </li>
+      <li class="card span-6 card-code" data-reveal>
+        <p class="card-path">$ technik</p>
+        <h3 class="card-title">Technik</h3>
+        <ul class="code-list"><li>C++ · Unreal Engine 5</li><li>JavaScript · Node.js · Three.js</li><li>React · TypeScript</li><li>Docker · nginx · Raspberry Pi</li></ul>
+      </li>
+      <li class="card span-3" data-reveal style="--d:1">
+        <p class="card-path">$ kompetenzen</p>
+        <h3 class="card-title">Kompetenzen</h3>
+        <ul class="plain-list"><li>Analytisches Denken</li><li>Problemorientiertes Denken</li><li>Führungskompetenz</li><li>Kommunikation</li></ul>
+      </li>
+      <li class="card span-3" data-reveal style="--d:2">
+        <p class="card-path">$ sprachen</p>
+        <h3 class="card-title">Sprachen</h3>
+        <ul class="plain-list"><li>Deutsch <span class="muted">Muttersprache</span></li><li>Englisch <span class="muted">fortgeschritten</span></li></ul>
+      </li>
+    </ul>
   </div>
 </section>
 
 <!-- ============================ LEBENSLAUF ============================ -->
-<section id="cv" class="sec">
-  <div class="wrap">
-    <p class="cmd"><span class="ps1">~$</span> git log --graph lebenslauf</p>
-    <h2 class="sec-title"><span class="num">05</span>Lebenslauf</h2>
+<section id="cv" class="section" aria-labelledby="cv-title">
+  <div class="wrap cv-grid">
+    <header class="sec-head cv-head" data-reveal>
+      <p class="kicker"><span class="kicker-idx">05</span> Lebenslauf <span class="kicker-cmd">git log --graph</span></p>
+      <h2 id="cv-title" class="sec-title">Stationen</h2>
+    </header>
 
-    <ol class="gitlog">
-      <li class="side">
-        <span class="g" aria-hidden="true">| *</span>
-        <div>
-          <p class="meta"><span class="hash">e5a71c0</span> <span class="ref">(feature/nebenbei)</span> <span class="when">laufend</span></p>
-          <p class="msg">Spiele, 3D-Web-Apps und Last Arrow</p>
-          <p class="where">Privat · Raspberry Pi</p>
+    <ol class="timeline">
+      <li class="tl-item tl-side" data-reveal>
+        <div class="tl-when"><span class="tl-date">laufend</span><span class="tl-hash">e5a71c0 · feature/nebenbei</span></div>
+        <div class="tl-body">
+          <h3 class="tl-role">Spiele, 3D-Web-Apps und Last Arrow</h3>
+          <p class="tl-where">Privat · Raspberry Pi</p>
         </div>
       </li>
-      <li class="g-only" aria-hidden="true"><span class="g">|/</span></li>
-      <li>
-        <span class="g" aria-hidden="true">*</span>
-        <div>
-          <p class="meta"><span class="hash">a3f9c21</span> <span class="ref">(HEAD -&gt; main)</span> <span class="when">Jan 2022 – heute</span></p>
-          <p class="msg">Kaufmann im Einzelhandel</p>
-          <p class="where">Telekom · Bonn</p>
+      <li class="tl-item tl-current" data-reveal>
+        <div class="tl-when"><span class="tl-date">Jan 2022 – heute</span><span class="tl-hash">a3f9c21 · HEAD → main</span></div>
+        <div class="tl-body">
+          <h3 class="tl-role">Kaufmann im Einzelhandel</h3>
+          <p class="tl-where">Telekom · Bonn</p>
           <ul>
             <li>Kundenberatung und Verkauf von Telekommunikationsprodukten</li>
             <li>Kundenservice und Lösung von Kundenanliegen</li>
@@ -404,13 +526,11 @@
           </ul>
         </div>
       </li>
-      <li class="g-only" aria-hidden="true"><span class="g">|\</span></li>
-      <li class="side">
-        <span class="g" aria-hidden="true">| *</span>
-        <div>
-          <p class="meta"><span class="hash">7be12d0</span> <span class="when">Aug 2021 – Nov 2022</span></p>
-          <p class="msg">Mitglied der Auszubildendenvertretung</p>
-          <p class="where">Telekom · Bonn</p>
+      <li class="tl-item tl-side" data-reveal>
+        <div class="tl-when"><span class="tl-date">Aug 2021 – Nov 2022</span><span class="tl-hash">7be12d0</span></div>
+        <div class="tl-body">
+          <h3 class="tl-role">Mitglied der Auszubildendenvertretung</h3>
+          <p class="tl-where">Telekom · Bonn</p>
           <ul>
             <li>Team-Events und Teambuilding organisiert</li>
             <li>Feedbackgespräche mit Auszubildenden geführt</li>
@@ -418,77 +538,78 @@
           </ul>
         </div>
       </li>
-      <li class="g-only" aria-hidden="true"><span class="g">|/</span></li>
-      <li>
-        <span class="g" aria-hidden="true">*</span>
-        <div>
-          <p class="meta"><span class="hash">4c8e1f5</span> <span class="when">Sep 2019 – Jan 2022</span></p>
-          <p class="msg">Ausbildung: Kaufmann im Einzelhandel</p>
-          <p class="where">Telekom · Bonn</p>
+      <li class="tl-item" data-reveal>
+        <div class="tl-when"><span class="tl-date">Sep 2019 – Jan 2022</span><span class="tl-hash">4c8e1f5</span></div>
+        <div class="tl-body">
+          <h3 class="tl-role">Ausbildung: Kaufmann im Einzelhandel</h3>
+          <p class="tl-where">Telekom · Bonn</p>
           <ul>
             <li>Warenpräsentation, Bestandsführung und Kassenabrechnung</li>
             <li>Kundenbetreuung und -bindung durch individuelle Beratung</li>
           </ul>
         </div>
       </li>
-      <li>
-        <span class="g" aria-hidden="true">*</span>
-        <div>
-          <p class="meta"><span class="hash">19d0a77</span> <span class="when">2017 – 2019</span></p>
-          <p class="msg">Studium Applied Economics</p>
-          <p class="where">Rheinische Friedrich-Wilhelms-Universität · Bonn</p>
+      <li class="tl-item" data-reveal>
+        <div class="tl-when"><span class="tl-date">2017 – 2019</span><span class="tl-hash">19d0a77</span></div>
+        <div class="tl-body">
+          <h3 class="tl-role">Studium Applied Economics</h3>
+          <p class="tl-where">Rheinische Friedrich-Wilhelms-Universität · Bonn</p>
         </div>
       </li>
-      <li>
-        <span class="g" aria-hidden="true">*</span>
-        <div>
-          <p class="meta"><span class="hash">0f3b2e9</span> <span class="when">2013 – 2017</span></p>
-          <p class="msg">Abitur</p>
-          <p class="where">Tannenbusch-Gymnasium · Bonn</p>
+      <li class="tl-item" data-reveal>
+        <div class="tl-when"><span class="tl-date">2013 – 2017</span><span class="tl-hash">0f3b2e9</span></div>
+        <div class="tl-body">
+          <h3 class="tl-role">Abitur</h3>
+          <p class="tl-where">Tannenbusch-Gymnasium · Bonn</p>
         </div>
       </li>
     </ol>
-
-    <!-- Zertifikate: sobald vorhanden, als weiteren Block hier ergänzen. -->
-    <div class="skills">
-      <div>
-        <h3>sprachen</h3>
-        <ul><li>Deutsch <span class="muted">Muttersprache</span></li><li>Englisch <span class="muted">fortgeschritten</span></li></ul>
-      </div>
-      <div>
-        <h3>kompetenzen</h3>
-        <ul><li>Analytisches Denken</li><li>Problemorientiertes Denken</li><li>Führungskompetenz</li><li>Kommunikation</li></ul>
-      </div>
-      <div>
-        <h3>technik</h3>
-        <ul><li>C++ · Unreal Engine 5</li><li>JavaScript · Node.js · Three.js</li><li>React · TypeScript</li><li>Docker · nginx · Raspberry Pi</li></ul>
-      </div>
-    </div>
+    <!-- Zertifikate: sobald vorhanden, als weitere Station oder eigene Karte ergänzen. -->
   </div>
 </section>
 
 <!-- ============================ KONTAKT ============================ -->
-<section id="kontakt" class="sec">
+<section id="kontakt" class="section contact" aria-labelledby="contact-title">
   <div class="wrap">
-    <p class="cmd"><span class="ps1">~$</span> cat kontakt.json</p>
-    <h2 class="sec-title"><span class="num">06</span>Kontakt</h2>
-<pre class="json"><span class="p">{</span>
-  <span class="k">"privat"</span>: <a class="s mail" data-u="oualidfauzi" data-d="hotmail.de" href="#kontakt">"oualidfauzi [at] hotmail.de"</a>,
-  <span class="k">"beruflich"</span>: <a class="s mail" data-u="oualid.fauzi" data-d="telekom.de" href="#kontakt">"oualid.fauzi [at] telekom.de"</a>,
-  <span class="k">"linkedin"</span>: <a class="s" href="https://www.linkedin.com/in/oualid-fauzi-630469218/" rel="me noopener">"linkedin.com/in/oualid-fauzi"</a>,
-  <span class="k">"github"</span>: <a class="s" href="https://github.com/Marmelade1357" rel="me noopener">"github.com/Marmelade1357"</a>
-<span class="p">}</span></pre>
+    <header class="sec-head" data-reveal>
+      <p class="kicker"><span class="kicker-idx">06</span> Kontakt <span class="kicker-cmd">cat kontakt.json</span></p>
+      <h2 id="contact-title" class="contact-title">Schreib mir.</h2>
+    </header>
+    <ul class="contact-list" data-reveal style="--d:1">
+      <li>
+        <span class="contact-key">privat</span>
+        <a class="contact-val mail" data-u="oualidfauzi" data-d="hotmail.de" href="#kontakt">oualidfauzi [at] hotmail.de</a>
+        <button type="button" class="copy" data-copy-from="prev" aria-label="Private E-Mail-Adresse kopieren">Kopieren</button>
+      </li>
+      <li>
+        <span class="contact-key">beruflich</span>
+        <a class="contact-val mail" data-u="oualid.fauzi" data-d="telekom.de" href="#kontakt">oualid.fauzi [at] telekom.de</a>
+        <button type="button" class="copy" data-copy-from="prev" aria-label="Berufliche E-Mail-Adresse kopieren">Kopieren</button>
+      </li>
+      <li>
+        <span class="contact-key">linkedin</span>
+        <a class="contact-val" href="https://www.linkedin.com/in/oualid-fauzi-630469218/" rel="me noopener">linkedin.com/in/oualid-fauzi</a>
+        <span class="contact-arrow" aria-hidden="true">↗</span>
+      </li>
+      <li>
+        <span class="contact-key">github</span>
+        <a class="contact-val" href="https://github.com/Marmelade1357" rel="me noopener">github.com/Marmelade1357</a>
+        <span class="contact-arrow" aria-hidden="true">↗</span>
+      </li>
+    </ul>
   </div>
 </section>
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <p><a href="impressum.html">Impressum &amp; Datenschutz</a></p>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-brand"><span class="brand-mark" aria-hidden="true">&gt;_</span> Oualid Fauzi</p>
+    <nav aria-label="Rechtliches">
+      <a href="impressum.html">Impressum &amp; Datenschutz</a>
+    </nav>
+    <a class="to-top" href="#top">Nach oben <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
-
-
 
 <script src="js/main.js" defer></script>
 <script src="js/mini-game.js" defer></script>

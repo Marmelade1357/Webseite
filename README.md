@@ -1,10 +1,13 @@
 # Webseite: oualid.de
 
 Persönliche Startseite: über mich, Interessen, Last Arrow, Projekte, Lebenslauf und Kontakt.
-Look: Terminal mit interaktiver Konsole (`help` eintippen), tmux-Statusleiste als Navigation
+Look: dunkles Editorial-Design mit Bento-Grids, Terminal mit interaktiver Konsole im Hero (`help` eintippen)
 und einem kleinen spielbaren Last-Arrow-Teaser im Browser.
 
 Reines HTML/CSS/JS, kein Build-Schritt, keine externen Anfragen (Schriften liegen lokal unter `public/fonts/`).
+
+Design-Tokens (Farben, Typografie, Abstände, Radien, Bewegung) stehen gesammelt am Anfang von
+`public/css/style.css`. Animationen respektieren `prefers-reduced-motion`.
 
 ## Aufbau
 
@@ -18,7 +21,7 @@ public/
 ├── js/holster-viewer.js  3D-Viewer fürs Holster
 ├── 3d/               3D-Modelle (GLB)
 ├── vendor/three/     Three.js (lokal)
-├── fonts/            JetBrains Mono + Space Grotesk (OFL)
+├── fonts/            Inter (Variable) + JetBrains Mono (OFL)
 ├── img/              Cosplay-Foto und Projekt-Screenshots (img/projekte/)
 └── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
 ```
