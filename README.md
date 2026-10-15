@@ -74,7 +74,28 @@ cd public && python3 -m http.server 8000
 ./deploy.sh
 ```
 
-Der Container lauscht auf `127.0.0.1:8104`. Im Reverse Proxy die Hauptdomain (`oualid.de`) auf diesen Port zeigen lassen.
+Der Container lauscht nur lokal auf `127.0.0.1:8104`. Davor sitzt **Caddy** als Reverse Proxy mit HTTPS.
+
+Einmalig auf dem Pi:
+
+```bash
+git clone https://github.com/Marmelade1357/Webseite.git ~/webseite
+cd ~/webseite && chmod +x deploy.sh && ./deploy.sh
+curl -I http://127.0.0.1:8104/          # muss "200 OK" liefern
+```
+
+Dann den Eintrag aus `caddy/oualid.de.caddy` in die Caddyfile übernehmen (meist `/etc/caddy/Caddyfile`):
+
+```bash
+sudo caddy validate --config /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+```
+
+Im Caddy-Eintrag steht bewusst keine `log`-Anweisung, weil die Datenschutzerklärung zusagt, dass keine
+Zugriffsprotokolle geschrieben werden. Beim DNS-Anbieter müssen `oualid.de` und `www.oualid.de` auf die
+öffentliche IP des Pi zeigen (Router: Ports 80 und 443 an den Pi weiterleiten), wie bei den Subdomains.
+
+Updates danach nur noch: `cd ~/webseite && ./deploy.sh`
 
 ## Cosplay-Foto
 

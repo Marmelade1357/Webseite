@@ -1,0 +1,22 @@
+# Caddy-Eintrag für die persönliche Webseite (oualid.de)
+#
+# In die Caddyfile auf dem Pi übernehmen (meist /etc/caddy/Caddyfile) und danach:
+#   sudo caddy validate --config /etc/caddy/Caddyfile
+#   sudo systemctl reload caddy
+#
+# HTTPS (Let's Encrypt) richtet Caddy automatisch ein.
+# Bewusst KEINE "log"-Anweisung: Laut Datenschutzerklärung werden keine Zugriffsprotokolle
+# geschrieben. Wird hier "log" ergänzt, muss die Datenschutzerklärung angepasst werden.
+
+oualid.de {
+	# Der Container lauscht nur lokal auf Port 8104 (siehe docker-compose.yml)
+	reverse_proxy 127.0.0.1:8104
+
+	# Browser merken sich ein Jahr lang: diese Seite nur per HTTPS
+	header Strict-Transport-Security "max-age=31536000"
+}
+
+# www.oualid.de dauerhaft auf oualid.de umleiten
+www.oualid.de {
+	redir https://oualid.de{uri} permanent
+}
