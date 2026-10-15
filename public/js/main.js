@@ -46,6 +46,22 @@
     setTimeout(function () { li.classList.add('on'); }, 150 + i * 180);
   });
 
+  /* ---------- Hero: „fest.“ beißt einmal zu (erneut bei Hover/Antippen) ---------- */
+  var bite = $('.hero-title .bite'), caret = $('.hero-title .bite-caret');
+  if (bite) {
+    if (reduceMotion) { bite.classList.add('is-done'); }
+    else {
+      var chomp = function (withCaret) {
+        bite.classList.remove('is-biting'); void bite.offsetWidth; bite.classList.add('is-biting');
+        if (withCaret && caret) { caret.classList.remove('is-blinking'); void caret.offsetWidth; caret.classList.add('is-blinking'); }
+      };
+      bite.addEventListener('animationend', function (e) { if (e.animationName === 'bite-line') bite.classList.add('is-done'); });
+      setTimeout(function () { chomp(true); }, 1000);
+      bite.addEventListener('mouseenter', function () { chomp(false); });
+      bite.addEventListener('click', function () { chomp(false); });
+    }
+  }
+
   /* ---------- E-Mail-Adressen erst im Browser zusammensetzen (gegen Spam-Bots) ---------- */
   document.querySelectorAll('a.mail').forEach(function (a) {
     var addr = a.dataset.u + '@' + a.dataset.d;

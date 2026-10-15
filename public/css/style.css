@@ -203,6 +203,27 @@ button { font: inherit; color: inherit; }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-2); padding: 6px 14px 6px 12px; border: 1px solid var(--line-strong); border-radius: var(--r-pill); margin-bottom: var(--space-6); }
 .hero-title { font-size: var(--fs-hero); line-height: var(--lh-tight); letter-spacing: -0.048em; font-weight: 680; }
 .hero-title em { font-style: normal; color: var(--accent); }
+/* „fest.“ beißt einmal zu: kurz stauchen, zurückfedern, Linie zieht sich darunter, Cursor blinkt 3x */
+.hero-title .bite { display: inline-block; position: relative; transform-origin: 50% 88%; white-space: nowrap; cursor: default; }
+.hero-title .bite::after {
+  content: ""; position: absolute; left: 0.02em; right: 0.06em; bottom: 0.02em; height: 0.075em; border-radius: 99px;
+  background: var(--accent); box-shadow: 0 0 18px var(--accent-line); transform-origin: 0 50%; transform: scaleX(0);
+}
+.bite-caret { display: inline-block; width: 0.07em; height: 0.78em; margin-left: 0.08em; vertical-align: -0.04em; background: var(--accent); opacity: 0; }
+.js .hero-title .bite.is-biting { animation: bite 560ms cubic-bezier(.3, 1.5, .5, 1) both; }
+.js .hero-title .bite.is-biting::after { animation: bite-line 620ms var(--ease-out) 380ms forwards; }
+.js .hero-title .bite.is-done::after { transform: none; }
+.js .hero-title .bite-caret.is-blinking { animation: bite-caret 900ms steps(1) 900ms 3 forwards; }
+.no-js .hero-title .bite::after, html:not(.js) .hero-title .bite::after { transform: none; }
+@keyframes bite {
+  0%   { transform: none; }
+  30%  { transform: scale(1.07, 0.8) translateY(0.02em); }
+  58%  { transform: scale(0.97, 1.06); }
+  80%  { transform: scale(1.01, 0.98); }
+  100% { transform: none; }
+}
+@keyframes bite-line { to { transform: none; } }
+@keyframes bite-caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 .hero-lead { font-size: var(--fs-md); line-height: 1.6; color: var(--text-2); max-width: 40ch; margin-bottom: var(--space-6); padding-top: var(--space-2); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-7); }
 .hero-meta { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); font-size: var(--fs-sm); color: var(--text); border-top: 1px solid var(--line); padding-top: var(--space-5); }
