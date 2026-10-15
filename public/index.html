@@ -38,9 +38,9 @@
     </button>
     <nav id="site-nav" class="site-nav" aria-label="Hauptnavigation">
       <ul>
+        <li><a href="#about">Über mich</a></li>
         <li><a href="#last-arrow">Last Arrow</a></li>
         <li><a href="#projekte">Projekte</a></li>
-        <li><a href="#about">Über mich</a></li>
         <li><a href="#cv">Lebenslauf</a></li>
         <li><a class="nav-cta" href="#kontakt">Kontakt</a></li>
       </ul>
@@ -126,11 +126,51 @@
 
 <main id="inhalt">
 
+<!-- ============================ ÜBER MICH ============================ -->
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="wrap">
+    <header class="sec-head" data-reveal>
+      <p class="kicker"><span class="kicker-idx">01</span> Über mich <span class="kicker-cmd">cat about.md</span></p>
+      <h2 id="about-title" class="sec-title">Ich bin Oualid aus Bonn. Tagsüber berate ich bei der Telekom Kundinnen und Kunden. Abends und am Wochenende baue ich Dinge.</h2>
+    </header>
+    <div class="about-cols">
+      <p data-reveal>Ein großer Teil davon sind Brett- und Kartenspiele, die ich für Spieleabende mit Freunden programmiert habe: mit eigenem Server, Bots, Wiederverbindung und teilweise 3D-Tisch. Alles läuft in Docker-Containern auf meinem Raspberry Pi. Gerade sitze ich an meinem ersten großen Spiel in der Unreal Engine: <a href="#last-arrow">Last Arrow</a>.</p>
+      <p data-reveal style="--d:1">Mein Muster ist immer dasselbe: Ich stoße auf ein Thema, lese mich schnell ein und beiße mich dann richtig fest, bis etwas Fertiges dabei herauskommt. Das gilt für Code genauso wie für KI, 3D-Druck oder ein Cosplay, das ich selbst finishe.</p>
+      <p data-reveal style="--d:2">Mein Mandalorian-Cosplay ist so ein Fall: Die komplette Rüstung habe ich selbst gedruckt und gefinisht. Einzelne Teile, die es so nicht gab, habe ich selbst konstruiert, zum Beispiel das Grav-Charge-Holster. Das gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a> zum Nachdrucken, und daneben kannst du es dir in 3D ansehen.</p>
+    </div>
+
+    <div class="about-media">
+      <!-- Cosplay-Foto: public/img/cosplay.jpg. Solange die Datei fehlt, zeigt die Seite den Platzhalter. -->
+      <figure class="photo" data-reveal>
+        <div class="photo-frame">
+          <img src="img/cosplay.jpg" alt="Oualid als Mandalorian mit Grogu in der Umhängetasche, Rüstung selbst gedruckt und gefinisht" width="960" height="1280" loading="lazy" decoding="async">
+          <div class="photo-placeholder" aria-hidden="true"><span class="mono-label">cosplay.jpg folgt …</span></div>
+        </div>
+        <figcaption><span class="mono-label">foto</span> Mandalorian, Rüstung komplett selbst gedruckt und gefinisht</figcaption>
+      </figure>
+      <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt, sobald er ins Bild scrollt. -->
+      <figure class="viewer" id="holster-3d" data-model="3d/holster.glb" data-reveal style="--d:1">
+        <div class="viewer-stage">
+          <button type="button" class="viewer-start" hidden>In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
+          <p class="viewer-status">Lade 3D-Modell …</p>
+        </div>
+        <div class="viewer-ui">
+          <button type="button" data-act="assemble">Zusammenbauen</button>
+          <button type="button" data-act="explode">Zerlegen</button>
+          <label><span class="mono-label">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
+          <button type="button" data-act="color">Farbe</button>
+        </div>
+        <figcaption><span class="mono-label">3d</span> Grav-Charge-Holster, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ LAST ARROW ============================ -->
 <section id="last-arrow" class="section la" aria-labelledby="la-title">
   <div class="wrap">
     <header class="sec-head" data-reveal>
-      <p class="kicker"><span class="kicker-idx">01</span> Ausgewähltes Projekt <span class="kicker-cmd">man last-arrow</span></p>
+      <p class="kicker"><span class="kicker-idx">02</span> Ausgewähltes Projekt <span class="kicker-cmd">man last-arrow</span></p>
     </header>
 
     <div class="la-hero">
@@ -204,7 +244,7 @@
   <div class="wrap">
     <header class="sec-head sec-head-split" data-reveal>
       <div>
-        <p class="kicker"><span class="kicker-idx">02</span> Projekte <span class="kicker-cmd">ls -la ~/projekte</span></p>
+        <p class="kicker"><span class="kicker-idx">03</span> Projekte <span class="kicker-cmd">ls -la ~/projekte</span></p>
         <h2 id="proj-title" class="sec-title">Gebaut für Spieleabende, Neugier und den eigenen Pi.</h2>
       </div>
       <p class="sec-lead">Die meisten davon sind Brett- und Kartenspiele für Spieleabende mit Freunden. Alle laufen im Browser auf Handy, Tablet oder PC, mit Räumen per 4-stelligem Code, Bots für fehlende Mitspieler und Wiederverbindung nach Abbrüchen. Jedes Projekt hat seinen eigenen Docker-Container auf dem Pi.</p>
@@ -379,7 +419,7 @@
             <p>Das Grav-Charge-Holster aus meinem Mandalorian-Cosplay als druckbares Modell. Zum Ansehen und Nachdrucken auf MakerWorld.</p>
             <ul class="tags"><li>3D-Druck</li><li>Bambu Lab H2S</li><li>Cosplay</li><li>Three.js</li></ul>
             <p class="card-links">
-              <a class="link-arrow" href="#holster-3d">3D-Ansicht <span aria-hidden="true">↓</span></a>
+              <a class="link-arrow" href="#holster-3d">3D-Ansicht <span aria-hidden="true">↑</span></a>
               <a class="link-arrow" href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld <span aria-hidden="true">↗</span></a>
             </p>
           </div>
@@ -397,46 +437,6 @@
       </li>
     </ul>
     <p class="grep-empty" id="grep-empty" hidden><span class="mono-label">grep:</span> keine Treffer.</p>
-  </div>
-</section>
-
-<!-- ============================ ÜBER MICH ============================ -->
-<section id="about" class="section" aria-labelledby="about-title">
-  <div class="wrap">
-    <header class="sec-head" data-reveal>
-      <p class="kicker"><span class="kicker-idx">03</span> Über mich <span class="kicker-cmd">cat about.md</span></p>
-      <h2 id="about-title" class="sec-title">Ich bin Oualid aus Bonn. Tagsüber berate ich bei der Telekom Kundinnen und Kunden. Abends und am Wochenende baue ich Dinge.</h2>
-    </header>
-    <div class="about-cols">
-      <p data-reveal>Ein großer Teil davon sind Brett- und Kartenspiele, die ich für Spieleabende mit Freunden programmiert habe: mit eigenem Server, Bots, Wiederverbindung und teilweise 3D-Tisch. Alles läuft in Docker-Containern auf meinem Raspberry Pi. Gerade sitze ich an meinem ersten großen Spiel in der Unreal Engine: <a href="#last-arrow">Last Arrow</a>.</p>
-      <p data-reveal style="--d:1">Mein Muster ist immer dasselbe: Ich stoße auf ein Thema, lese mich schnell ein und beiße mich dann richtig fest, bis etwas Fertiges dabei herauskommt. Das gilt für Code genauso wie für KI, 3D-Druck oder ein Cosplay, das ich selbst finishe.</p>
-      <p data-reveal style="--d:2">Mein Mandalorian-Cosplay ist so ein Fall: Die komplette Rüstung habe ich selbst gedruckt und gefinisht. Einzelne Teile, die es so nicht gab, habe ich selbst konstruiert, zum Beispiel das Grav-Charge-Holster. Das gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a> zum Nachdrucken, und daneben kannst du es dir in 3D ansehen.</p>
-    </div>
-
-    <div class="about-media">
-      <!-- Cosplay-Foto: public/img/cosplay.jpg. Solange die Datei fehlt, zeigt die Seite den Platzhalter. -->
-      <figure class="photo" data-reveal>
-        <div class="photo-frame">
-          <img src="img/cosplay.jpg" alt="Oualid als Mandalorian mit Grogu in der Umhängetasche, Rüstung selbst gedruckt und gefinisht" width="960" height="1280" loading="lazy" decoding="async">
-          <div class="photo-placeholder" aria-hidden="true"><span class="mono-label">cosplay.jpg folgt …</span></div>
-        </div>
-        <figcaption><span class="mono-label">foto</span> Mandalorian, Rüstung komplett selbst gedruckt und gefinisht</figcaption>
-      </figure>
-      <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt, sobald er ins Bild scrollt. -->
-      <figure class="viewer" id="holster-3d" data-model="3d/holster.glb" data-reveal style="--d:1">
-        <div class="viewer-stage">
-          <button type="button" class="viewer-start" hidden>In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
-          <p class="viewer-status">Lade 3D-Modell …</p>
-        </div>
-        <div class="viewer-ui">
-          <button type="button" data-act="assemble">Zusammenbauen</button>
-          <button type="button" data-act="explode">Zerlegen</button>
-          <label><span class="mono-label">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
-          <button type="button" data-act="color">Farbe</button>
-        </div>
-        <figcaption><span class="mono-label">3d</span> Grav-Charge-Holster, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
-      </figure>
-    </div>
   </div>
 </section>
 

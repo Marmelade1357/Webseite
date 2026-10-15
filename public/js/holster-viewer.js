@@ -11,7 +11,7 @@ const PALETTES = [
   { name: 'Braun / Schwarz', holster: 0x7a4527, body: 0x3a3d42, dome: 0xe6eef2, metal: 0.25, domeGlass: true }
 ];
 // Wie weit (mm) die Teile beim Zerlegen nach vorne fliegen
-const EXPLODE = { back: 34, front: 70, dome: 104 };
+const EXPLODE = { back: 28, front: 58, dome: 86 };
 
 export function mount(root) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -100,12 +100,13 @@ export function mount(root) {
     scene.add(model);
 
     // Kamera so wählen, dass auch der zerlegte Zustand ganz ins Bild passt
+    // Kamera zielt auf das zusammengebaute Holster, der Abstand reicht auch für den zerlegten Zustand
+    layout(0);
+    const center = new THREE.Box3().setFromObject(model).getCenter(new THREE.Vector3());
     layout(1);
-    const box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    const size = box.getSize(new THREE.Vector3()).length();
+    const size = new THREE.Box3().setFromObject(model).getSize(new THREE.Vector3()).length();
     controls.target.copy(center);
-    camera.position.copy(center).add(new THREE.Vector3(0.35, 0.45, -1).normalize().multiplyScalar(size * 1.4));
+    camera.position.copy(center).add(new THREE.Vector3(0.3, 0.35, -1).normalize().multiplyScalar(size * 1.3));
     controls.minDistance = size * 0.5;
     controls.maxDistance = size * 3;
     status.hidden = true;
