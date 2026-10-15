@@ -47,12 +47,12 @@ Dateien machen. Oberflächentexte in den Skripten (Konsole, Kopieren, Minispiel,
 
 ## Devlog
 
-Einträge für Last Arrow in `public/devlog/eintraege.json` (Anleitung: `public/devlog/LIESMICH.md`).
-Erscheinen automatisch auf beiden Sprachseiten, neueste zuerst.
+Zurzeit ausgeblendet. Einträge für Last Arrow liegen in `public/devlog/eintraege.json`; wie man den
+Devlog wieder einschaltet, steht in `public/devlog/LIESMICH.md`.
 
 ## Lebenslauf als PDF
 
-`public/lebenslauf.pdf` und `public/en/resume.pdf` werden aus `lebenslauf/` erzeugt
+`public/lebenslauf.pdf` und `public/en/cv.pdf` werden aus `lebenslauf/` erzeugt
 (Anleitung: `lebenslauf/LIESMICH.md`).
 
 ## Betrieb

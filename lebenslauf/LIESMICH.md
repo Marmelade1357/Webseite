@@ -5,7 +5,7 @@ Quelle für die PDF-Downloads auf der Webseite. Wird **nicht** ausgeliefert, nur
 | Datei              | Ergebnis                    |
 |--------------------|-----------------------------|
 | `lebenslauf.html`  | `public/lebenslauf.pdf`     |
-| `resume.html`      | `public/en/resume.pdf`      |
+| `cv.html`          | `public/en/cv.pdf`          |
 | `cv.css`           | gemeinsames Druck-Layout    |
 
 Änderungen (z. B. neue Station oder Zertifikate) in beiden HTML-Dateien eintragen und die PDFs neu

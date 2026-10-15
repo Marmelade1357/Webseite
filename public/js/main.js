@@ -27,7 +27,7 @@
       viewerFail: 'The 3D viewer could not be loaded.',
       trailer: 'Play trailer', trailerNote: 'Playing loads a video from YouTube.',
       locale: 'en-GB',
-      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           Résumé as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, clear',
+      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           CV as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, clear',
       whoami: 'oualid: retail by day, games, AI and 3D printing by night.',
       about: 'Opening about.md …', projects: '14 entries. Tip: filter the list with grep.', contact: 'Opening contact.json …',
       lastArrow: 'Starting Last Arrow …\n[WARN] Goblins are approaching the treasure chest. There is a mini demo below.',
