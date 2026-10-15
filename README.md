@@ -20,6 +20,9 @@ public/
 └── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
 ```
 
+`modelle/` enthält Quelldateien (z. B. 3MF), die nicht ausgeliefert werden.
+Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
+
 ## Lokal ansehen
 
 ```bash
