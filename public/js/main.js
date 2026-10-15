@@ -32,6 +32,19 @@
     else img.addEventListener('error', hide);
   });
 
+  /* ---------- 3D-Viewer (Holster) erst nach Klick laden ---------- */
+  document.querySelectorAll('.viewer').forEach(function (v) {
+    var btn = v.querySelector('.viewer-start');
+    btn.addEventListener('click', function () {
+      btn.hidden = true;
+      var status = v.querySelector('.viewer-status');
+      status.hidden = false;
+      import('./holster-viewer.js').then(function (mod) { mod.mount(v); }).catch(function () {
+        status.textContent = 'Der 3D-Viewer konnte nicht geladen werden.';
+      });
+    });
+  });
+
   /* ---------- YouTube erst nach Klick laden ---------- */
   document.querySelectorAll('.video[data-youtube-id]').forEach(function (box) {
     var id = (box.dataset.youtubeId || '').trim();

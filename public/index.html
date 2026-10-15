@@ -19,6 +19,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.min.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -336,13 +337,25 @@
           <p class="tags"><span>React</span><span>TypeScript</span><span>Tailwind</span><span>SQLite</span></p>
         </details>
       </li>
-      <li data-tags="3d-druck cosplay makerworld modell">
+      <li data-tags="3d-druck cosplay makerworld modell 3d viewer">
         <details>
           <summary><span class="perm">-rw-r--r--</span><span class="pname">grav-charge-holster.3mf</span><span class="pdesc">Mandalorian-Holster, selbst konstruiert, auf MakerWorld</span></summary>
-          <!-- Bild von MakerWorld als public/img/projekte/holster.jpg hochladen; solange es fehlt, wird hier nichts angezeigt. -->
-          <img class="shot" src="img/projekte/holster.jpg" alt="Grav-Charge-Holster für das Mandalorian-Cosplay, eigenes 3D-Druck-Modell" loading="lazy" decoding="async">
+          <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt erst nach Klick. -->
+          <div class="viewer" data-model="3d/holster.glb">
+            <div class="viewer-stage">
+              <button type="button" class="viewer-start">▶ In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
+              <p class="viewer-status" hidden>Lade 3D-Modell …</p>
+            </div>
+            <div class="viewer-ui">
+              <button type="button" data-act="assemble">Zusammenbauen</button>
+              <button type="button" data-act="explode">Zerlegen</button>
+              <label><span class="muted">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
+              <button type="button" data-act="color">Farbe</button>
+            </div>
+            <p class="viewer-hint muted">Ziehen zum Drehen, Mausrad oder zwei Finger zum Zoomen. Holster plus drei Charges aus Rückteil mit Magnet und Ring (7 Druckteile), dazu die Kuppeln.</p>
+          </div>
           <p>Das Grav-Charge-Holster aus meinem Mandalorian-Cosplay als druckbares Modell. Zum Ansehen und Nachdrucken auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a>.</p>
-          <p class="tags"><span>3D-Druck</span><span>Bambu Lab H2S</span><span>Cosplay</span></p>
+          <p class="tags"><span>3D-Druck</span><span>Bambu Lab H2S</span><span>Cosplay</span><span>Three.js</span></p>
         </details>
       </li>
       <li data-tags="web nginx docker hub">
