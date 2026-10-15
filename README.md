@@ -37,7 +37,7 @@ Der Container lauscht auf `127.0.0.1:8104`. Im Reverse Proxy die Hauptdomain (`o
 
 ## Cosplay-Foto
 
-Einfach als `public/img/cosplay.jpg` hochladen (Hochformat, ideal 3:4, z. B. 1125 × 1500).
+Einfach als `public/img/cosplay.jpg` hochladen (Hochformat, ideal 3:4, etwa 960 × 1280, unter 500 KB).
 Solange die Datei fehlt, zeigt die Seite einen Platzhalter.
 
 ## Noch offen
