@@ -15,10 +15,16 @@ public/
 ├── css/style.css
 ├── js/main.js        Startsequenz, Konsole, Projektfilter, Navigation, E-Mail, YouTube-Klick
 ├── js/mini-game.js   Mini Last Arrow (Canvas)
+├── js/holster-viewer.js  3D-Viewer fürs Holster
+├── 3d/               3D-Modelle (GLB)
+├── vendor/three/     Three.js (lokal)
 ├── fonts/            JetBrains Mono + Space Grotesk (OFL)
 ├── img/              Cosplay-Foto und Projekt-Screenshots (img/projekte/)
 └── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
 ```
+
+`modelle/` enthält Quelldateien (z. B. 3MF), die nicht ausgeliefert werden.
+Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
 
 ## Lokal ansehen
 
@@ -40,10 +46,12 @@ Der Container lauscht auf `127.0.0.1:8104`. Im Reverse Proxy die Hauptdomain (`o
 Einfach als `public/img/cosplay.jpg` hochladen (Hochformat, ideal 3:4, etwa 960 × 1280, unter 500 KB).
 Solange die Datei fehlt, zeigt die Seite einen Platzhalter.
 
-## Holster-Bild
+## 3D-Viewer (Holster)
 
-Das Bild von MakerWorld als `public/img/projekte/holster.jpg` hochladen (Querformat, unter 300 KB).
-Solange die Datei fehlt, zeigt der Eintrag einfach kein Bild.
+- Modell: `public/3d/holster.glb`, erzeugt aus der Bambu-Studio-Datei (Original liegt nicht im Repo)
+  (Holster und Ringe in Originalauflösung, Rückteil auf 8 % vereinfacht, Charges zusammengesetzt).
+- Code: `public/js/holster-viewer.js`, Three.js liegt lokal unter `public/vendor/three/` (MIT-Lizenz).
+- Lädt erst nach Klick auf „In 3D ansehen“.
 
 ## Noch offen
 
