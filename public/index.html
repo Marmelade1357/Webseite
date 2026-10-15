@@ -12,11 +12,14 @@
 <meta property="og:image" content="https://oualid.de/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Terminalfenster mit dem Text: Oualid Fauzi. Ich lese mich ein. Dann beiße ich mich fest.">
+<meta property="og:image:alt" content="oualid.de – Ich lese mich ein. Dann beiße ich mich fest. Last Arrow, Spiele, KI, 3D-Druck, Cosplay.">
 <meta property="og:locale" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0f1113">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
 <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.min.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
@@ -83,7 +86,8 @@
           <li><span class="warn">[ WARN ]</span> Kobolde vor dem Burgtor gesichtet.</li>
           <li><span class="ok">[  OK  ]</span> Bogen gespannt.</li>
         </ol>
-        <p class="cmd"><span class="ps1">oualid@duckpi:~$</span> neofetch</p>
+        <details class="sysinfo" open>
+        <summary><span class="ps1">oualid@duckpi:~$</span> neofetch <span class="sysinfo-hint">Systeminfo</span></summary>
         <div class="neofetch">
 <pre class="duck" aria-hidden="true">
       __
@@ -104,6 +108,7 @@
             <div><dt>Modus</dt><dd>festgebissen</dd></div>
           </dl>
         </div>
+        </details>
 
         <div class="console" id="console" hidden>
           <div class="console-out" id="console-out" aria-live="polite"></div>
@@ -251,7 +256,7 @@
     </header>
 
     <div class="filter" data-reveal>
-      <form class="grep" role="search" onsubmit="return false">
+      <form class="grep" role="search">
         <label for="grep-input"><span class="mono-label">ls | grep -i</span></label>
         <input id="grep-input" type="search" placeholder="z. B. 3d, karten, react" autocomplete="off" spellcheck="false">
       </form>
@@ -400,9 +405,10 @@
         </article>
       </li>
       <li class="proj span-8" data-tags="web react typescript sqlite tool" data-reveal>
-        <article class="card card-text">
+        <article class="card card-media">
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/monitoring-shop.webp" alt="Monitoring-Shop: Wochenmonitoring mit Zielen und Fortschrittsbalken, hier mit Beispieldaten" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
-            <p class="card-path">monitoring-shop/</p>
+            <p class="card-path">monitoring-shop/ <span class="mono-label">Beispieldaten</span></p>
             <h3 class="card-title">Monitoring-Shop</h3>
             <p class="card-lede">Absatz-Monitoring fürs Team, mit Echtzeit-Chat</p>
             <p>Jede Person trägt ihre Absätze pro Produkt ein, am Desktop im Wochen-Grid, mobil mit großem Plus-Minus-Regler. Admins sehen alles zentral. Dazu Team-Chat und Direktnachrichten in Echtzeit.</p>

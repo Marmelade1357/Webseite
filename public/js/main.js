@@ -60,9 +60,10 @@
       });
     }
     btn.addEventListener('click', start);
-    // Im Datensparmodus oder ohne IntersectionObserver erst nach Klick laden
+    // Auf Handys/Tablets, im Datensparmodus oder ohne IntersectionObserver erst nach Antippen laden (ca. 1,2 MB)
     var saveData = navigator.connection && navigator.connection.saveData;
-    if (saveData || !('IntersectionObserver' in window)) { status.hidden = true; btn.hidden = false; return; }
+    var touch = window.matchMedia('(pointer: coarse), (max-width: 860px)').matches;
+    if (saveData || touch || !('IntersectionObserver' in window)) { status.hidden = true; btn.hidden = false; return; }
     var io = new IntersectionObserver(function (en) {
       if (en[0].isIntersecting) { io.disconnect(); start(); }
     }, { rootMargin: '300px 0px' });
@@ -116,6 +117,12 @@
     c.addEventListener('click', function () { grepInput.value = c.dataset.filter; grep(); syncChips(); });
   });
   if (grepInput) grep();
+  var grepForm = $('.grep');
+  if (grepForm) grepForm.addEventListener('submit', function (e) { e.preventDefault(); });
+
+  /* ---------- Systeminfo im Terminal: auf kleinen Bildschirmen eingeklappt starten ---------- */
+  var sysinfo = $('.sysinfo');
+  if (sysinfo && window.matchMedia('(max-width: 640px)').matches) sysinfo.open = false;
 
   /* ---------- Navigation: aktiver Abschnitt ---------- */
   var navLinks = {};

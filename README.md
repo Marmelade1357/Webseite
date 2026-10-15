@@ -22,12 +22,22 @@ public/
 ├── 3d/               3D-Modelle (GLB)
 ├── vendor/three/     Three.js (lokal)
 ├── fonts/            Inter (Variable) + JetBrains Mono (OFL)
+├── icons/            App-Icons (Startbildschirm, Manifest)
 ├── img/              Cosplay-Foto und Projekt-Screenshots (img/projekte/)
 └── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
 ```
 
 `modelle/` enthält Quelldateien (z. B. 3MF), die nicht ausgeliefert werden.
 Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
+
+## Sicherheit (CSP)
+
+`nginx.conf` erlaubt Inline-Skripte nur per SHA-256-Hash (Import-Map und `js`-Klasse in `index.html`,
+Mail-Skript in `impressum.html`). Wird eines davon geändert, Hashes neu berechnen und in `nginx.conf` eintragen:
+
+```bash
+python3 -c "import re,hashlib,base64;[print(f,\"'sha256-\"+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()+\"'\") for f in ['public/index.html','public/impressum.html'] for m in re.findall(r'<script(?![^>]*src=)[^>]*>(.*?)</script>',open(f,encoding='utf-8').read(),re.S)]"
+```
 
 ## Lokal ansehen
 
