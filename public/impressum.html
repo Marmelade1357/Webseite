@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressum &amp; Datenschutz · Oualid Fauzi</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b0f14">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { padding-bottom: 0; }
+  .legal { padding: 56px 0 80px; max-width: 760px; }
+  .legal h1 { font: 700 clamp(30px, 5vw, 48px)/1.1 var(--display); color: var(--white); margin: 8px 0 32px; }
+  .legal h2 { font: 700 14px var(--mono); color: var(--green); margin: 36px 0 8px; }
+  .legal p, .legal address { margin: 0 0 12px; font-style: normal; }
+  .todo { color: var(--bg); background: var(--amber); padding: 0 6px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main class="wrap legal">
+  <p class="cmd"><a href="./">← cd ~</a></p>
+  <h1>Impressum &amp; Datenschutz</h1>
+
+  <h2>## Angaben gemäß § 5 DDG</h2>
+  <address>
+    Oualid Fauzi<br>
+    <!-- Ladungsfähige Anschrift eintragen und die Markierung entfernen. -->
+    <span class="todo">Straße Hausnummer</span><br>
+    <span class="todo">PLZ</span> Bonn
+  </address>
+
+  <h2>## Kontakt</h2>
+  <p>E-Mail: <a class="mail" data-u="oualidfauzi" data-d="hotmail.de" href="./#kontakt">oualidfauzi [at] hotmail.de</a></p>
+
+  <h2>## Datenschutz</h2>
+  <p>Diese Website läuft auf einem eigenen Raspberry Pi. Sie setzt keine Cookies, nutzt kein Tracking und lädt keine Schriften oder Skripte von fremden Servern.</p>
+  <p>Beim Aufruf überträgt dein Browser technisch notwendige Daten wie die IP-Adresse an den Server, damit die Seite ausgeliefert werden kann. Der Webserver dieser Seite schreibt keine Zugriffsprotokolle.</p>
+
+  <h2>## YouTube</h2>
+  <p>Der Last-Arrow-Trailer ist über YouTube (Google Ireland Limited) eingebunden, im erweiterten Datenschutzmodus (youtube-nocookie.com). Das Video wird erst geladen, wenn du auf „Trailer abspielen“ klickst. Erst dann werden Daten wie deine IP-Adresse an YouTube übertragen. Es gilt die <a href="https://policies.google.com/privacy?hl=de" rel="noopener">Datenschutzerklärung von Google</a>.</p>
+
+  <h2>## Externe Links</h2>
+  <p>Links zu anderen Seiten, etwa MakerWorld, GitHub oder LinkedIn, öffnen diese Seiten direkt. Für deren Inhalte und Datenverarbeitung sind die jeweiligen Betreiber verantwortlich.</p>
+
+  <h2>## Schriften</h2>
+  <p>JetBrains Mono und Space Grotesk, beide unter der SIL Open Font License 1.1, lokal ausgeliefert.</p>
+</main>
+<script>
+  document.querySelectorAll('a.mail').forEach(function (a) {
+    var addr = a.dataset.u + '@' + a.dataset.d;
+    a.href = 'mailto:' + addr; a.textContent = addr;
+  });
+</script>
+</body>
+</html>

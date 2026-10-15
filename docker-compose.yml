@@ -1,0 +1,13 @@
+name: webseite
+
+services:
+  app:
+    build: .
+    environment:
+      - TZ=Europe/Berlin
+    ports:
+      # Nur intern auf dem Pi erreichbar (127.0.0.1:8104) - der Reverse Proxy des Pi
+      # routet die Hauptdomain (oualid.de) hierher. Port 8104 gewählt, weil 8080/8081
+      # und 8090-8103 schon von den Spielen, dem Spielehub und der iPhone-Seite belegt sind.
+      - "127.0.0.1:8104:80"
+    restart: unless-stopped
