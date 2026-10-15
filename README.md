@@ -16,8 +16,8 @@ public/
 ├── js/main.js        Startsequenz, Konsole, Projektfilter, Navigation, E-Mail, YouTube-Klick
 ├── js/mini-game.js   Mini Last Arrow (Canvas)
 ├── fonts/            JetBrains Mono + Space Grotesk (OFL)
-└── img/              Bilder (z. B. cosplay.jpg)
-entwuerfe/            Die ersten Designentwürfe (werden nicht ausgeliefert)
+├── img/              Cosplay-Foto und Projekt-Screenshots (img/projekte/)
+└── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
 ```
 
 ## Lokal ansehen
