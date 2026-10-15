@@ -117,6 +117,7 @@
         <p>Mein Muster ist immer dasselbe: Ich stoße auf ein Thema, lese mich schnell ein und beiße mich dann richtig fest, bis etwas Fertiges dabei herauskommt. Das gilt für Code genauso wie für KI, 3D-Druck oder ein Cosplay, das ich selbst finishe.</p>
         <p>Mein Mandalorian-Cosplay ist so ein Fall: Teile davon habe ich selbst konstruiert, gedruckt und gefinisht. Das Grav-Charge-Holster gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a> zum Nachdrucken.</p>
       </div>
+      <div class="about-media">
       <!-- Cosplay-Foto: einfach als public/img/cosplay.jpg hochladen. Solange die Datei fehlt, zeigt die Seite den Platzhalter. -->
       <figure class="photo">
         <div class="photo-frame">
@@ -132,8 +133,23 @@
 </pre>
           </div>
         </div>
-        <figcaption>Mandalorian, Teile selbst gedruckt und gefinisht · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">Holster auf MakerWorld</a></figcaption>
+        <figcaption>Mandalorian, Teile selbst gedruckt und gefinisht</figcaption>
       </figure>
+      <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt, sobald er ins Bild scrollt. -->
+      <figure class="viewer" id="holster-3d" data-model="3d/holster.glb">
+        <div class="viewer-stage">
+          <button type="button" class="viewer-start" hidden>▶ In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
+          <p class="viewer-status">Lade 3D-Modell …</p>
+        </div>
+        <div class="viewer-ui">
+          <button type="button" data-act="assemble">Zusammenbauen</button>
+          <button type="button" data-act="explode">Zerlegen</button>
+          <label><span class="muted">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
+          <button type="button" data-act="color">Farbe</button>
+        </div>
+        <figcaption>Grav-Charge-Holster in 3D, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
+      </figure>
+      </div>
     </div>
   </div>
 </section>
@@ -340,20 +356,7 @@
       <li data-tags="3d-druck cosplay makerworld modell 3d viewer">
         <details>
           <summary><span class="perm">-rw-r--r--</span><span class="pname">grav-charge-holster.3mf</span><span class="pdesc">Mandalorian-Holster, selbst konstruiert, auf MakerWorld</span></summary>
-          <!-- 3D-Viewer: Modell in public/3d/holster.glb, Code in js/holster-viewer.js. Lädt erst nach Klick. -->
-          <div class="viewer" data-model="3d/holster.glb">
-            <div class="viewer-stage">
-              <button type="button" class="viewer-start">▶ In 3D ansehen<small>Modell lädt ca. 1,2 MB</small></button>
-              <p class="viewer-status" hidden>Lade 3D-Modell …</p>
-            </div>
-            <div class="viewer-ui">
-              <button type="button" data-act="assemble">Zusammenbauen</button>
-              <button type="button" data-act="explode">Zerlegen</button>
-              <label><span class="muted">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
-              <button type="button" data-act="color">Farbe</button>
-            </div>
-            <p class="viewer-hint muted">Ziehen zum Drehen, Mausrad oder zwei Finger zum Zoomen. Holster plus drei Charges aus Rückteil mit Magnet und Ring (7 Druckteile), dazu die Kuppeln.</p>
-          </div>
+          <p><a class="run" href="#holster-3d">3D-Ansicht neben dem Cosplay-Foto ↑</a></p>
           <p>Das Grav-Charge-Holster aus meinem Mandalorian-Cosplay als druckbares Modell. Zum Ansehen und Nachdrucken auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a>.</p>
           <p class="tags"><span>3D-Druck</span><span>Bambu Lab H2S</span><span>Cosplay</span><span>Three.js</span></p>
         </details>

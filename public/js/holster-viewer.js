@@ -139,7 +139,7 @@ export function mount(root) {
   new IntersectionObserver(en => { visible = en[0].isIntersecting; }).observe(stage);
 
   renderer.setAnimationLoop(now => {
-    if (!visible || !root.closest('details').open) return;
+    if (!visible) return;
     if (animating) {
       const t = Math.min(1, (now - animStart) / 1800);
       explode = from + (target - from) * t;
