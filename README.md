@@ -40,6 +40,11 @@ Der Container lauscht auf `127.0.0.1:8104`. Im Reverse Proxy die Hauptdomain (`o
 Einfach als `public/img/cosplay.jpg` hochladen (Hochformat, ideal 3:4, etwa 960 × 1280, unter 500 KB).
 Solange die Datei fehlt, zeigt die Seite einen Platzhalter.
 
+## Holster-Bild
+
+Das Bild von MakerWorld als `public/img/projekte/holster.jpg` hochladen (Querformat, unter 300 KB).
+Solange die Datei fehlt, zeigt der Eintrag einfach kein Bild.
+
 ## Noch offen
 
 - **Zertifikate:** im Lebenslauf ergänzen, sobald vorhanden.

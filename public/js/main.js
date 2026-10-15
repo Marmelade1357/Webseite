@@ -25,6 +25,13 @@
     else img.addEventListener('error', missing);
   });
 
+  /* ---------- Projekt-Screenshots ausblenden, wenn die Datei (noch) fehlt ---------- */
+  document.querySelectorAll('img.shot').forEach(function (img) {
+    function hide() { img.hidden = true; }
+    if (img.complete && img.naturalWidth === 0) hide();
+    else img.addEventListener('error', hide);
+  });
+
   /* ---------- YouTube erst nach Klick laden ---------- */
   document.querySelectorAll('.video[data-youtube-id]').forEach(function (box) {
     var id = (box.dataset.youtubeId || '').trim();
