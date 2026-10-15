@@ -16,6 +16,11 @@
 <meta property="og:locale" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0f1113">
+<link rel="canonical" href="https://oualid.de/">
+<link rel="alternate" hreflang="de" href="https://oualid.de/">
+<link rel="alternate" hreflang="en" href="https://oualid.de/en/">
+<link rel="alternate" hreflang="x-default" href="https://oualid.de/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Oualid Fauzi","url":"https://oualid.de/","image":"https://oualid.de/og.png","jobTitle":"Kaufmann im Einzelhandel","worksFor":{"@type":"Organization","name":"Telekom"},"address":{"@type":"PostalAddress","addressLocality":"Bonn","addressCountry":"DE"},"knowsAbout":["Spieleentwicklung","Unreal Engine 5","C++","JavaScript","Three.js","3D-Druck","KI"],"sameAs":["https://www.linkedin.com/in/oualid-fauzi-630469218/","https://github.com/Marmelade1357","https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster"]}</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -45,6 +50,7 @@
         <li><a href="#last-arrow">Last Arrow</a></li>
         <li><a href="#projekte">Projekte</a></li>
         <li><a href="#cv">Lebenslauf</a></li>
+        <li><a class="lang-switch" href="en/" hreflang="en" lang="en" aria-label="English version">EN</a></li>
         <li><a class="nav-cta" href="#kontakt">Kontakt</a></li>
       </ul>
     </nav>
@@ -95,8 +101,9 @@
   \ &lt;_. )
    `---'
 </pre>
+          <div class="nf-info">
+          <p class="nf-head"><span class="hl">oualid</span>@<span class="hl">duckpi</span></p>
           <dl>
-            <div class="nf-head"><span class="hl">oualid</span>@<span class="hl">duckpi</span></div>
             <div><dt>Name</dt><dd>Oualid Fauzi</dd></div>
             <div><dt>Ort</dt><dd>Bonn</dd></div>
             <div><dt>Beruf</dt><dd>Kaufmann im Einzelhandel @ Telekom</dd></div>
@@ -107,6 +114,7 @@
             <div><dt>Host</dt><dd>Raspberry Pi „duckpi“</dd></div>
             <div><dt>Modus</dt><dd>festgebissen</dd></div>
           </dl>
+          </div>
         </div>
         </details>
 
@@ -141,14 +149,14 @@
     <div class="about-cols">
       <p data-reveal>Ein großer Teil davon sind Brett- und Kartenspiele, die ich für Spieleabende mit Freunden programmiert habe: mit eigenem Server, Bots, Wiederverbindung und teilweise 3D-Tisch. Alles läuft in Docker-Containern auf meinem Raspberry Pi. Gerade sitze ich an meinem ersten großen Spiel in der Unreal Engine: <a href="#last-arrow">Last Arrow</a>.</p>
       <p data-reveal style="--d:1">Mein Muster ist immer dasselbe: Ich stoße auf ein Thema, lese mich schnell ein und beiße mich dann richtig fest, bis etwas Fertiges dabei herauskommt. Das gilt für Code genauso wie für KI, 3D-Druck oder ein Cosplay, das ich selbst finishe.</p>
-      <p data-reveal style="--d:2">Mein Mandalorian-Cosplay ist so ein Fall: Die komplette Rüstung habe ich selbst gedruckt und gefinisht. Einzelne Teile, die es so nicht gab, habe ich selbst konstruiert, zum Beispiel das Grav-Charge-Holster. Das gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a> zum Nachdrucken, und daneben kannst du es dir in 3D ansehen.</p>
+      <p data-reveal style="--d:2">Mein Mandalorian-Cosplay ist so ein Fall: Die komplette Rüstung habe ich selbst gedruckt und gefinisht. Einzelne Teile, die es so nicht gab, habe ich selbst konstruiert, zum Beispiel das Grav-Charge-Holster. Das gibt es als eigenes Modell auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener" target="_blank">MakerWorld</a> zum Nachdrucken, und daneben kannst du es dir in 3D ansehen.</p>
     </div>
 
     <div class="about-media">
       <!-- Cosplay-Foto: public/img/cosplay.jpg. Solange die Datei fehlt, zeigt die Seite den Platzhalter. -->
       <figure class="photo" data-reveal>
         <div class="photo-frame">
-          <img src="img/cosplay.jpg" alt="Oualid als Mandalorian mit Grogu in der Umhängetasche, Rüstung selbst gedruckt und gefinisht" width="960" height="1280" loading="lazy" decoding="async">
+          <img src="img/cosplay.jpg" srcset="img/cosplay-480.jpg 480w, img/cosplay.jpg 960w" sizes="(max-width: 860px) 92vw, 440px" alt="Oualid als Mandalorian mit Grogu in der Umhängetasche, Rüstung selbst gedruckt und gefinisht" width="960" height="1280" loading="lazy" decoding="async">
           <div class="photo-placeholder" aria-hidden="true"><span class="mono-label">cosplay.jpg folgt …</span></div>
         </div>
         <figcaption><span class="mono-label">foto</span> Mandalorian, Rüstung komplett selbst gedruckt und gefinisht</figcaption>
@@ -160,12 +168,12 @@
           <p class="viewer-status">Lade 3D-Modell …</p>
         </div>
         <div class="viewer-ui">
-          <button type="button" data-act="assemble">Zusammenbauen</button>
-          <button type="button" data-act="explode">Zerlegen</button>
-          <label><span class="mono-label">zerlegt</span> <input type="range" min="0" max="100" value="0" aria-label="Wie weit die Teile auseinandergezogen sind"></label>
-          <button type="button" data-act="color">Farbe</button>
+          <button type="button" data-act="assemble" disabled>Zusammenbauen</button>
+          <button type="button" data-act="explode" disabled>Zerlegen</button>
+          <label><span class="mono-label">zerlegt</span> <input type="range" min="0" max="100" value="0" disabled aria-label="Wie weit die Teile auseinandergezogen sind"></label>
+          <button type="button" data-act="color" disabled>Farbe</button>
         </div>
-        <figcaption><span class="mono-label">3d</span> Grav-Charge-Holster, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
+        <figcaption><span class="mono-label">3d</span> Grav-Charge-Holster, mein eigenes Modell · <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener" target="_blank">auf MakerWorld</a> · Ziehen zum Drehen, Zoomen mit Mausrad oder zwei Fingern</figcaption>
       </figure>
     </div>
   </div>
@@ -241,6 +249,12 @@
         <p>Warme, farbenfrohe Märchenwelt mit Sonne, Wetter, Wald, Bergen und Wiesen. Burghof mit Haus, Marktstand, Fahnen, Fackeln und Torbannern. Burg, Gegner und Effekte entstehen fast alle im Spiel selbst. Für Marktstand, Häuser, Truhe, Goldmine und Bogen kamen KI-generierte 3D-Modelle zum Einsatz, die ich für die Engine aufbereitet habe.</p>
       </article>
     </div>
+
+    <!-- Devlog: Einträge in public/devlog/eintraege.json (siehe LIESMICH.md), werden von js/main.js eingelesen -->
+    <div class="devlog" id="devlog" hidden>
+      <h3 class="devlog-title"><span class="mono-label">tail -f devlog.md</span> Devlog</h3>
+      <ol class="devlog-list" id="devlog-list"></ol>
+    </div>
   </div>
 </section>
 
@@ -273,140 +287,150 @@
     <ul class="bento projects" id="projects">
       <li class="proj span-8 tall" data-tags="spiele 3d würfel bluff threejs" data-reveal>
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/liars-dice.webp" alt="Liar's Dice: 3D-Tisch auf der Pirateninsel mit Bot-Piraten" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/liars-dice.webp" srcset="img/projekte/liars-dice-640.webp 640w, img/projekte/liars-dice.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 92vw, 820px" alt="Liar's Dice: 3D-Tisch auf der Pirateninsel mit Bot-Piraten" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">liars-dice/</p>
             <h3 class="card-title">Liar's Dice</h3>
             <p class="card-lede">Würfel-Bluffspiel auf einer 3D-Pirateninsel</p>
             <p>Das Würfelspiel aus <i>Fluch der Karibik</i> in der Ich-Perspektive: Du sitzt am Tisch auf einer Pirateninsel mit Palmen, Lagerfeuer, Schiffen am Horizont und einem Papagei. Mit Charakter-Editor für die eigene Piratenfigur und einer Aufdeck-Animation, bei der jeder Würfel einzeln mitgezählt wird.</p>
             <ul class="tags"><li>Three.js</li><li>Socket.IO</li><li>Node.js</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/liarsdice/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="web 3d iphone threejs vergleich live" data-reveal style="--d:1">
         <article class="card card-media is-live">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/iphone.webp" alt="iPhone-Vergleich: zwei Geräte maßstabsgetreu im 3D-Showroom" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/iphone.webp" srcset="img/projekte/iphone-640.webp 640w, img/projekte/iphone.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="iPhone-Vergleich: zwei Geräte maßstabsgetreu im 3D-Showroom" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">iphone-vergleich/ <span class="live-pill">live</span></p>
             <h3 class="card-title">iPhone-Vergleich</h3>
             <p class="card-lede">Alle iPhones seit 2007 maßstabsgetreu in 3D</p>
             <p>Bis zu vier Geräte nebeneinander, frei drehbar, mit drückbaren Tasten, Farben und Speichervarianten. Preise wahlweise inflationsbereinigt, dazu eine Vergleichstabelle mit allen Maßen und Daten.</p>
             <ul class="tags"><li>Three.js</li><li>nginx</li></ul>
-            <p class="card-links"><a class="link-arrow" href="https://iphone.oualid.de/" rel="noopener">iphone.oualid.de <span aria-hidden="true">↗</span></a></p>
+            <p class="card-links"><a class="link-arrow" href="https://iphone.oualid.de/" rel="noopener" target="_blank">iphone.oualid.de <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele 3d brettspiel monopoly threejs tests" data-reveal>
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/monopoly.webp" alt="Monopoly Entenhausen in der 3D-Ansicht" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/monopoly.webp" srcset="img/projekte/monopoly-640.webp 640w, img/projekte/monopoly.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Monopoly Entenhausen in der 3D-Ansicht" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">monopoly/</p>
             <h3 class="card-title">Monopoly</h3>
             <p class="card-lede">Monopoly in Entenhausen, mit 3D-Ansicht</p>
             <p>Vollständiges Regelwerk mit Auktionen, Bauen, Hypotheken und Knast. Die Straßen spielen auf Entenhausen an: Geldspeicher, Bruchbude, Panzerknacker-Knast. Getestet unter anderem mit 40 automatischen Bot-Partien und Invarianten-Checks.</p>
             <ul class="tags"><li>Three.js</li><li>Socket.IO</li><li>Tests</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/monopoly/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele 3d karten uno threejs" data-reveal style="--d:1">
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/uno.webp" alt="Uno No Mercy auf dem 3D-Tisch" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/uno.webp" srcset="img/projekte/uno-640.webp 640w, img/projekte/uno.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Uno No Mercy auf dem 3D-Tisch" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">uno-no-mercy/</p>
             <h3 class="card-title">Uno No Mercy</h3>
             <p class="card-lede">Alle 168 Karten, 3D-Tisch mit fliegenden Karten</p>
             <p>Uno in der gnadenlosen Variante: Ziehkarten stapeln, Wild +10, Farbroulette. Wahlweise auf einem 3D-Holztisch mit freier Kamera oder in 2D.</p>
             <ul class="tags"><li>Three.js</li><li>Socket.IO</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/uno/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele karten munchkin tests" data-reveal style="--d:2">
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/munchkin.webp" alt="Munchkin: Spielfeld mit Handkarten und Ausrüstung" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/munchkin.webp" srcset="img/projekte/munchkin-640.webp 640w, img/projekte/munchkin.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Munchkin: Spielfeld mit Handkarten und Ausrüstung" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">munchkin/</p>
             <h3 class="card-title">Munchkin</h3>
             <p class="card-lede">355 Karten, Kampf-Mathematik, 17 Testdateien</p>
             <p>Das Kartenspiel mit Grundspiel und zwei Erweiterungen. Der Server verwaltet Stapel, Phasen, Kämpfe, Stufen und Ausrüstung. Die Kartendaten habe ich aus den eigenen Spieldateien aufbereitet.</p>
             <ul class="tags"><li>Socket.IO</li><li>Tests</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/munchkin/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele karten poker" data-reveal>
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/poker.webp" alt="Poker-Tisch mit Bots, Pot und Setz-Buttons" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/poker.webp" srcset="img/projekte/poker-640.webp 640w, img/projekte/poker.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Poker-Tisch mit Bots, Pot und Setz-Buttons" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">poker/</p>
             <h3 class="card-title">Poker</h3>
             <p class="card-lede">No-Limit Texas Hold'em für 2 bis 8 Spieler</p>
             <p>Komplette Setzrunden-Logik mit serverseitiger Prüfung, Side Pots bei mehreren All-ins und Elimination-Modus, in dem Ausgeschiedene als Zuschauer weiterschauen.</p>
             <ul class="tags"><li>Socket.IO</li><li>Node.js</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/poker/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele karten wizard stiche" data-reveal style="--d:1">
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/wizard.webp" alt="Wizard: Vorhersage-Phase mit Trumpf" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/wizard.webp" srcset="img/projekte/wizard-640.webp 640w, img/projekte/wizard.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Wizard: Vorhersage-Phase mit Trumpf" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">wizard/</p>
             <h3 class="card-title">Wizard</h3>
             <p class="card-lede">Stichspiel mit Vorhersagen und Trumpf</p>
             <p>60 Karten, Rundenzahl je nach Spielerzahl, automatische Trumpf-Ermittlung und Punkteabrechnung.</p>
             <ul class="tags"><li>Socket.IO</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/wizard/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele rollen widerstand bluff" data-reveal style="--d:2">
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/widerstand.webp" alt="Der Widerstand: Abstimmung über ein Team" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/widerstand.webp" srcset="img/projekte/widerstand-640.webp 640w, img/projekte/widerstand.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Der Widerstand: Abstimmung über ein Team" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">widerstand/</p>
             <h3 class="card-title">Der Widerstand</h3>
             <p class="card-lede">Geheime Rollen, Abstimmungen, Missionen</p>
             <p>The Resistance für 5 bis 10 Spieler. Rollen werden privat aufs eigene Gerät verteilt, Spione erkennen sich beim Start gegenseitig.</p>
             <ul class="tags"><li>Socket.IO</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/widerstand/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele rollen tempel" data-reveal>
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/tempel.webp" alt="Tempel des Schreckens: Schatzkammern der Spieler" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/tempel.webp" srcset="img/projekte/tempel-640.webp 640w, img/projekte/tempel.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Tempel des Schreckens: Schatzkammern der Spieler" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">tempel-des-schreckens/</p>
             <h3 class="card-title">Tempel des Schreckens</h3>
             <p class="card-lede">Abenteurer gegen Wächterinnen, 3 bis 10 Spieler</p>
             <p>Geheime Teams, Schatzkammern und Feuerfallen, verteilt nach den Tabellen aus dem offiziellen Regelwerk.</p>
             <ul class="tags"><li>Socket.IO</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/tempel/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="spiele karten bluff lügen" data-reveal style="--d:1">
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/bluff.webp" alt="Bluff: runder Tisch mit verdeckt gelegter Karte" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/bluff.webp" srcset="img/projekte/bluff-640.webp 640w, img/projekte/bluff.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Bluff: runder Tisch mit verdeckt gelegter Karte" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">bluff/</p>
             <h3 class="card-title">Bluff</h3>
             <p class="card-lede">Lügen, das Kartenspiel, am runden Tisch</p>
             <p>Karten verdeckt legen, ehrlich oder gelogen, und im richtigen Moment „Bluff!“ rufen. Mit einstellbarem Deck und automatischer 4er-Ablage.</p>
             <ul class="tags"><li>Socket.IO</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/bluff/" rel="noopener" target="_blank">Jetzt spielen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-4" data-tags="web nginx docker hub" data-reveal style="--d:2">
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/spielehub.webp" alt="Spielehub: Startseite mit allen Spielen" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/spielehub.webp" srcset="img/projekte/spielehub-640.webp 640w, img/projekte/spielehub.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="Spielehub: Startseite mit allen Spielen" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">spielehub/</p>
             <h3 class="card-title">Spielehub</h3>
             <p class="card-lede">Eine Startseite für alle Spiele-Server</p>
             <p>Bündelt alle Spiele unter einer Adresse. nginx leitet jeden Pfad an den passenden Container weiter, inklusive WebSocket-Upgrade für die Live-Verbindungen.</p>
             <ul class="tags"><li>nginx</li><li>Docker</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://games.oualid.de/" rel="noopener" target="_blank">Alle Spiele öffnen <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
       <li class="proj span-8" data-tags="web react typescript sqlite tool" data-reveal>
         <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="img/projekte/monitoring-shop.webp" alt="Monitoring-Shop: Wochenmonitoring mit Zielen und Fortschrittsbalken, hier mit Beispieldaten" width="1280" height="800" loading="lazy" decoding="async"></figure>
+          <figure class="shot-wrap"><img class="shot" src="img/projekte/monitoring-shop.webp" srcset="img/projekte/monitoring-shop-640.webp 640w, img/projekte/monitoring-shop.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 92vw, 820px" alt="Monitoring-Shop: Wochenmonitoring mit Zielen und Fortschrittsbalken, hier mit Beispieldaten" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">monitoring-shop/ <span class="mono-label">Beispieldaten</span></p>
             <h3 class="card-title">Monitoring-Shop</h3>
@@ -426,7 +450,7 @@
             <ul class="tags"><li>3D-Druck</li><li>Bambu Lab H2S</li><li>Cosplay</li><li>Three.js</li></ul>
             <p class="card-links">
               <a class="link-arrow" href="#holster-3d">3D-Ansicht <span aria-hidden="true">↑</span></a>
-              <a class="link-arrow" href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld <span aria-hidden="true">↗</span></a>
+              <a class="link-arrow" href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener" target="_blank">MakerWorld <span aria-hidden="true">↗</span></a>
             </p>
           </div>
         </article>
@@ -467,7 +491,7 @@
       <li class="card span-3" data-reveal style="--d:2">
         <p class="card-path">~/3d-druck/</p>
         <h3 class="card-title">3D-Druck</h3>
-        <p>Vom digitalen Modell zum echten Teil: konstruieren, drucken, nachbearbeiten, finishen. Aktuell auf einem Bambu Lab H2S. Eigene Modelle veröffentliche ich auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener">MakerWorld</a>.</p>
+        <p>Vom digitalen Modell zum echten Teil: konstruieren, drucken, nachbearbeiten, finishen. Aktuell auf einem Bambu Lab H2S. Eigene Modelle veröffentliche ich auf <a href="https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster" rel="noopener" target="_blank">MakerWorld</a>.</p>
       </li>
       <li class="card span-4" data-reveal>
         <p class="card-path">~/cosplay/</p>
@@ -509,6 +533,7 @@
     <header class="sec-head cv-head" data-reveal>
       <p class="kicker"><span class="kicker-idx">05</span> Lebenslauf <span class="kicker-cmd">git log --graph</span></p>
       <h2 id="cv-title" class="sec-title">Stationen</h2>
+      <p class="cv-download"><a class="btn btn-ghost" href="lebenslauf.pdf" download="Lebenslauf_Oualid_Fauzi.pdf">Lebenslauf als PDF <span class="btn-arrow" aria-hidden="true">↓</span></a></p>
     </header>
 
     <ol class="timeline">
@@ -594,12 +619,12 @@
       </li>
       <li>
         <span class="contact-key">linkedin</span>
-        <a class="contact-val" href="https://www.linkedin.com/in/oualid-fauzi-630469218/" rel="me noopener">linkedin.com/in/oualid-fauzi</a>
+        <a class="contact-val" href="https://www.linkedin.com/in/oualid-fauzi-630469218/" rel="me noopener" target="_blank">linkedin.com/in/oualid-fauzi</a>
         <span class="contact-arrow" aria-hidden="true">↗</span>
       </li>
       <li>
         <span class="contact-key">github</span>
-        <a class="contact-val" href="https://github.com/Marmelade1357" rel="me noopener">github.com/Marmelade1357</a>
+        <a class="contact-val" href="https://github.com/Marmelade1357" rel="me noopener" target="_blank">github.com/Marmelade1357</a>
         <span class="contact-arrow" aria-hidden="true">↗</span>
       </li>
     </ul>

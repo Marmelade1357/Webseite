@@ -4,6 +4,41 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (sel) { return document.querySelector(sel); };
 
+  /* ---------- Sprache: Texte der Oberfläche (die englische Seite liegt unter /en/) ---------- */
+  var LANG = document.documentElement.lang === 'en' ? 'en' : 'de';
+  var T = {
+    de: {
+      copy: 'Kopieren', copied: 'Kopiert', hits: ' Treffer', entries: ' Einträge',
+      viewerFail: 'Der 3D-Viewer konnte nicht geladen werden.',
+      trailer: 'Trailer abspielen', trailerNote: 'Beim Abspielen wird ein Video von YouTube geladen.',
+      locale: 'de-DE',
+      help: 'Verfügbare Befehle:\n  about        Wer ich bin\n  interessen   Woran ich mich festbeiße\n  ./last-arrow Mein aktuelles Spiel\n  ls projekte  Alles, was ich gebaut habe\n  cv           Lebenslauf als git log\n  kontakt      So erreichst du mich\n  makerworld   Meine 3D-Druck-Modelle\n  neofetch, whoami, date, uptime, clear',
+      whoami: 'oualid: Einzelhandel bei Tag, Spiele, KI und 3D-Druck bei Nacht.',
+      about: 'Öffne about.md …', projects: '14 Einträge. Tipp: oben in der Liste mit grep filtern.', contact: 'Öffne kontakt.json …',
+      lastArrow: 'Starte Last Arrow …\n[WARN] Kobolde nähern sich der Schatztruhe. Unten gibt es eine Mini-Demo.',
+      makerworld: 'Öffne MakerWorld: Grav-Charge Mandalorian-Holster …', iphone: 'Öffne iphone.oualid.de …',
+      neofetch: 'Der steht doch schon oben. ;)', uptime: 'duckpi: läuft, 13 Container, 0 Kobolde in der Schatzkammer.',
+      exit: 'Hier gibt es keinen Ausgang. Nur noch mehr Projekte.', sudo: 'oualid ist nicht in der sudoers-Datei. Dieser Vorfall wird gemeldet. 🦆',
+      rm: 'Nö.', vim: 'Du kommst hier nicht mehr raus. Versuch es mit :q!', quit: 'Gerettet.',
+      notFound: ': Befehl nicht gefunden. Tippe help.'
+    },
+    en: {
+      copy: 'Copy', copied: 'Copied', hits: ' matches', entries: ' entries',
+      viewerFail: 'The 3D viewer could not be loaded.',
+      trailer: 'Play trailer', trailerNote: 'Playing loads a video from YouTube.',
+      locale: 'en-GB',
+      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           Résumé as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, clear',
+      whoami: 'oualid: retail by day, games, AI and 3D printing by night.',
+      about: 'Opening about.md …', projects: '14 entries. Tip: filter the list with grep.', contact: 'Opening contact.json …',
+      lastArrow: 'Starting Last Arrow …\n[WARN] Goblins are approaching the treasure chest. There is a mini demo below.',
+      makerworld: 'Opening MakerWorld: Grav Charge Mandalorian holster …', iphone: 'Opening iphone.oualid.de …',
+      neofetch: "It's right up there already. ;)", uptime: 'duckpi: up, 13 containers, 0 goblins in the vault.',
+      exit: 'There is no exit here. Only more projects.', sudo: 'oualid is not in the sudoers file. This incident will be reported. 🦆',
+      rm: 'Nope.', vim: "You can't get out of here. Try :q!", quit: 'Saved.',
+      notFound: ': command not found. Type help.'
+    }
+  }[LANG];
+
   /* ---------- Startsequenz ---------- */
   var bootLines = document.querySelectorAll('.boot li');
   bootLines.forEach(function (li, i) {
@@ -25,8 +60,8 @@
       var addr = (link.getAttribute('href') || '').replace(/^mailto:/, '');
       if (!addr || addr.charAt(0) === '#') return;
       var done = function () {
-        btn.classList.add('is-done'); btn.textContent = 'Kopiert';
-        setTimeout(function () { btn.classList.remove('is-done'); btn.textContent = 'Kopieren'; }, 1800);
+        btn.classList.add('is-done'); btn.textContent = T.copied;
+        setTimeout(function () { btn.classList.remove('is-done'); btn.textContent = T.copy; }, 1800);
       };
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(addr).then(done, function () {});
       else { var t = document.createElement('textarea'); t.value = addr; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch (e) {} t.remove(); }
@@ -56,7 +91,7 @@
       if (started) return;
       started = true; btn.hidden = true; status.hidden = false;
       import('./holster-viewer.js').then(function (mod) { mod.mount(v); }).catch(function () {
-        status.textContent = 'Der 3D-Viewer konnte nicht geladen werden.';
+        status.textContent = T.viewerFail;
       });
     }
     btn.addEventListener('click', start);
@@ -78,7 +113,7 @@
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'video-play';
-    btn.innerHTML = '<span><b>▶</b>Trailer abspielen<small>Beim Abspielen wird ein Video von YouTube geladen.</small></span>';
+    btn.innerHTML = '<span><b>▶</b>' + T.trailer + '<small>' + T.trailerNote + '</small></span>';
     btn.addEventListener('click', function () {
       var f = document.createElement('iframe');
       f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
@@ -104,7 +139,7 @@
       if (hit) li.classList.add('is-in');
       if (hit) n++;
     });
-    $('#grep-count').textContent = q ? n + ' Treffer' : items.length + ' Einträge';
+    $('#grep-count').textContent = q ? n + T.hits : items.length + T.entries;
     $('#grep-empty').hidden = n !== 0;
   }
   var chips = Array.prototype.slice.call(document.querySelectorAll('.chip[data-filter]'));
@@ -119,6 +154,30 @@
   if (grepInput) grep();
   var grepForm = $('.grep');
   if (grepForm) grepForm.addEventListener('submit', function (e) { e.preventDefault(); });
+
+  /* ---------- Devlog (Einträge aus devlog/eintraege.json) ---------- */
+  var devlog = $('#devlog');
+  if (devlog && window.fetch) {
+    var pick = function (v) { return v && typeof v === 'object' ? (v[LANG] || v.de || v.en || '') : (v || ''); };
+    fetch(devlog.dataset.src || 'devlog/eintraege.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (list) {
+        if (!Array.isArray(list) || !list.length) return;
+        list.sort(function (a, b) { return String(b.datum).localeCompare(String(a.datum)); });
+        var ol = $('#devlog-list');
+        list.forEach(function (e) {
+          var li = document.createElement('li'); li.className = 'devlog-item';
+          var t = document.createElement('time'); t.className = 'devlog-date'; t.dateTime = e.datum;
+          var d = new Date(e.datum + 'T12:00:00');
+          t.textContent = isNaN(d) ? e.datum : d.toLocaleDateString(T.locale, { day: 'numeric', month: 'long', year: 'numeric' });
+          var h = document.createElement('h4'); h.className = 'devlog-head'; h.textContent = pick(e.titel);
+          var p = document.createElement('p'); p.className = 'devlog-text'; p.textContent = pick(e.text);
+          li.appendChild(t); li.appendChild(h); li.appendChild(p); ol.appendChild(li);
+        });
+        devlog.hidden = false;
+      })
+      .catch(function () {});
+  }
 
   /* ---------- Systeminfo im Terminal: auf kleinen Bildschirmen eingeklappt starten ---------- */
   var sysinfo = $('.sysinfo');
@@ -210,50 +269,43 @@
 
   var commands = {
     help: function () {
-      print('Verfügbare Befehle:\n' +
-        '  about        Wer ich bin\n' +
-        '  interessen   Woran ich mich festbeiße\n' +
-        '  ./last-arrow Mein aktuelles Spiel\n' +
-        '  ls projekte  Alles, was ich gebaut habe\n' +
-        '  cv           Lebenslauf als git log\n' +
-        '  kontakt      So erreichst du mich\n' +
-        '  makerworld   Meine 3D-Druck-Modelle\n' +
-        '  neofetch, whoami, date, uptime, clear');
+      print(T.help);
     },
-    whoami: function () { print('oualid: Einzelhandel bei Tag, Spiele, KI und 3D-Druck bei Nacht.'); },
-    about: function () { print('Öffne about.md …'); go('about'); },
+    whoami: function () { print(T.whoami); },
+    about: function () { print(T.about); go('about'); },
     interessen: function () { print('spieleentwicklung/  ki/  3d-druck/  cosplay/  tinkering/  brettspiele/'); go('interessen'); },
-    projekte: function () { print('14 Einträge. Tipp: oben in der Liste mit grep filtern.'); go('projekte'); },
+    projekte: function () { print(T.projects); go('projekte'); },
     cv: function () { print('git log --graph lebenslauf'); go('cv'); },
-    kontakt: function () { print('Öffne kontakt.json …'); go('kontakt'); },
+    kontakt: function () { print(T.contact); go('kontakt'); },
     'last-arrow': function () {
-      print('Starte Last Arrow …\n[WARN] Kobolde nähern sich der Schatztruhe. Unten gibt es eine Mini-Demo.');
+      print(T.lastArrow);
       go('last-arrow');
     },
     makerworld: function () {
-      print('Öffne MakerWorld: Grav-Charge Mandalorian-Holster …');
+      print(T.makerworld);
       window.open('https://makerworld.com/de/models/2300726-grav-charge-mandalorian-holster', '_blank', 'noopener');
     },
     iphone: function () {
-      print('Öffne iphone.oualid.de …');
+      print(T.iphone);
       window.open('https://iphone.oualid.de/', '_blank', 'noopener');
     },
-    neofetch: function () { print('Der steht doch schon oben. ;)'); },
-    date: function () { print(new Date().toLocaleString('de-DE', { dateStyle: 'full', timeStyle: 'short' })); },
-    uptime: function () { print('duckpi: läuft, 13 Container, 0 Kobolde in der Schatzkammer.'); },
+    neofetch: function () { print(T.neofetch); },
+    date: function () { print(new Date().toLocaleString(T.locale, { dateStyle: 'full', timeStyle: 'short' })); },
+    uptime: function () { print(T.uptime); },
     clear: function () { out.innerHTML = ''; },
-    exit: function () { print('Hier gibt es keinen Ausgang. Nur noch mehr Projekte.'); },
-    sudo: function () { print('oualid ist nicht in der sudoers-Datei. Dieser Vorfall wird gemeldet. 🦆', 'err'); },
-    rm: function () { print('Nö.', 'err'); },
-    vim: function () { print('Du kommst hier nicht mehr raus. Versuch es mit :q!'); },
-    ':q!': function () { print('Gerettet.'); }
+    exit: function () { print(T.exit); },
+    sudo: function () { print(T.sudo, 'err'); },
+    rm: function () { print(T.rm, 'err'); },
+    vim: function () { print(T.vim); },
+    ':q!': function () { print(T.quit); }
   };
   var aliases = {
     'ls': 'projekte', 'ls projekte': 'projekte', 'ls ~/projekte': 'projekte', 'ls -la': 'projekte',
     'ls interessen': 'interessen', 'ls ~/interessen': 'interessen',
     'cat about.md': 'about', 'cat kontakt.json': 'kontakt', 'git log': 'cv', 'lebenslauf': 'cv',
     './last-arrow': 'last-arrow', 'man last-arrow': 'last-arrow', 'play': 'last-arrow',
-    '?': 'help', 'hilfe': 'help', 'contact': 'kontakt', 'projects': 'projekte'
+    '?': 'help', 'hilfe': 'help', 'contact': 'kontakt', 'projects': 'projekte', 'ls projects': 'projekte',
+    'interests': 'interessen', 'ls interests': 'interessen', 'resume': 'cv', 'cat contact.json': 'kontakt'
   };
 
   var history = [], hIdx = 0;
@@ -268,7 +320,7 @@
     if (name.indexOf('rm ') === 0) name = 'rm';
     if (name.indexOf('echo ') === 0) { print(cmd.slice(5)); return; }
     if (commands[name]) commands[name]();
-    else print('bash: ' + cmd.split(' ')[0] + ': Befehl nicht gefunden. Tippe help.', 'err');
+    else print('bash: ' + cmd.split(' ')[0] + T.notFound, 'err');
   }
 
   form.addEventListener('submit', function (e) { e.preventDefault(); run(input.value); input.value = ''; });

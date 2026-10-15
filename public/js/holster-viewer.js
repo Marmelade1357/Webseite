@@ -6,9 +6,10 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
+const EN = document.documentElement.lang === 'en';
 const PALETTES = [
-  { name: 'Silber / Rot', holster: 0xa9aeb5, body: 0xc4c9d0, dome: 0xb3262e, metal: 0.85, domeGlass: false },
-  { name: 'Braun / Schwarz', holster: 0x7a4527, body: 0x3a3d42, dome: 0xe6eef2, metal: 0.25, domeGlass: true }
+  { name: EN ? 'Silver / red' : 'Silber / Rot', holster: 0xa9aeb5, body: 0xc4c9d0, dome: 0xb3262e, metal: 0.85, domeGlass: false },
+  { name: EN ? 'Brown / black' : 'Braun / Schwarz', holster: 0x7a4527, body: 0x3a3d42, dome: 0xe6eef2, metal: 0.25, domeGlass: true }
 ];
 // Wie weit (mm) die Teile beim Zerlegen nach vorne fliegen
 const EXPLODE = { back: 28, front: 58, dome: 86 };
@@ -57,7 +58,7 @@ export function mount(root) {
     mats.dome.opacity = p.domeGlass ? 0.45 : 1;
     mats.dome.roughness = p.domeGlass ? 0.05 : 0.35;
     mats.dome.needsUpdate = true;
-    root.querySelector('[data-act=color]').textContent = 'Farbe: ' + p.name;
+    root.querySelector('[data-act=color]').textContent = (EN ? 'Colour: ' : 'Farbe: ') + p.name;
   }
 
   const parts = [];          // { obj, base, dir, kind, idx }
@@ -113,10 +114,11 @@ export function mount(root) {
     controls.maxDistance = size * 3;
     status.hidden = true;
     root.classList.add('ready');
+    root.querySelectorAll('.viewer-ui [disabled]').forEach(el => { el.disabled = false; });
     // Kleiner Auftritt: einmal zerlegt starten und zusammenbauen
     explode = 1; slider.value = 100;
     setTimeout(() => animateTo(0), reduceMotion ? 0 : 500);
-  }, undefined, () => { status.textContent = 'Das 3D-Modell konnte nicht geladen werden.'; });
+  }, undefined, () => { status.textContent = EN ? 'The 3D model could not be loaded.' : 'Das 3D-Modell konnte nicht geladen werden.'; });
 
   root.addEventListener('click', e => {
     const act = e.target.closest('[data-act]');

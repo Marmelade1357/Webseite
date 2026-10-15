@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found · Oualid Fauzi</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0f1113">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  .nf { min-height: 100vh; display: grid; place-items: center; padding: var(--space-8) var(--gutter); position: relative; isolation: isolate; overflow: hidden; }
+  .nf::before { content: ""; position: absolute; inset: -30% -20% auto auto; width: 700px; height: 700px; z-index: -1; background: radial-gradient(closest-side, rgba(79,220,133,.10), transparent 70%); }
+  .nf-box { max-width: 640px; width: 100%; }
+  .nf-code { font-size: clamp(5rem, 3rem + 12vw, 11rem); line-height: .9; letter-spacing: -0.06em; font-weight: 700; color: var(--text); }
+  .nf-code em { font-style: normal; color: var(--accent); }
+  .nf-term { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--text-2); margin: var(--space-6) 0; padding: var(--space-4) var(--space-5); border: 1px solid var(--line-strong); border-radius: var(--r-md); background: var(--surface-1); }
+  .nf-term .ps1 { margin-right: 8px; }
+  .nf-term .err { display: block; color: #ff8a80; margin-top: 6px; }
+  .nf-lead { color: var(--text-2); font-size: var(--fs-md); margin-bottom: var(--space-6); }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+</style>
+</head>
+<body>
+<main class="nf">
+  <div class="nf-box">
+    <h1 class="nf-code">4<em>0</em>4</h1>
+    <p class="nf-term"><span class="ps1">oualid@duckpi:~$</span> cd ./this-page<span class="err">bash: cd: page not found</span></p>
+    <p class="nf-lead">This address doesn't exist here (anymore). Maybe an old link or a typo.</p>
+    <div class="nf-actions">
+      <a class="btn btn-primary" href="/en/">Back to the start <span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="/en/#projekte">Projects</a>
+      <a class="btn btn-ghost" href="/en/#kontakt">Contact</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

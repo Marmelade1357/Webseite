@@ -6,6 +6,10 @@
   var canvas = document.getElementById('mini-game');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
+  var EN = document.documentElement.lang === 'en';
+  var L = EN
+    ? { wave: 'Wave ', gold: 'Gold ', chest: 'Chest ', boss: 'BOSS!', grows: 'The castle grows!', start: 'Click or tap to start', fallen: 'The chest has fallen', goblins: ' goblins · click for a new run' }
+    : { wave: 'Welle ', gold: 'Gold ', chest: 'Truhe ', boss: 'BOSS!', grows: 'Die Burg wächst!', start: 'Klicken oder tippen zum Starten', fallen: 'Die Truhe ist gefallen', goblins: ' Kobolde · klicken für neuen Run' };
   var W = 640, H = 300, GROUND = 250, GATE_X = 150;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = W * dpr; canvas.height = H * dpr;
@@ -27,7 +31,7 @@
     S.toSpawn = boss ? 1 : 3 + S.wave * 2;
     S.spawnT = 0.6;
     S.boss = boss;
-    S.banner = boss ? 'BOSS!' : 'Welle ' + S.wave;
+    S.banner = boss ? L.boss : L.wave + S.wave;
     S.bannerT = 1.4;
   }
 
@@ -58,7 +62,7 @@
       S.spawnT -= dt;
       if (S.spawnT <= 0) { spawn(); S.toSpawn--; S.spawnT = Math.max(0.35, 1.3 - S.wave * 0.07) * (0.6 + Math.random() * 0.8); }
     } else if (S.kobolds.every(function (k) { return k.dead; })) {
-      if (S.boss) { S.level = Math.min(S.level + 1, 4); S.chest = Math.min(10, S.chest + 3); S.banner = 'Die Burg wächst!'; S.bannerT = 1.6; }
+      if (S.boss) { S.level = Math.min(S.level + 1, 4); S.chest = Math.min(10, S.chest + 3); S.banner = L.grows; S.bannerT = 1.6; }
       startWave();
     }
 
@@ -175,9 +179,9 @@
   }
 
   function drawHud() {
-    text('Welle ' + Math.max(1, S.wave), 170, 24, 14, '#fff');
-    text('Gold ' + S.gold, 280, 24, 14, '#f2b84b');
-    text('Truhe ' + '■'.repeat(S.chest) + '□'.repeat(10 - S.chest), W - 12, 24, 13, '#fff', 'right');
+    text(L.wave + Math.max(1, S.wave), 170, 24, 14, '#fff');
+    text(L.gold + S.gold, 280, 24, 14, '#f2b84b');
+    text(L.chest + '■'.repeat(S.chest) + '□'.repeat(10 - S.chest), W - 12, 24, 13, '#fff', 'right');
     if (S.bannerT > 0) text(S.banner, W / 2 + 70, 120, 28, '#fff', 'center');
   }
 
@@ -193,8 +197,8 @@
     S.kobolds.forEach(drawKobold);
     drawArrows();
     if (S.state === 'play') drawHud();
-    if (S.state === 'idle') overlay('MINI LAST ARROW', 'Klicken oder tippen zum Starten');
-    if (S.state === 'over') overlay('Die Truhe ist gefallen', 'Welle ' + S.wave + ' · ' + S.kills + ' Kobolde · klicken für neuen Run');
+    if (S.state === 'idle') overlay('MINI LAST ARROW', L.start);
+    if (S.state === 'over') overlay(L.fallen, L.wave + S.wave + ' · ' + S.kills + L.goblins);
   }
 
   function loop(ts) {

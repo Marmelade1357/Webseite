@@ -32,12 +32,34 @@ Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
 
 ## Sicherheit (CSP)
 
-`nginx.conf` erlaubt Inline-Skripte nur per SHA-256-Hash (Import-Map und `js`-Klasse in `index.html`,
-Mail-Skript in `impressum.html`). Wird eines davon geändert, Hashes neu berechnen und in `nginx.conf` eintragen:
+`nginx.conf` erlaubt Inline-Skripte nur per SHA-256-Hash (Import-Map und `js`-Klasse in `index.html`
+und `en/index.html`, Mail-Skript in `impressum.html`). Wird eines davon geändert, Hashes neu berechnen und in `nginx.conf` eintragen:
 
 ```bash
-python3 -c "import re,hashlib,base64;[print(f,\"'sha256-\"+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()+\"'\") for f in ['public/index.html','public/impressum.html'] for m in re.findall(r'<script(?![^>]*src=)[^>]*>(.*?)</script>',open(f,encoding='utf-8').read(),re.S)]"
+python3 -c "import re,hashlib,base64;[print(f,\"'sha256-\"+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()+\"'\") for f in ['public/index.html','public/en/index.html','public/impressum.html'] for m in re.findall(r'<script(?![^>]*src=)[^>]*>(.*?)</script>',open(f,encoding='utf-8').read(),re.S)]"
 ```
+
+## Englische Version
+
+`public/en/index.html` ist die englische Fassung von `public/index.html`. Textänderungen bitte in **beiden**
+Dateien machen. Oberflächentexte in den Skripten (Konsole, Kopieren, Minispiel, 3D-Viewer) stehen in
+`js/main.js`, `js/mini-game.js` und `js/holster-viewer.js` und richten sich nach `<html lang>`.
+
+## Devlog
+
+Einträge für Last Arrow in `public/devlog/eintraege.json` (Anleitung: `public/devlog/LIESMICH.md`).
+Erscheinen automatisch auf beiden Sprachseiten, neueste zuerst.
+
+## Lebenslauf als PDF
+
+`public/lebenslauf.pdf` und `public/en/resume.pdf` werden aus `lebenslauf/` erzeugt
+(Anleitung: `lebenslauf/LIESMICH.md`).
+
+## Betrieb
+
+- Eigene 404-Seiten: `public/404.html` und `public/en/404.html`
+- Health-Check: `/healthz`, Docker prüft ihn jede Minute (`docker compose ps` zeigt `healthy`)
+- `robots.txt` und `sitemap.xml` liegen in `public/`
 
 ## Lokal ansehen
 

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /3d/
+Disallow: /vendor/
+
+Sitemap: https://oualid.de/sitemap.xml
