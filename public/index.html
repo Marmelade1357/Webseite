@@ -18,6 +18,20 @@
 <a class="skip" href="#about">Zum Inhalt springen</a>
 <div class="crt" aria-hidden="true"></div>
 
+<!-- tmux-artige Statusleiste als Navigation (oben fixiert) -->
+<nav class="tmux" aria-label="Hauptnavigation">
+  <span class="tmux-session">[duckpi]</span>
+  <ul>
+    <li><a href="#about">1:about</a></li>
+    <li><a href="#interessen">2:interessen</a></li>
+    <li><a href="#last-arrow">3:last-arrow</a></li>
+    <li><a href="#projekte">4:projekte</a></li>
+    <li><a href="#cv">5:cv</a></li>
+    <li><a href="#kontakt">6:kontakt</a></li>
+  </ul>
+  <span class="tmux-clock" id="clock" aria-hidden="true"></span>
+</nav>
+
 <!-- ============================ HERO ============================ -->
 <header class="hero" id="top">
   <div class="wrap">
@@ -224,6 +238,7 @@
       <li data-tags="spiele 3d würfel bluff threejs">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">liars-dice/</span><span class="pdesc">Würfel-Bluffspiel auf einer 3D-Pirateninsel</span></summary>
+          <img class="shot" src="img/projekte/liars-dice.webp" alt="Liar's Dice: 3D-Tisch auf der Pirateninsel mit Bot-Piraten" width="1280" height="800" loading="lazy" decoding="async">
           <p>Das Würfelspiel aus <i>Fluch der Karibik</i> in der Ich-Perspektive: Du sitzt am Tisch auf einer Pirateninsel mit Palmen, Lagerfeuer, Schiffen am Horizont und einem Papagei. Mit Charakter-Editor für die eigene Piratenfigur und einer Aufdeck-Animation, bei der jeder Würfel einzeln mitgezählt wird.</p>
           <p class="tags"><span>Three.js</span><span>Socket.IO</span><span>Node.js</span></p>
         </details>
@@ -231,6 +246,7 @@
       <li data-tags="spiele 3d brettspiel monopoly threejs">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">monopoly/</span><span class="pdesc">Monopoly in Entenhausen, mit 3D-Ansicht</span></summary>
+          <img class="shot" src="img/projekte/monopoly.webp" alt="Monopoly Entenhausen in der 3D-Ansicht" width="1280" height="800" loading="lazy" decoding="async">
           <p>Vollständiges Regelwerk mit Auktionen, Bauen, Hypotheken und Knast. Die Straßen spielen auf Entenhausen an: Geldspeicher, Bruchbude, Panzerknacker-Knast. Getestet unter anderem mit 40 automatischen Bot-Partien und Invarianten-Checks.</p>
           <p class="tags"><span>Three.js</span><span>Socket.IO</span><span>Tests</span></p>
         </details>
@@ -238,6 +254,7 @@
       <li data-tags="spiele 3d karten uno threejs">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">uno-no-mercy/</span><span class="pdesc">Alle 168 Karten, 3D-Tisch mit fliegenden Karten</span></summary>
+          <img class="shot" src="img/projekte/uno.webp" alt="Uno No Mercy auf dem 3D-Tisch" width="1280" height="800" loading="lazy" decoding="async">
           <p>Uno in der gnadenlosen Variante: Ziehkarten stapeln, Wild +10, Farbroulette. Wahlweise auf einem 3D-Holztisch mit freier Kamera oder in 2D.</p>
           <p class="tags"><span>Three.js</span><span>Socket.IO</span></p>
         </details>
@@ -245,6 +262,7 @@
       <li data-tags="spiele karten poker">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">poker/</span><span class="pdesc">No-Limit Texas Hold'em für 2 bis 8 Spieler</span></summary>
+          <img class="shot" src="img/projekte/poker.webp" alt="Poker-Tisch mit Bots, Pot und Setz-Buttons" width="1280" height="800" loading="lazy" decoding="async">
           <p>Komplette Setzrunden-Logik mit serverseitiger Prüfung, Side Pots bei mehreren All-ins und Elimination-Modus, in dem Ausgeschiedene als Zuschauer weiterschauen.</p>
           <p class="tags"><span>Socket.IO</span><span>Node.js</span></p>
         </details>
@@ -252,6 +270,7 @@
       <li data-tags="spiele karten munchkin tests">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">munchkin/</span><span class="pdesc">355 Karten, Kampf-Mathematik, 17 Testdateien</span></summary>
+          <img class="shot" src="img/projekte/munchkin.webp" alt="Munchkin: Spielfeld mit Handkarten und Ausrüstung" width="1280" height="800" loading="lazy" decoding="async">
           <p>Das Kartenspiel mit Grundspiel und zwei Erweiterungen. Der Server verwaltet Stapel, Phasen, Kämpfe, Stufen und Ausrüstung. Die Kartendaten habe ich aus den eigenen Spieldateien aufbereitet.</p>
           <p class="tags"><span>Socket.IO</span><span>Tests</span></p>
         </details>
@@ -259,6 +278,7 @@
       <li data-tags="spiele karten wizard stiche">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">wizard/</span><span class="pdesc">Stichspiel mit Vorhersagen und Trumpf</span></summary>
+          <img class="shot" src="img/projekte/wizard.webp" alt="Wizard: Vorhersage-Phase mit Trumpf" width="1280" height="800" loading="lazy" decoding="async">
           <p>60 Karten, Rundenzahl je nach Spielerzahl, automatische Trumpf-Ermittlung und Punkteabrechnung.</p>
           <p class="tags"><span>Socket.IO</span></p>
         </details>
@@ -266,6 +286,7 @@
       <li data-tags="spiele rollen widerstand bluff">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">widerstand/</span><span class="pdesc">Geheime Rollen, Abstimmungen, Missionen</span></summary>
+          <img class="shot" src="img/projekte/widerstand.webp" alt="Der Widerstand: Abstimmung über ein Team" width="1280" height="800" loading="lazy" decoding="async">
           <p>The Resistance für 5 bis 10 Spieler. Rollen werden privat aufs eigene Gerät verteilt, Spione erkennen sich beim Start gegenseitig.</p>
           <p class="tags"><span>Socket.IO</span></p>
         </details>
@@ -273,6 +294,7 @@
       <li data-tags="spiele rollen tempel">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">tempel-des-schreckens/</span><span class="pdesc">Abenteurer gegen Wächterinnen, 3 bis 10 Spieler</span></summary>
+          <img class="shot" src="img/projekte/tempel.webp" alt="Tempel des Schreckens: Schatzkammern der Spieler" width="1280" height="800" loading="lazy" decoding="async">
           <p>Geheime Teams, Schatzkammern und Feuerfallen, verteilt nach den Tabellen aus dem offiziellen Regelwerk.</p>
           <p class="tags"><span>Socket.IO</span></p>
         </details>
@@ -280,6 +302,7 @@
       <li data-tags="spiele karten bluff lügen">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">bluff/</span><span class="pdesc">Lügen, das Kartenspiel, am runden Tisch</span></summary>
+          <img class="shot" src="img/projekte/bluff.webp" alt="Bluff: runder Tisch mit verdeckt gelegter Karte" width="1280" height="800" loading="lazy" decoding="async">
           <p>Karten verdeckt legen, ehrlich oder gelogen, und im richtigen Moment „Bluff!“ rufen. Mit einstellbarem Deck und automatischer 4er-Ablage.</p>
           <p class="tags"><span>Socket.IO</span></p>
         </details>
@@ -293,6 +316,7 @@
       <li data-tags="web 3d iphone threejs vergleich live" class="live-item">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">iphone-vergleich/</span><span class="pdesc">Alle iPhones seit 2007 maßstabsgetreu in 3D</span></summary>
+          <img class="shot" src="img/projekte/iphone.webp" alt="iPhone-Vergleich: zwei Geräte maßstabsgetreu im 3D-Showroom" width="1280" height="800" loading="lazy" decoding="async">
           <p>Bis zu vier Geräte nebeneinander, frei drehbar, mit drückbaren Tasten, Farben und Speichervarianten. Preise wahlweise inflationsbereinigt, dazu eine Vergleichstabelle mit allen Maßen und Daten.</p>
           <p class="tags"><span>Three.js</span><span>nginx</span></p>
           <p><a class="run" href="https://iphone.oualid.de/" rel="noopener">./iphone-vergleich --open ↗</a></p>
@@ -315,6 +339,7 @@
       <li data-tags="web nginx docker hub">
         <details>
           <summary><span class="perm">drwxr-xr-x</span><span class="pname">spielehub/</span><span class="pdesc">Eine Startseite für alle Spiele-Server</span></summary>
+          <img class="shot" src="img/projekte/spielehub.webp" alt="Spielehub: Startseite mit allen Spielen" width="1280" height="800" loading="lazy" decoding="async">
           <p>Bündelt alle Spiele unter einer Adresse. nginx leitet jeden Pfad an den passenden Container weiter, inklusive WebSocket-Upgrade für die Live-Verbindungen.</p>
           <p class="tags"><span>nginx</span><span>Docker</span></p>
         </details>
@@ -434,24 +459,11 @@
 
 <footer class="foot">
   <div class="wrap">
-    <p>Läuft auf einem Raspberry Pi namens <span class="hl">duckpi</span>. Keine Cookies, kein Tracking.</p>
     <p><a href="impressum.html">Impressum &amp; Datenschutz</a></p>
   </div>
 </footer>
 
-<!-- tmux-artige Statusleiste als Navigation -->
-<nav class="tmux" aria-label="Hauptnavigation">
-  <span class="tmux-session">[duckpi]</span>
-  <ul>
-    <li><a href="#about">1:about</a></li>
-    <li><a href="#interessen">2:interessen</a></li>
-    <li><a href="#last-arrow">3:last-arrow</a></li>
-    <li><a href="#projekte">4:projekte</a></li>
-    <li><a href="#cv">5:cv</a></li>
-    <li><a href="#kontakt">6:kontakt</a></li>
-  </ul>
-  <span class="tmux-clock" id="clock" aria-hidden="true"></span>
-</nav>
+
 
 <script src="js/main.js" defer></script>
 <script src="js/mini-game.js" defer></script>
