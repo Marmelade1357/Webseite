@@ -58,85 +58,103 @@
   </div>
 </header>
 
-<!-- ============================ HERO ============================ -->
-<section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="wrap hero-grid">
-    <div class="hero-head">
-      <p class="eyebrow" data-reveal><span class="status-dot" aria-hidden="true"></span>Oualid Fauzi · Bonn</p>
-      <h1 id="hero-title" class="hero-title" data-reveal style="--d:1">I read up.<br>Then I sink my <em class="bite">teeth in.</em><span class="bite-caret" aria-hidden="true"></span></h1>
-    </div>
-    <div class="hero-copy">
-      <p class="hero-lead" data-reveal style="--d:2">I build games, 3D web apps and whatever grabs me right now: from browser card games for game night to a castle defence game in Unreal Engine. By day I work in retail sales at Telekom.</p>
-      <div class="hero-actions" data-reveal style="--d:3">
+<!-- ============================ HERO: Playground ============================ -->
+<!-- Linke Spalte: Text. Rechte Spalte: 3D-Diorama (js/playground.js lädt js/playground-world.js). -->
+<section class="hero pg-hero" id="top" aria-labelledby="hero-title">
+  <div class="pg-backdrop" aria-hidden="true"></div>
+  <div class="wrap pg-grid">
+    <div class="pg-copy">
+      <p class="eyebrow" data-reveal><span class="status-dot" aria-hidden="true"></span>Welcome to my Playground</p>
+      <h1 id="hero-title" class="pg-title" data-reveal style="--d:1">Hi, I’m Oualid.</h1>
+      <p class="pg-sub" data-reveal style="--d:2">I build things that are fun.</p>
+      <p class="pg-lead" data-reveal style="--d:3">Games in Unreal Engine and in the browser, Raspberry Pi tinkering, 3D printing and experiments with AI. I read up and then I sink my <em class="bite">teeth in.</em><span class="bite-caret" aria-hidden="true"></span> By day I work in retail sales at Telekom.</p>
+      <div class="hero-actions" data-reveal style="--d:4">
         <a class="btn btn-primary" href="#projekte">Explore projects <span class="btn-arrow" aria-hidden="true">→</span></a>
-        <a class="btn btn-ghost" href="#cv">CV</a>
+        <button type="button" class="btn btn-ghost" data-open-terminal aria-haspopup="dialog" aria-controls="terminal-dialog"><span class="btn-prompt" aria-hidden="true">&gt;_</span> Open terminal</button>
       </div>
-      <ul class="hero-meta" data-reveal style="--d:4" aria-label="At a glance">
-        <li><span class="mono-label">now</span> Last Arrow · Unreal Engine 5.8</li>
-        <li><span class="mono-label">projects</span> 14 entries</li>
-        <li><span class="mono-label">printer</span> Bambu Lab H2S</li>
-      </ul>
+      <p class="pg-cmd" data-reveal style="--d:5"><span class="ps1">oualid@duckpi:~$</span> <span class="pg-cmd-text">./start-playground.sh</span><span class="pg-cmd-caret" aria-hidden="true"></span> <span class="pg-cmd-status" aria-live="polite"></span></p>
     </div>
 
-    <!-- Terminal with neofetch and interactive console (js/main.js) -->
-    <div class="terminal" data-reveal style="--d:2">
-      <div class="terminal-bar" aria-hidden="true">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-        <span class="terminal-title">oualid@duckpi: ~</span>
+    <figure class="playground" id="playground" data-reveal style="--d:2" aria-labelledby="pg-caption">
+      <div class="pg-stage">
+        <p class="pg-loading">Building the world …</p>
+        <button type="button" class="pg-start" hidden>Load 3D world<small>approx. 170 KB</small></button>
       </div>
-      <div class="terminal-body">
-        <ol class="boot" aria-label="Boot sequence">
-          <li><span class="ok">[  OK  ]</span> Coffee brewing.</li>
-          <li><span class="ok">[  OK  ]</span> Curiosity loaded.</li>
-          <li><span class="ok">[  OK  ]</span> 14 projects mounted at <span class="hl">~/projects</span>.</li>
-          <li><span class="warn">[ WARN ]</span> Goblins spotted at the castle gate.</li>
-          <li><span class="ok">[  OK  ]</span> Bow drawn.</li>
-        </ol>
-        <details class="sysinfo" open>
-        <summary><span class="ps1">oualid@duckpi:~$</span> neofetch <span class="sysinfo-hint">system info</span></summary>
-        <div class="neofetch">
+      <ul class="pg-spots" aria-label="Objects in the 3D world">
+        <li class="pg-spot-item" data-spot="castle"><button type="button" class="pg-spot pg-spot-castle" data-spot="castle"><span class="pg-pin" aria-hidden="true">♜</span><span class="pg-tip"><b>Last Arrow</b><small>Defend the castle</small></span></button></li>
+        <li class="pg-spot-item" data-spot="pc"><button type="button" class="pg-spot pg-spot-pc" data-spot="pc"><span class="pg-pin" aria-hidden="true">&gt;_</span><span class="pg-tip"><b>Terminal</b><small>Boot the retro PC</small></span></button></li>
+        <li class="pg-spot-item" data-spot="printer"><button type="button" class="pg-spot pg-spot-printer" data-spot="printer"><span class="pg-pin" aria-hidden="true">▤</span><span class="pg-tip"><b>3D printing</b><small>See my print projects</small></span></button></li>
+        <li class="pg-spot-item" data-spot="duck"><button type="button" class="pg-spot pg-spot-duck" data-spot="duck" aria-label="Hidden rubber duck"><span class="pg-pin" aria-hidden="true">?</span><span class="pg-tip"><b>???</b><small>Something is quacking …</small></span></button></li>
+      </ul>
+      <div class="pg-hud" aria-hidden="true">
+        <span class="pg-hint">Click the objects</span>
+        <span class="pg-ach"><span class="pg-ach-icon">🏆</span> Achievements <b class="pg-ach-count">0/1</b></span>
+      </div>
+      <div class="pg-toast" role="status" aria-live="polite"></div>
+      <figcaption id="pg-caption" class="visually-hidden">Interactive 3D diorama with a miniature castle, a retro PC, a 3D printer and a hidden rubber duck.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Terminal (neofetch + Konsole, js/main.js) als Dialog: „Terminal öffnen“ oder Klick auf den Retro-PC -->
+<dialog class="term-dialog" id="terminal-dialog" aria-labelledby="terminal-title">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span>
+      <h2 class="terminal-title" id="terminal-title">oualid@duckpi: ~</h2>
+      <button type="button" class="term-close" data-close-terminal aria-label="Close terminal">×</button>
+    </div>
+    <div class="terminal-body">
+      <ol class="boot" aria-label="Boot sequence">
+        <li><span class="ok">[  OK  ]</span> Coffee brewing.</li>
+        <li><span class="ok">[  OK  ]</span> Curiosity loaded.</li>
+        <li><span class="ok">[  OK  ]</span> 14 projects mounted at <span class="hl">~/projects</span>.</li>
+        <li><span class="warn">[ WARN ]</span> Goblins spotted at the castle gate.</li>
+        <li><span class="ok">[  OK  ]</span> Bow drawn.</li>
+      </ol>
+      <details class="sysinfo" open>
+      <summary><span class="ps1">oualid@duckpi:~$</span> neofetch <span class="sysinfo-hint">system info</span></summary>
+      <div class="neofetch">
 <pre class="duck" aria-hidden="true">
       __
   ___( o)&gt;
   \ &lt;_. )
    `---'
 </pre>
-          <div class="nf-info">
-          <p class="nf-head"><span class="hl">oualid</span>@<span class="hl">duckpi</span></p>
-          <dl>
-            <div><dt>Name</dt><dd>Oualid Fauzi</dd></div>
-            <div><dt>Location</dt><dd>Bonn, Germany</dd></div>
-            <div><dt>Job</dt><dd>Retail sales @ Telekom</dd></div>
-            <div><dt>Side</dt><dd>Games, AI, 3D printing, cosplay</dd></div>
-            <div><dt>Printer</dt><dd>Bambu Lab H2S</dd></div>
-            <div><dt>Project</dt><dd>Last Arrow (Unreal Engine 5.8)</dd></div>
-            <div><dt>Stack</dt><dd>C++ · Node.js · Three.js · Socket.IO · Docker</dd></div>
-            <div><dt>Host</dt><dd>Raspberry Pi „duckpi“</dd></div>
-            <div><dt>Mode</dt><dd>teeth sunk in</dd></div>
-          </dl>
-          </div>
+        <div class="nf-info">
+        <p class="nf-head"><span class="hl">oualid</span>@<span class="hl">duckpi</span></p>
+        <dl>
+          <div><dt>Name</dt><dd>Oualid Fauzi</dd></div>
+          <div><dt>Location</dt><dd>Bonn, Germany</dd></div>
+          <div><dt>Job</dt><dd>Retail sales @ Telekom</dd></div>
+          <div><dt>Side</dt><dd>Games, AI, 3D printing, cosplay</dd></div>
+          <div><dt>Printer</dt><dd>Bambu Lab H2S</dd></div>
+          <div><dt>Project</dt><dd>Last Arrow (Unreal Engine 5.8)</dd></div>
+          <div><dt>Stack</dt><dd>C++ · Node.js · Three.js · Socket.IO · Docker</dd></div>
+          <div><dt>Host</dt><dd>Raspberry Pi „duckpi“</dd></div>
+          <div><dt>Mode</dt><dd>teeth sunk in</dd></div>
+        </dl>
         </div>
-        </details>
+      </div>
+      </details>
 
-        <div class="console" id="console" hidden>
-          <div class="console-out" id="console-out" aria-live="polite"></div>
-          <form class="console-in" id="console-form" autocomplete="off">
-            <label for="console-input"><span class="ps1">~$</span><span class="visually-hidden">Enter a command</span></label>
-            <input id="console-input" type="text" spellcheck="false" autocapitalize="off" placeholder="type help and press Enter">
-          </form>
-          <div class="console-chips" aria-label="Quick commands">
-            <button type="button" data-cmd="help">help</button>
-            <button type="button" data-cmd="ls projects">ls projects</button>
-            <button type="button" data-cmd="./last-arrow">./last-arrow</button>
-            <button type="button" data-cmd="cv">cv</button>
-            <button type="button" data-cmd="contact">contact</button>
-          </div>
+      <div class="console" id="console" hidden>
+        <div class="console-out" id="console-out" aria-live="polite"></div>
+        <form class="console-in" id="console-form" autocomplete="off">
+          <label for="console-input"><span class="ps1">~$</span><span class="visually-hidden">Enter a command</span></label>
+          <input id="console-input" type="text" spellcheck="false" autocapitalize="off" placeholder="type help and press Enter">
+        </form>
+        <div class="console-chips" aria-label="Quick commands">
+          <button type="button" data-cmd="help">help</button>
+          <button type="button" data-cmd="ls projects">ls projects</button>
+          <button type="button" data-cmd="./last-arrow">./last-arrow</button>
+          <button type="button" data-cmd="cv">cv</button>
+          <button type="button" data-cmd="contact">contact</button>
         </div>
       </div>
     </div>
   </div>
-</section>
+</dialog>
 
 <main id="inhalt">
 
@@ -630,6 +648,7 @@
 </footer>
 
 <script src="../js/main.js" defer></script>
+<script src="../js/playground.js" defer></script>
 <script src="../js/mini-game.js" defer></script>
 </body>
 </html>

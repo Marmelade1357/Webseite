@@ -12,7 +12,7 @@
       viewerFail: 'Der 3D-Viewer konnte nicht geladen werden.',
       trailer: 'Trailer abspielen', trailerNote: 'Beim Abspielen wird ein Video von YouTube geladen.',
       locale: 'de-DE',
-      help: 'Verfügbare Befehle:\n  about        Wer ich bin\n  interessen   Woran ich mich festbeiße\n  ./last-arrow Mein aktuelles Spiel\n  ls projekte  Alles, was ich gebaut habe\n  cv           Lebenslauf als git log\n  kontakt      So erreichst du mich\n  makerworld   Meine 3D-Druck-Modelle\n  neofetch, whoami, date, uptime, clear',
+      help: 'Verfügbare Befehle:\n  about        Wer ich bin\n  interessen   Woran ich mich festbeiße\n  ./last-arrow Mein aktuelles Spiel\n  ls projekte  Alles, was ich gebaut habe\n  cv           Lebenslauf als git log\n  kontakt      So erreichst du mich\n  makerworld   Meine 3D-Druck-Modelle\n  neofetch, whoami, date, uptime, achievements, clear',
       whoami: 'oualid: Einzelhandel bei Tag, Spiele, KI und 3D-Druck bei Nacht.',
       about: 'Öffne about.md …', projects: '14 Einträge. Tipp: oben in der Liste mit grep filtern.', contact: 'Öffne kontakt.json …',
       lastArrow: 'Starte Last Arrow …\n[WARN] Kobolde nähern sich der Schatztruhe. Unten gibt es eine Mini-Demo.',
@@ -20,14 +20,16 @@
       neofetch: 'Der steht doch schon oben. ;)', uptime: 'duckpi: läuft, 13 Container, 0 Kobolde in der Schatzkammer.',
       exit: 'Hier gibt es keinen Ausgang. Nur noch mehr Projekte.', sudo: 'oualid ist nicht in der sudoers-Datei. Dieser Vorfall wird gemeldet. 🦆',
       rm: 'Nö.', vim: 'Du kommst hier nicht mehr raus. Versuch es mit :q!', quit: 'Gerettet.',
-      notFound: ': Befehl nicht gefunden. Tippe help.'
+      notFound: ': Befehl nicht gefunden. Tippe help.',
+      achYes: '🏆 1/1  Quack Mode: Du hast die Ente gefunden.', achNo: '🏆 0/1  ???  Irgendwo im Playground versteckt sich etwas.',
+      quack: 'Quack. 🦆'
     },
     en: {
       copy: 'Copy', copied: 'Copied', hits: ' matches', entries: ' entries',
       viewerFail: 'The 3D viewer could not be loaded.',
       trailer: 'Play trailer', trailerNote: 'Playing loads a video from YouTube.',
       locale: 'en-GB',
-      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           CV as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, clear',
+      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           CV as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, achievements, clear',
       whoami: 'oualid: retail by day, games, AI and 3D printing by night.',
       about: 'Opening about.md …', projects: '14 entries. Tip: filter the list with grep.', contact: 'Opening contact.json …',
       lastArrow: 'Starting Last Arrow …\n[WARN] Goblins are approaching the treasure chest. There is a mini demo below.',
@@ -35,19 +37,57 @@
       neofetch: "It's right up there already. ;)", uptime: 'duckpi: up, 13 containers, 0 goblins in the vault.',
       exit: 'There is no exit here. Only more projects.', sudo: 'oualid is not in the sudoers file. This incident will be reported. 🦆',
       rm: 'Nope.', vim: "You can't get out of here. Try :q!", quit: 'Saved.',
-      notFound: ': command not found. Type help.'
+      notFound: ': command not found. Type help.',
+      achYes: '🏆 1/1  Quack Mode: you found the duck.', achNo: '🏆 0/1  ???  Something is hiding in the playground.',
+      quack: 'Quack. 🦆'
     }
   }[LANG];
 
-  /* ---------- Startsequenz ---------- */
-  var bootLines = document.querySelectorAll('.boot li');
-  bootLines.forEach(function (li, i) {
-    if (reduceMotion) { li.classList.add('on'); return; }
-    setTimeout(function () { li.classList.add('on'); }, 150 + i * 180);
-  });
+  /* ---------- Startsequenz im Terminal (läuft beim ersten Öffnen) ---------- */
+  var booted = false;
+  function boot() {
+    if (booted) return;
+    booted = true;
+    document.querySelectorAll('.boot li').forEach(function (li, i) {
+      if (reduceMotion) { li.classList.add('on'); return; }
+      setTimeout(function () { li.classList.add('on'); }, 150 + i * 180);
+    });
+  }
+
+  /* ---------- Terminal als Dialog: „Terminal öffnen“, Retro-PC im Playground ---------- */
+  var termDialog = $('#terminal-dialog'), termOpener = null;
+  function openTerminal() {
+    if (!termDialog || termDialog.open) return;
+    termOpener = document.activeElement;
+    if (termDialog.showModal) termDialog.showModal(); else termDialog.setAttribute('open', '');
+    document.documentElement.classList.add('term-open');
+    boot();
+    var inp = $('#console-input');
+    // Auf Touch-Geräten nicht gleich die Tastatur aufklappen
+    if (inp && window.matchMedia('(pointer: fine)').matches) setTimeout(function () { inp.focus(); }, 30);
+  }
+  function closeTerminal() {
+    if (!termDialog || !termDialog.open) return;
+    if (termDialog.close) termDialog.close(); else { termDialog.removeAttribute('open'); onTermClose(); }
+  }
+  function onTermClose() {
+    document.documentElement.classList.remove('term-open');
+    if (termOpener && termOpener.focus && document.contains(termOpener)) termOpener.focus();
+    termOpener = null;
+  }
+  if (termDialog) {
+    termDialog.addEventListener('close', onTermClose);
+    // Klick auf den abgedunkelten Hintergrund schließt
+    termDialog.addEventListener('click', function (e) { if (e.target === termDialog) closeTerminal(); });
+    document.querySelectorAll('[data-open-terminal]').forEach(function (b) { b.addEventListener('click', openTerminal); });
+    document.querySelectorAll('[data-close-terminal]').forEach(function (b) { b.addEventListener('click', closeTerminal); });
+    document.addEventListener('terminal:open', openTerminal);
+  } else {
+    boot();
+  }
 
   /* ---------- Hero: „fest.“ beißt einmal zu (erneut bei Hover/Antippen) ---------- */
-  var bite = $('.hero-title .bite'), caret = $('.hero-title .bite-caret');
+  var bite = $('.hero .bite'), caret = $('.hero .bite-caret');
   if (bite) {
     if (reduceMotion) { bite.classList.add('is-done'); }
     else {
@@ -279,6 +319,7 @@
     out.scrollTop = out.scrollHeight;
   }
   function go(id) {
+    closeTerminal();
     var el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   }
@@ -306,6 +347,12 @@
       window.open('https://iphone.oualid.de/', '_blank', 'noopener');
     },
     neofetch: function () { print(T.neofetch); },
+    achievements: function () {
+      var list = [];
+      try { list = JSON.parse(localStorage.getItem('oualid.achievements') || '[]'); } catch (e) {}
+      print(list.indexOf('quack-mode') !== -1 ? T.achYes : T.achNo);
+    },
+    quack: function () { print(T.quack); },
     date: function () { print(new Date().toLocaleString(T.locale, { dateStyle: 'full', timeStyle: 'short' })); },
     uptime: function () { print(T.uptime); },
     clear: function () { out.innerHTML = ''; },

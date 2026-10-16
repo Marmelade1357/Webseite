@@ -1,8 +1,10 @@
 # Webseite: oualid.de
 
 Persönliche Startseite: über mich, Interessen, Last Arrow, Projekte, Lebenslauf und Kontakt.
-Look: dunkles Editorial-Design mit Bento-Grids, Terminal mit interaktiver Konsole im Hero (`help` eintippen)
-und einem kleinen spielbaren Last-Arrow-Teaser im Browser.
+Look: dunkles Editorial-Design mit Bento-Grids. Der Hero „Welcome to my Playground“ zeigt ein interaktives
+Low-Poly-Diorama (Burg → Last Arrow, Retro-PC → Terminal, 3D-Drucker → Druckprojekte, versteckte Gummiente →
+Achievement). Das Terminal mit Konsole öffnet sich als Dialog (`help` eintippen). Dazu ein kleiner spielbarer
+Last-Arrow-Teaser im Browser.
 
 Reines HTML/CSS/JS, kein Build-Schritt, keine externen Anfragen (Schriften liegen lokal unter `public/fonts/`).
 
@@ -16,12 +18,14 @@ public/
 ├── index.html        Die Seite
 ├── impressum.html    Impressum & Datenschutz
 ├── css/style.css
-├── js/main.js        Startsequenz, Konsole, Projektfilter, Navigation, E-Mail, YouTube-Klick
+├── js/main.js        Terminal-Dialog, Konsole, Projektfilter, Navigation, E-Mail, YouTube-Klick
+├── js/playground.js  Hero-Playground: Aktionen der Objekte, Achievements, Fallback ohne WebGL
+├── js/playground-world.js  3D-Diorama (three.js, nur Grundformen), wird dynamisch nachgeladen
 ├── js/mini-game.js   Mini Last Arrow (Canvas)
 ├── js/holster-viewer.js  3D-Viewer fürs Holster
 ├── 3d/               3D-Modelle (GLB)
 ├── vendor/three/     Three.js (lokal)
-├── fonts/            Inter (Variable) + JetBrains Mono (OFL)
+├── fonts/            Inter + Space Grotesk (Variable) + JetBrains Mono (OFL)
 ├── icons/            App-Icons (Startbildschirm, Manifest)
 ├── img/              Cosplay-Foto und Projekt-Screenshots (img/projekte/)
 └── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
@@ -29,6 +33,16 @@ public/
 
 `modelle/` enthält Quelldateien (z. B. 3MF), die nicht ausgeliefert werden.
 Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
+
+## Hero-Playground
+
+- Farben des Heros (Navy, Mint, Violett, Gold) stehen als eigene Tokens in `.pg-hero` in `style.css`,
+  der Rest der Seite behält vorerst seine Farben.
+- Die 3D-Welt lädt nach dem ersten Rendern (ca. 170 KB three.js, gzip). Im Datensparmodus erst nach Klick,
+  ohne WebGL erscheinen die vier Objekte als Kacheln. Bei `prefers-reduced-motion` steht die Szene still.
+- Alle Objekte sind auch per Tastatur erreichbar (Tab auf die Hotspots, Enter).
+- Das Achievement liegt nur im Browser (`localStorage`, Schlüssel `oualid.achievements`). Zurücksetzen:
+  `localStorage.removeItem('oualid.achievements')` in der Browser-Konsole.
 
 ## Sicherheit (CSP)
 
