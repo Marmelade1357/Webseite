@@ -706,13 +706,16 @@ figcaption a { color: var(--text); }
 
 /* Breite Projektkachel: Bild links, Text rechts (FinanceDuck) */
 .card-wide { flex-direction: row; }
-.card-wide .shot-wrap { flex: 0 0 55%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
-.card-wide .shot { object-position: left top; }
+/* Bild nie beschneiden: ganz zeigen, Rest in der Hintergrundfarbe des Dashboards */
+.card-wide .shot-wrap { flex: 0 0 52%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); background: #0b0b0c; }
+.card-wide .shot { object-fit: contain; object-position: center top; }
 .card-wide .card-body { justify-content: center; }
 .card-wide .opts { margin: var(--space-4) 0 var(--space-4); }
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
   .card-wide { flex-direction: column; }
-  .card-wide .shot-wrap { flex: none; aspect-ratio: 16 / 10; border-right: 0; border-bottom: 1px solid var(--line); }
+  .card-wide .shot-wrap { flex: none; aspect-ratio: 16 / 11; border-right: 0; border-bottom: 1px solid var(--line); }
+  /* Volle Breite zeigen, unten abschneiden statt an den Seiten */
+  .card-wide .shot { object-fit: cover; object-position: center top; }
 }
 
 /* Last-Arrow-Galerie: Karte groß, Burg und Gegnerburg daneben */
