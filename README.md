@@ -37,8 +37,9 @@ Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
 
 ## Hero-Playground
 
-- Farben des Heros (Navy, Mint, Violett, Gold) stehen als eigene Tokens in `.pg-hero` in `style.css`,
-  der Rest der Seite behält vorerst seine Farben.
+- Farben (Navy, Mint, Violett, Gold) und Schriften (Space Grotesk, Inter, JetBrains Mono) gelten auf der
+  ganzen Seite, Tokens am Anfang von `style.css`.
+- Die 3D-Welt drosselt sich selbst (Schatten, Auflösung, Kobolde), wenn ein Gerät unter ca. 40 fps fällt.
 - Die 3D-Welt lädt nach dem ersten Rendern (ca. 170 KB three.js, gzip). Im Datensparmodus erst nach Klick,
   ohne WebGL erscheinen die vier Objekte als Kacheln. Bei `prefers-reduced-motion` steht die Szene still.
 - Alle Objekte sind auch per Tastatur erreichbar (Tab auf die Hotspots, Enter).
