@@ -19,6 +19,7 @@ const SCREEN_QUACK = EN
   ? ['$ ls ~/projects', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'rubber-duck/  <- found!', '>> QUACK MODE ACTIVATED']
   : ['$ ls ~/projekte', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'gummiente/  <- gefunden!', '>> QUACK MODE ACTIVATED'];
 
+const DUCK_YAW = 0.15; // Blickrichtung der Ente (0 = Dreiviertelansicht, -π/4 = frontal)
 const easeOut = t => 1 - Math.pow(1 - t, 3);
 const easeOutBack = t => { const c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
 const clamp01 = t => Math.min(1, Math.max(0, t));
@@ -298,14 +299,17 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     return { update };
   })();
 
-  // Gummiente im Burghof
+  // Gummiente auf dem Teich zwischen Drucker und PC
   const duck = (function duck() {
     const g = new THREE.Group();
-    // Sitzt im Burghof neben der Schatztruhe
-    g.position.set(-2.4, 0.05, -1.25);
-    g.scale.setScalar(0.7);
+    // Sitzt auf einem kleinen Teich zwischen 3D-Drucker und PC
+    g.position.set(2.75, 0.03, 0.05);
+    g.scale.setScalar(0.85);
+    const pond = add(world, cyl(0.5, 0.54, 0.05, 10), M(0x3f8fc4, { emissive: 0x2a6fa8, emissiveIntensity: 0.35, roughness: 0.25 }), 2.75, 0.025, 0.05);
+    pond.castShadow = false;
     const body = new THREE.Group();
-    body.rotation.y = -Math.PI / 4;
+    // Dreiviertelansicht: Schnabel zeigt schräg nach rechts vorn statt direkt in die Kamera
+    body.rotation.y = DUCK_YAW;
     g.add(body);
     const yellow = M(COL.duck, { emissive: COL.duck, emissiveIntensity: 0.05 });
     add(body, new THREE.IcosahedronGeometry(0.3, 1), yellow, 0, 0.27, 0).scale.set(1.3, 0.85, 1);
@@ -390,7 +394,10 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   enemy.position.set(-2.4, 0, 3.15);
   const dark = M(0x44465a), roofV = M(0x6a4bb0);
   const ES = 1.3;
-  [[0, -ES / 2, ES, 0.18], [0, ES / 2, ES, 0.18], [-ES / 2, 0, 0.18, ES], [ES / 2, 0, 0.18, ES]].forEach(([x, z, w, d]) => add(enemy, box(w, 0.55, d), dark, x, 0.275, z));
+  // Vorderseite (Richtung eigene Burg) mit Tor, durch das die Kobolde herauskommen
+  const GATE = 0.46, SEG = (ES - GATE) / 2;
+  [[-(GATE + SEG) / 2, -ES / 2, SEG, 0.18], [(GATE + SEG) / 2, -ES / 2, SEG, 0.18], [0, ES / 2, ES, 0.18], [-ES / 2, 0, 0.18, ES], [ES / 2, 0, 0.18, ES]].forEach(([x, z, w, d]) => add(enemy, box(w, 0.55, d), dark, x, 0.275, z));
+  add(enemy, box(GATE + 0.12, 0.14, 0.22), M(0x2f3142), 0, 0.5, -ES / 2);
   [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
     add(enemy, box(0.3, 0.8, 0.3), dark, sx * ES / 2, 0.4, sz * ES / 2);
     add(enemy, new THREE.ConeGeometry(0.26, 0.5, 4), roofV, sx * ES / 2, 1.05, sz * ES / 2).rotation.y = Math.PI / 4;
@@ -454,10 +461,10 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     ear: new THREE.ConeGeometry(0.035, 0.13, 4), eye: box(0.03, 0.03, 0.01), sack: new THREE.IcosahedronGeometry(0.06, 0)
   };
   const gobHitGeo = box(0.42, 0.55, 0.42), gobHitMat = new THREE.MeshBasicMaterial({ visible: false });
-  // Zwei Routen: aus der Kuppel über die Brücke zu je einem Burgtor
+  // Zwei Routen: aus dem Bergfried der Gegnerburg (dort unsichtbar) durchs Tor, über die Brücke zu je einem Burgtor
   const ROUTES = [
-    [[-2.4, 2.6], [-2.6, 2.0], [-2.75, 1.1], [-2.52, -0.2]],
-    [[-2.4, 2.6], [-2.1, 2.0], [-1.6, 1.1], [-1.28, -0.2]]
+    [[-2.4, 3.15], [-2.4, 2.25], [-2.6, 2.0], [-2.75, 1.1], [-2.52, -0.2]],
+    [[-2.4, 3.15], [-2.4, 2.25], [-2.1, 2.0], [-1.6, 1.1], [-1.28, -0.2]]
   ].map(pts => {
     const segs = []; let total = 0;
     for (let i = 0; i < pts.length - 1; i++) {
@@ -586,7 +593,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   Object.keys(objects).forEach(k => {
     const o = objects[k];
     const b = new THREE.Box3().setFromObject(o.group);
-    if (k === 'duck') b.expandByScalar(0.04);
+    if (k === 'duck') b.expandByScalar(0.15);
     const size = b.getSize(new THREE.Vector3()), c = b.getCenter(new THREE.Vector3());
     const hit = new THREE.Mesh(new THREE.BoxGeometry(size.x, size.y, size.z), hitMat);
     hit.position.copy(c);
@@ -840,7 +847,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
       portalGlow.scale.setScalar(1 + Math.sin(time * 3) * 0.12);
       printer.update(time);
       updateGoblins(dt);
-      // Ente wackelt im Burghof
+      // Ente schaukelt auf dem Teich
       duck.body.position.y = Math.sin(time * 2.1) * 0.03;
       duck.body.rotation.z = Math.sin(time * 1.6) * 0.06;
       // Staub steigt langsam auf
@@ -858,7 +865,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     if (duck.spinT >= 0) {
       duck.spinT += dt;
       const p = clamp01(duck.spinT / 1.1);
-      duck.body.rotation.y = -Math.PI / 4 + easeOut(p) * Math.PI * 4;
+      duck.body.rotation.y = DUCK_YAW + easeOut(p) * Math.PI * 4;
       duck.body.position.y = Math.sin(p * Math.PI) * 0.9;
       duck.crownT = clamp01((duck.spinT - 0.6) / 0.5);
       if (p >= 1 && duck.crownT >= 1) duck.spinT = -1;
