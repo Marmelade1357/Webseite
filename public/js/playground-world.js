@@ -461,10 +461,11 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     ear: new THREE.ConeGeometry(0.035, 0.13, 4), eye: box(0.03, 0.03, 0.01), sack: new THREE.IcosahedronGeometry(0.06, 0)
   };
   const gobHitGeo = box(0.42, 0.55, 0.42), gobHitMat = new THREE.MeshBasicMaterial({ visible: false });
-  // Zwei Routen: aus dem Bergfried der Gegnerburg (dort unsichtbar) durchs Tor, über die Brücke zu je einem Burgtor
+  // Zwei Routen: Start direkt vor dem Tor der Gegnerburg (von der Kamera aus hinter der Burg,
+  // also verdeckt), dann über die Brücke zu je einem Burgtor. Nie durch Mauern hindurch.
   const ROUTES = [
-    [[-2.4, 3.15], [-2.4, 2.25], [-2.6, 2.0], [-2.75, 1.1], [-2.52, -0.2]],
-    [[-2.4, 3.15], [-2.4, 2.25], [-2.1, 2.0], [-1.6, 1.1], [-1.28, -0.2]]
+    [[-2.4, 2.3], [-2.6, 2.0], [-2.75, 1.1], [-2.52, -0.2]],
+    [[-2.4, 2.3], [-2.1, 2.0], [-1.6, 1.1], [-1.28, -0.2]]
   ].map(pts => {
     const segs = []; let total = 0;
     for (let i = 0; i < pts.length - 1; i++) {
@@ -537,7 +538,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   function fireArrow() {
     // Ziel: der Kobold, der dem Tor am nächsten ist und noch keinen Pfeil abbekommt
     let best = null;
-    goblins.forEach(gb => { if (gb.alive && !gb.targeted && gb.d > 0.9 && (!best || gb.d / gb.route.total > best.d / best.route.total)) best = gb; });
+    goblins.forEach(gb => { if (gb.alive && !gb.targeted && gb.d > 1.0 && (!best || gb.d / gb.route.total > best.d / best.route.total)) best = gb; });
     const ar = arrows.find(q => q.t < 0);
     if (!best || !ar) return;
     best.targeted = true;
