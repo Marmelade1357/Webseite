@@ -12,8 +12,8 @@ const COL = {
 };
 const EN = document.documentElement.lang === 'en';
 const SCREEN_LINES = EN
-  ? ['$ ./start-playground.sh', '[ OK ] castle online', '[ OK ] printer at 220°C', '[ OK ] 14 projects loaded', '[WARN] duck not found']
-  : ['$ ./start-playground.sh', '[ OK ] Burg online', '[ OK ] Drucker: 220°C', '[ OK ] 14 Projekte geladen', '[WARN] Ente nicht gefunden'];
+  ? ['$ ./start-playground.sh', '[ OK ] castle online', '[ OK ] printer at 220°C', '[ OK ] 15 projects loaded', '[WARN] duck not found']
+  : ['$ ./start-playground.sh', '[ OK ] Burg online', '[ OK ] Drucker: 220°C', '[ OK ] 15 Projekte geladen', '[WARN] Ente nicht gefunden'];
 const SCREEN_QUACK = EN
   ? ['$ ./start-playground.sh', '[ OK ] castle online', '[ OK ] duck found', '', '>> QUACK MODE ACTIVATED']
   : ['$ ./start-playground.sh', '[ OK ] Burg online', '[ OK ] Ente gefunden', '', '>> QUACK MODE ACTIVATED'];
