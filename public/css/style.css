@@ -704,6 +704,17 @@ figcaption a { color: var(--text); }
 .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); transition-delay: calc(var(--d, 0) * 80ms); }
 .js [data-reveal].is-in { opacity: 1; transform: none; }
 
+/* Breite Projektkachel: Bild links, Text rechts (FinanceDuck) */
+.card-wide { flex-direction: row; }
+.card-wide .shot-wrap { flex: 0 0 55%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+.card-wide .shot { object-position: left top; }
+.card-wide .card-body { justify-content: center; }
+.card-wide .opts { margin: var(--space-4) 0 var(--space-4); }
+@media (max-width: 860px) {
+  .card-wide { flex-direction: column; }
+  .card-wide .shot-wrap { flex: none; aspect-ratio: 16 / 10; border-right: 0; border-bottom: 1px solid var(--line); }
+}
+
 /* Last-Arrow-Galerie: Karte groß, Burg und Gegnerburg daneben */
 .la-gallery { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: clamp(12px, 1.6vw, 20px); margin: 0 0 clamp(12px, 1.6vw, 20px); }
 .la-shot { position: relative; margin: 0; overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface-1); box-shadow: var(--shadow-card); }

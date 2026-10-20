@@ -459,7 +459,26 @@
           </div>
         </article>
       </li>
-      <li class="proj span-8 tall" data-tags="web react typescript sqlite tool" data-reveal>
+      <li class="proj span-12" data-tags="web tool finance banking dotnet csharp react typescript sqlite docker team" data-reveal>
+        <article class="card card-media card-wide">
+          <figure class="shot-wrap"><img class="shot" src="../img/projekte/finance-duck.webp" srcset="../img/projekte/finance-duck-640.webp 528w, ../img/projekte/finance-duck.webp 1056w" sizes="(max-width: 860px) 92vw, 680px" alt="FinanceDuck: monthly dashboard with income, expenses, balance, savings rate and categories including fixed costs, shown with made-up sample data" width="1056" height="1176" loading="lazy" decoding="async"></figure>
+          <div class="card-body">
+            <p class="card-path">finance-duck/ <span class="mono-label">team project · sample data</span></p>
+            <h3 class="card-title">FinanceDuck</h3>
+            <p class="card-lede">Where did my money go this month?</p>
+            <p>A finance tool I am building together with a colleague: it fetches your own bank transactions, sorts them into categories using rules you define, and shows at a glance where the money went each month. Everything runs locally in Docker, the bank data never leaves the machine.</p>
+            <dl class="opts">
+              <div><dt>--import</dt><dd>Directly through the PSD2 interface (Enable Banking) or as a CAMT.052/053 export from online banking. Duplicate bookings are detected.</dd></div>
+              <div><dt>--rules</dt><dd>Fixed mappings like “gym → leisure”. For PayPal the payment reference counts, not the payment provider. Re-sorting a booking can turn it into a rule right away.</dd></div>
+              <div><dt>--dashboard</dt><dd>Income, expenses, balance and savings rate, categories with their share, fixed costs grouped. Clicking a category shows its bookings.</dd></div>
+              <div><dt>--my-part</dt><dd>Dashboard redesign with key figures and category list, date range calendar, re-sorting right in the booking list, a fix for the CAMT.053 import and the mobile layout.</dd></div>
+            </dl>
+            <ul class="tags"><li>C# · .NET 8</li><li>React</li><li>TypeScript</li><li>SQLite</li><li>Docker</li></ul>
+            <p class="card-links"><a class="link-arrow" href="https://github.com/DuckOfJustice/FinanceAgent" rel="noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a></p>
+          </div>
+        </article>
+      </li>
+      <li class="proj span-8" data-tags="web react typescript sqlite tool" data-reveal>
         <article class="card card-media">
           <figure class="shot-wrap"><img class="shot" src="../img/projekte/monitoring-shop.webp" srcset="../img/projekte/monitoring-shop-640.webp 640w, ../img/projekte/monitoring-shop.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 92vw, 820px" alt="Monitoring Shop: weekly overview with targets and progress bars, here with sample data" width="1280" height="800" loading="lazy" decoding="async"></figure>
           <div class="card-body">
@@ -468,19 +487,6 @@
             <p class="card-lede">Sales monitoring for the team, with real-time chat</p>
             <p>Everyone enters their sales per product, on desktop in a weekly grid, on mobile with a big plus/minus stepper. Admins see everything in one place. Plus team chat and direct messages in real time.</p>
             <ul class="tags"><li>React</li><li>TypeScript</li><li>Tailwind</li><li>SQLite</li></ul>
-          </div>
-        </article>
-      </li>
-      <li class="proj span-4" data-tags="web tool finance banking dotnet csharp react typescript sqlite docker team" data-reveal style="--d:1">
-        <article class="card card-media">
-          <figure class="shot-wrap"><img class="shot" src="../img/projekte/finance-duck.webp" srcset="../img/projekte/finance-duck-640.webp 640w, ../img/projekte/finance-duck.webp 1280w" sizes="(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 400px" alt="FinanceDuck: monthly dashboard with income, expenses, savings rate and categories, shown with made-up sample data" width="1280" height="800" loading="lazy" decoding="async"></figure>
-          <div class="card-body">
-            <p class="card-path">finance-duck/ <span class="mono-label">team project · sample data</span></p>
-            <h3 class="card-title">FinanceDuck</h3>
-            <p class="card-lede">Where did my money go this month?</p>
-            <p>A local finance tool I am building together with a colleague: bank transactions come in through the PSD2 interface (Enable Banking) or as the bank’s CAMT.053 export, custom rules sort them into categories, and a monthly dashboard shows spending including fixed costs. Runs entirely locally, the bank data never leaves the machine.</p>
-            <ul class="tags"><li>C# · .NET 8</li><li>React</li><li>TypeScript</li><li>SQLite</li><li>Docker</li></ul>
-            <p class="card-links"><a class="link-arrow" href="https://github.com/DuckOfJustice/FinanceAgent" rel="noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
       </li>
