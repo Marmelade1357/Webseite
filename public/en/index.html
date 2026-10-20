@@ -448,12 +448,12 @@
             <p class="card-path">finance-duck/ <span class="mono-label">team project · sample data</span></p>
             <h3 class="card-title">FinanceDuck</h3>
             <p class="card-lede">Where did my money go this month?</p>
-            <p>A finance tool I am building together with a colleague: it fetches your own bank transactions, sorts them into categories using rules you define, and shows at a glance where the money went each month. Everything runs locally in Docker, the bank data never leaves the machine.</p>
+            <p>A finance tool I am building together with a colleague: it fetches your own bank transactions, sorts them into categories using rules you define, and shows at a glance where the money went each month. Everything is self-hosted in Docker, the bank data never ends up with a third-party cloud service.</p>
             <dl class="opts">
               <div><dt>--import</dt><dd>Directly through the PSD2 interface (Enable Banking) or as a CAMT.052/053 export from online banking. Duplicate bookings are detected.</dd></div>
               <div><dt>--rules</dt><dd>Fixed mappings like “gym → leisure”. For PayPal the payment reference counts, not the payment provider. Re-sorting a booking can turn it into a rule right away.</dd></div>
               <div><dt>--dashboard</dt><dd>Income, expenses, balance and savings rate, categories with their share, fixed costs grouped. Clicking a category shows its bookings.</dd></div>
-              <div><dt>--my-part</dt><dd>Dashboard redesign with key figures and category list, date range calendar, re-sorting right in the booking list, a fix for the CAMT.053 import and the mobile layout.</dd></div>
+              <div><dt>--my-part</dt><dd>Dashboard redesign with key figures and category list, date range calendar, re-sorting right in the booking list, a fix for the CAMT.053 import, the mobile layout and the hosting: FinanceDuck runs on my server.</dd></div>
             </dl>
             <ul class="tags"><li>C# · .NET 8</li><li>React</li><li>TypeScript</li><li>SQLite</li><li>Docker</li></ul>
             <p class="card-links"><a class="link-arrow" href="https://github.com/DuckOfJustice/FinanceAgent" rel="noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a></p>
