@@ -2,7 +2,7 @@
 
 Persönliche Startseite: über mich, Interessen, Last Arrow, Projekte, Lebenslauf und Kontakt.
 Look: dunkles Editorial-Design mit Bento-Grids. Der Hero „Welcome to my Playground“ zeigt ein interaktives
-Low-Poly-Diorama (Burg → Last Arrow, Retro-PC → Terminal, 3D-Drucker → Druckprojekte, versteckte Gummiente →
+Low-Poly-Diorama (Burg → Last Arrow, Retro-PC → alle Projekte, 3D-Drucker → Druckprojekte, versteckte Gummiente →
 Achievement). Das Terminal mit Konsole öffnet sich als Dialog (`help` eintippen). Dazu ein kleiner spielbarer
 Last-Arrow-Teaser im Browser.
 

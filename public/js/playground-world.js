@@ -11,12 +11,13 @@ const COL = {
   stone: 0x5b6590, stoneDark: 0x454f7a, beige: 0xd9d1bf, duck: 0xffd447, beak: 0xff9f43
 };
 const EN = document.documentElement.lang === 'en';
+// Bildschirm des Retro-PCs: listet die Projekte (Klick auf den PC führt zur Projektliste)
 const SCREEN_LINES = EN
-  ? ['$ ./start-playground.sh', '[ OK ] castle online', '[ OK ] printer at 220°C', '[ OK ] 15 projects loaded', '[WARN] duck not found']
-  : ['$ ./start-playground.sh', '[ OK ] Burg online', '[ OK ] Drucker: 220°C', '[ OK ] 15 Projekte geladen', '[WARN] Ente nicht gefunden'];
+  ? ['$ ls ~/projects', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'monopoly/  poker/  wizard/', '15 entries']
+  : ['$ ls ~/projekte', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'monopoly/  poker/  wizard/', '15 Einträge'];
 const SCREEN_QUACK = EN
-  ? ['$ ./start-playground.sh', '[ OK ] castle online', '[ OK ] duck found', '', '>> QUACK MODE ACTIVATED']
-  : ['$ ./start-playground.sh', '[ OK ] Burg online', '[ OK ] Ente gefunden', '', '>> QUACK MODE ACTIVATED'];
+  ? ['$ ls ~/projects', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'rubber-duck/  <- found!', '>> QUACK MODE ACTIVATED']
+  : ['$ ls ~/projekte', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'gummiente/  <- gefunden!', '>> QUACK MODE ACTIVATED'];
 
 const easeOut = t => 1 - Math.pow(1 - t, 3);
 const easeOutBack = t => { const c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };

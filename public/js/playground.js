@@ -68,17 +68,17 @@
   // Kurz warten, damit man den Effekt am Objekt noch sieht
   function later(fn) { setTimeout(fn, reduceMotion || !world ? 0 : 380); }
 
+  // Projektliste filtern (leer = alle Projekte), nutzt den bestehenden grep-Filter
+  function filterProjects(q) {
+    var grep = document.getElementById('grep-input');
+    if (grep) { grep.value = q; grep.dispatchEvent(new Event('input')); }
+  }
+
   var duckClicks = 0;
   var actions = {
     castle: function () { later(function () { go('last-arrow'); }); },
-    pc: function () { later(function () { document.dispatchEvent(new CustomEvent('terminal:open')); }); },
-    printer: function () {
-      later(function () {
-        var grep = document.getElementById('grep-input');
-        if (grep) { grep.value = '3d-druck'; grep.dispatchEvent(new Event('input')); }
-        go('projekte');
-      });
-    },
+    pc: function () { later(function () { filterProjects(''); go('projekte'); }); },
+    printer: function () { later(function () { filterProjects('3d-druck'); go('projekte'); }); },
     duck: function () {
       if (hasAch('quack-mode')) { showToast(L.quackAgain, '', 'small'); return; }
       duckClicks++;
