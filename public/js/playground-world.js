@@ -298,12 +298,12 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     return { update };
   })();
 
-  // Gummiente am Teich hinter der Burg
+  // Gummiente im Burghof
   const duck = (function duck() {
     const g = new THREE.Group();
-    g.position.set(-4.1, 0, -2.55);
-    const pond = add(world, cyl(0.38, 0.42, 0.06, 9), M(0x3f8fc4, { emissive: 0x2a6fa8, emissiveIntensity: 0.35, roughness: 0.25 }), -4.1, 0.03, -2.55);
-    pond.castShadow = false;
+    // Sitzt im Burghof neben der Schatztruhe
+    g.position.set(-2.4, 0.05, -1.25);
+    g.scale.setScalar(0.7);
     const body = new THREE.Group();
     body.rotation.y = -Math.PI / 4;
     g.add(body);
@@ -445,6 +445,140 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   lamp.position.set(-0.85, 1.25, 0.45);
   world.add(lamp);
 
+  /* ---------- Kobolde und Pfeile: das Spielgefühl von Last Arrow im Kleinen ----------
+     Kobolde kommen aus der gegnerischen Burg, laufen über Wege und Brücke zu den Toren.
+     Die Türme schießen Pfeile, und man kann Kobolde selbst anklicken. */
+  const gobMat = M(0x72c04c), gobDark = M(0x4f8f36), gobEye = M(0xffe066, { emissive: 0xffe066, emissiveIntensity: 1.2 });
+  const gobGeo = {
+    body: cyl(0.08, 0.11, 0.2, 6), head: new THREE.IcosahedronGeometry(0.1, 0),
+    ear: new THREE.ConeGeometry(0.035, 0.13, 4), eye: box(0.03, 0.03, 0.01), sack: new THREE.IcosahedronGeometry(0.06, 0)
+  };
+  const gobHitGeo = box(0.42, 0.55, 0.42), gobHitMat = new THREE.MeshBasicMaterial({ visible: false });
+  // Zwei Routen: aus der Kuppel über die Brücke zu je einem Burgtor
+  const ROUTES = [
+    [[-2.4, 2.6], [-2.6, 2.0], [-2.75, 1.1], [-2.52, -0.2]],
+    [[-2.4, 2.6], [-2.1, 2.0], [-1.6, 1.1], [-1.28, -0.2]]
+  ].map(pts => {
+    const segs = []; let total = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [x1, z1] = pts[i], [x2, z2] = pts[i + 1], len = Math.hypot(x2 - x1, z2 - z1);
+      segs.push({ x1, z1, x2, z2, len, start: total }); total += len;
+    }
+    return { segs, total };
+  });
+  function routePos(route, d, out) {
+    const sg = route.segs.find(q => d <= q.start + q.len) || route.segs[route.segs.length - 1];
+    const t = clamp01((d - sg.start) / sg.len);
+    out.set(sg.x1 + (sg.x2 - sg.x1) * t, 0, sg.z1 + (sg.z2 - sg.z1) * t);
+    // Über die Brücke ein Stück höher laufen
+    if (out.z > 1.12 && out.z < 1.72 && out.x > -2.85 && out.x < -1.55) out.y = 0.1;
+    return Math.atan2(sg.x2 - sg.x1, sg.z2 - sg.z1);
+  }
+  const goblins = [], MAX_GOB = 7, GS = 1.8; // GS: Größe der Kobolde
+  function makeGoblin() {
+    const g = new THREE.Group();
+    add(g, gobGeo.body, gobMat, 0, 0.1, 0);
+    add(g, gobGeo.head, gobMat, 0, 0.29, 0.01);
+    add(g, gobGeo.ear, gobDark, 0.1, 0.32, 0).rotation.z = -1.2;
+    add(g, gobGeo.ear, gobDark, -0.1, 0.32, 0).rotation.z = 1.2;
+    add(g, gobGeo.eye, gobEye, 0.035, 0.31, 0.09);
+    add(g, gobGeo.eye, gobEye, -0.035, 0.31, 0.09);
+    add(g, gobGeo.sack, M(0x9a7a4e), 0, 0.16, -0.1); // leerer Beutel für den Schatz
+    const hit = new THREE.Mesh(gobHitGeo, gobHitMat);
+    hit.position.y = 0.25;
+    g.add(hit);
+    world.add(g);
+    const gob = { g, hit, route: ROUTES[0], d: 0, alive: false, dieT: -1, popT: 0, phase: 0, targeted: false };
+    hit.userData.goblin = gob;
+    return gob;
+  }
+  for (let i = 0; i < MAX_GOB; i++) { const gb = makeGoblin(); gb.g.visible = false; goblins.push(gb); }
+  const gobHits = goblins.map(gb => gb.hit);
+  const tmpG = new THREE.Vector3();
+  function spawnGoblin(d) {
+    const gb = goblins.find(q => !q.alive && q.dieT < 0);
+    if (!gb) return null;
+    gb.route = ROUTES[Math.random() < 0.5 ? 0 : 1];
+    gb.d = d || 0; gb.alive = true; gb.dieT = -1; gb.popT = d ? 1 : 0; gb.targeted = false;
+    gb.phase = Math.random() * 6;
+    gb.g.visible = true;
+    gb.g.scale.setScalar(d ? GS : 0.001);
+    gb.g.rotation.set(0, routePos(gb.route, gb.d, gb.g.position), 0);
+    return gb;
+  }
+  function killGoblin(gb, colors) {
+    if (!gb.alive) return;
+    gb.alive = false; gb.dieT = 0;
+    spawn(tmpG.copy(gb.g.position).setY(gb.g.position.y + 0.4), colors || [0x72c04c, 0xffe066], 14, 1.8);
+    dirty = true;
+  }
+
+  // Pfeile von den beiden vorderen Ecktürmen
+  const arrowGeo = cyl(0.012, 0.012, 0.36, 4); arrowGeo.rotateX(Math.PI / 2);
+  const tipGeo = new THREE.ConeGeometry(0.03, 0.08, 4); tipGeo.rotateX(Math.PI / 2); tipGeo.translate(0, 0, 0.2);
+  const arrowMat = M(0xd8c39a), tipMat = M(0xcfd6e6, { metalness: 0.5, roughness: 0.4 }), fletchMat = M(0xf07a3a);
+  const fletchGeo = box(0.06, 0.005, 0.07); fletchGeo.translate(0, 0, -0.16);
+  const TOWERS = [new THREE.Vector3(-3.5, 1.75, -0.55), new THREE.Vector3(-0.3, 1.75, -0.55)];
+  const arrows = [];
+  for (let i = 0; i < 6; i++) {
+    const a = new THREE.Group();
+    a.add(new THREE.Mesh(arrowGeo, arrowMat), new THREE.Mesh(tipGeo, tipMat), new THREE.Mesh(fletchGeo, fletchMat));
+    a.visible = false;
+    world.add(a);
+    arrows.push({ a, t: -1, from: new THREE.Vector3(), target: null, prev: new THREE.Vector3() });
+  }
+  function fireArrow() {
+    // Ziel: der Kobold, der dem Tor am nächsten ist und noch keinen Pfeil abbekommt
+    let best = null;
+    goblins.forEach(gb => { if (gb.alive && !gb.targeted && gb.d > 0.9 && (!best || gb.d / gb.route.total > best.d / best.route.total)) best = gb; });
+    const ar = arrows.find(q => q.t < 0);
+    if (!best || !ar) return;
+    best.targeted = true;
+    const tower = TOWERS[Math.abs(best.g.position.x - TOWERS[0].x) < Math.abs(best.g.position.x - TOWERS[1].x) ? 0 : 1];
+    ar.from.copy(tower); ar.prev.copy(tower); ar.target = best; ar.t = 0; ar.a.visible = true; ar.a.position.copy(tower);
+  }
+  let spawnIn = 0.8, fireIn = 1.4, kills = 0;
+  const hint = root.querySelector('.pg-hint');
+  function updateGoblins(dt) {
+    spawnIn -= dt;
+    if (spawnIn <= 0 && introT > 1.2) { spawnGoblin(); spawnIn = 1.3 + Math.random() * 1.4; }
+    goblins.forEach(gb => {
+      if (gb.alive) {
+        gb.d += dt * 0.42;
+        if (gb.popT < 1) { gb.popT = Math.min(1, gb.popT + dt * 3); gb.g.scale.setScalar(Math.max(0.001, GS * easeOutBack(gb.popT))); }
+        const yaw = routePos(gb.route, gb.d, gb.g.position);
+        gb.g.rotation.y = yaw;
+        gb.g.position.y += Math.abs(Math.sin(time * 14 + gb.phase)) * 0.035;
+        gb.g.rotation.z = Math.sin(time * 14 + gb.phase) * 0.12;
+        // Am Tor angekommen: kurzer Funkenregen, dann weg
+        if (gb.d >= gb.route.total) { killGoblin(gb, [0xf07a3a, COL.gold]); objects.castle.pokeT = 0; }
+      } else if (gb.dieT >= 0) {
+        gb.dieT += dt;
+        const p = clamp01(gb.dieT / 0.25);
+        gb.g.scale.setScalar(Math.max(0.001, GS * (1 - p)));
+        if (p >= 1) { gb.dieT = -1; gb.g.visible = false; }
+      }
+    });
+    fireIn -= dt;
+    if (fireIn <= 0) { fireArrow(); fireIn = 0.9 + Math.random() * 0.5; }
+    arrows.forEach(ar => {
+      if (ar.t < 0) return;
+      ar.t += dt / 0.7;
+      const tgt = ar.target, p = clamp01(ar.t);
+      tmpG.copy(tgt.g.position).setY(tgt.g.position.y + 0.4);
+      ar.a.position.lerpVectors(ar.from, tmpG, p);
+      ar.a.position.y += Math.sin(p * Math.PI) * 0.9;
+      if (ar.a.position.distanceToSquared(ar.prev) > 1e-6) ar.a.lookAt(ar.a.position.clone().multiplyScalar(2).sub(ar.prev));
+      ar.prev.copy(ar.a.position);
+      if (p >= 1) {
+        ar.t = -1; ar.a.visible = false;
+        if (tgt.alive) killGoblin(tgt); else tgt.targeted = false;
+      }
+    });
+  }
+  // Bei reduzierter Bewegung: zwei Kobolde stehen still auf dem Weg
+  if (reduceMotion) { spawnGoblin(2.2); spawnGoblin(1.4); }
+
   /* ---------- Trefferboxen und Hover-Ringe ---------- */
   world.updateMatrixWorld(true);
   const hitMat = new THREE.MeshBasicMaterial({ visible: false });
@@ -452,13 +586,14 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   Object.keys(objects).forEach(k => {
     const o = objects[k];
     const b = new THREE.Box3().setFromObject(o.group);
-    if (k === 'duck') b.expandByScalar(0.25);
+    if (k === 'duck') b.expandByScalar(0.04);
     const size = b.getSize(new THREE.Vector3()), c = b.getCenter(new THREE.Vector3());
     const hit = new THREE.Mesh(new THREE.BoxGeometry(size.x, size.y, size.z), hitMat);
     hit.position.copy(c);
     hit.userData.key = k;
     world.add(hit);
     hits.push(hit);
+    o.hit = hit;
     const ring = new THREE.Mesh(new THREE.RingGeometry(0.92, 1, 40),
       new THREE.MeshBasicMaterial({ color: k === 'duck' ? COL.gold : COL.mint, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
     ring.rotation.x = -Math.PI / 2;
@@ -585,6 +720,10 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     const r = renderer.domElement.getBoundingClientRect();
     ndc.set((clientX - r.left) / r.width * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1);
     raycaster.setFromCamera(ndc, camera);
+    // Reihenfolge: Kobolde, dann die Ente im Burghof, dann die großen Objekte
+    const g = raycaster.intersectObjects(gobHits.filter(h => h.userData.goblin.alive), false)[0];
+    if (g) return g.object.userData.goblin;
+    if (raycaster.intersectObject(objects.duck.hit, false).length) return 'duck';
     const hit = raycaster.intersectObjects(hits, false)[0];
     return hit ? hit.object.userData.key : null;
   }
@@ -596,6 +735,13 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   renderer.domElement.addEventListener('pointerleave', () => { lastPointer = null; src.canvas = null; refreshActive(); });
   renderer.domElement.addEventListener('click', e => {
     const k = pick(e.clientX, e.clientY);
+    if (k && typeof k === 'object') {
+      // Kobold selbst erwischt
+      killGoblin(k, [0x72c04c, 0xffe066, 0xffffff]);
+      kills++;
+      if (hint) hint.textContent = (EN ? 'Goblins zapped: ' : 'Kobolde erwischt: ') + kills;
+      return;
+    }
     if (k && spots[k]) spots[k].querySelector('button').click();
   });
 
@@ -637,7 +783,10 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     if (pickPending && lastPointer) {
       pickPending = false;
       const k = pick(lastPointer.clientX, lastPointer.clientY);
-      if (k !== src.canvas) { src.canvas = k; refreshActive(); }
+      const isGob = k && typeof k === 'object';
+      renderer.domElement.classList.toggle('is-aiming', isGob);
+      const key = isGob ? null : k;
+      if (key !== src.canvas) { src.canvas = key; refreshActive(); }
     }
 
     // Intro
@@ -690,7 +839,8 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
       domeMat.opacity = 0.5 + Math.sin(time * 1.6) * 0.15;
       portalGlow.scale.setScalar(1 + Math.sin(time * 3) * 0.12);
       printer.update(time);
-      // Ente schaukelt auf dem Teich
+      updateGoblins(dt);
+      // Ente wackelt im Burghof
       duck.body.position.y = Math.sin(time * 2.1) * 0.03;
       duck.body.rotation.z = Math.sin(time * 1.6) * 0.06;
       // Staub steigt langsam auf
