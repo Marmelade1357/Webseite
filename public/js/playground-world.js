@@ -72,16 +72,16 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
 
   /* ---------- Insel ---------- */
   const SIZE = 9;
-  const top = add(world, box(SIZE, 0.3, SIZE), M(0x1b2238), 0, -0.15, 0);
+  const top = add(world, box(SIZE, 0.3, SIZE), M(0x3d7348), 0, -0.15, 0);
   top.castShadow = false;
   // Schwebender Felssockel: Pyramidenstumpf mit vier Seiten
-  const rock = add(world, cyl(SIZE / Math.SQRT2, 2.4, 2.4, 4), M(0x1a2140), 0, -1.5, 0);
+  const rock = add(world, cyl(SIZE / Math.SQRT2, 2.4, 2.4, 4), M(0x5a4a6e), 0, -1.5, 0);
   rock.rotation.y = Math.PI / 4;
   rock.castShadow = false;
   // Raster und leuchtende Kante: Spielbrett-Gefühl
   const grid = new THREE.GridHelper(SIZE, 9, COL.mint, COL.mint);
   grid.material.transparent = true;
-  grid.material.opacity = 0.07;
+  grid.material.opacity = 0.05;
   grid.position.y = 0.005;
   world.add(grid);
   const edge = new THREE.LineSegments(new THREE.EdgesGeometry(box(SIZE, 0.3, SIZE)),
@@ -97,58 +97,78 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     objects[keyName] = { group, base: group.position.clone(), glow, anchor, radius, k: 0, target: 0, pokeT: -1 };
   }
 
-  // Burg im Tower-Defense-Stil
+  // Eigene Burg aus Last Arrow: Sandstein, runde Ecktürme mit orangen Spitzdächern,
+  // zwei Holztore, Häuser mit roten Dächern und die Schatztruhe im Hof
   (function castle() {
     const g = new THREE.Group();
     g.position.set(-1.9, 0, -1.75);
-    const stone = M(COL.stone), stoneDark = M(COL.stoneDark);
-    const roof = glowMat(COL.violet), band = glowMat(COL.gold), win = glowMat(COL.gold);
+    const sand = M(0xd8b88a), sandDark = M(0xbf9a6c), wood = M(0x7a4a2c), timber = M(0x8a4b2e);
+    const roof = glowMat(0xf08a4b), redRoof = glowMat(0xd9502f), win = glowMat(COL.gold), flagMat = glowMat(0xf07a3a);
     win.emissiveIntensity = 0.7;
-    const S = 3, T = 0.28, H = 0.95;
-    add(g, box(S, 0.05, S), M(0x252e50), 0, 0.025, 0);
-    [[0, -S / 2, S, T], [0, S / 2, S, T], [-S / 2, 0, T, S], [S / 2, 0, T, S]].forEach(([x, z, w, d]) => {
-      add(g, box(w, H, d), stone, x, H / 2, z);
-      const along = w > d, n = 7;
+    const W = 3.2, D = 2.4, T = 0.26, H = 0.78;
+    add(g, box(W, 0.05, D), M(0x4f8a4a), 0, 0.025, 0);
+    // Mauern mit Zinnen
+    [[0, -D / 2, W, T], [0, D / 2, W, T], [-W / 2, 0, T, D], [W / 2, 0, T, D]].forEach(([x, z, w, d]) => {
+      add(g, box(w, H, d), sand, x, H / 2, z);
+      const along = w > d, len = along ? w : d, n = Math.round(len / 0.22);
       for (let i = 0; i < n; i += 2) {
-        const o = -S / 2 + (i + 0.5) * S / n;
-        add(g, box(along ? S / n : T, 0.2, along ? T : S / n), stone, along ? o : x, H + 0.1, along ? z : o);
+        const o = -len / 2 + (i + 0.5) * len / n;
+        add(g, box(along ? len / n : T, 0.16, along ? T : len / n), sand, along ? o : x, H + 0.08, along ? z : o);
       }
     });
-    // Tor auf der Vorderseite
-    add(g, box(0.62, 0.6, 0.05), M(0x5a3d33), 0, 0.3, S / 2 + T / 2 + 0.005);
-    add(g, box(0.78, 0.1, 0.07), band, 0, 0.66, S / 2 + T / 2 + 0.01);
-    // Ecktürme: Fenster, Lichtband und Dach leuchten bei Hover
-    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
-      const x = sx * S / 2, z = sz * S / 2;
-      add(g, cyl(0.42, 0.5, 1.6), stone, x, 0.8, z);
-      add(g, cyl(0.47, 0.47, 0.12), band, x, 1.5, z);
-      add(g, new THREE.ConeGeometry(0.6, 0.85, 8), roof, x, 2.0, z);
-      const w = add(g, box(0.12, 0.22, 0.04), win, x + 0.31, 1.05, z + 0.31);
-      w.rotation.y = Math.PI / 4;
+    // Torhäuser mit Holztoren auf der Vorderseite
+    [-0.62, 0.62].forEach(x => {
+      add(g, box(0.62, 1.0, 0.4), sandDark, x, 0.5, D / 2);
+      add(g, box(0.44, 0.58, 0.04), wood, x, 0.29, D / 2 + 0.21);
+      add(g, box(0.48, 0.05, 0.05), M(0x4a2e1c), x, 0.42, D / 2 + 0.23);
+      add(g, box(0.48, 0.05, 0.05), M(0x4a2e1c), x, 0.18, D / 2 + 0.23);
     });
-    // Bergfried mit Fahne
-    add(g, box(1.1, 1.8, 1.1), stoneDark, 0, 0.9, 0);
-    const keepRoof = add(g, new THREE.ConeGeometry(0.95, 0.9, 4), roof, 0, 2.25, 0);
-    keepRoof.rotation.y = Math.PI / 4;
-    const kw = add(g, box(0.16, 0.26, 0.04), win, 0.3, 1.3, 0.56);
-    kw.castShadow = false;
-    add(g, cyl(0.025, 0.025, 0.8, 5), M(0x9aa3c7), 0, 3.0, 0);
-    const flagGeo = box(0.42, 0.24, 0.02);
-    flagGeo.translate(0.21, 0, 0); // Drehpunkt am Mast, damit die Fahne weht
-    const flag = add(g, flagGeo, M(COL.mint, { emissive: COL.mint, emissiveIntensity: 0.25 }), 0.01, 3.25, 0);
+    // Runde Ecktürme mit Türmchen, Spitzdach und Fahne
+    let waving = null;
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz], i) => {
+      const x = sx * W / 2, z = sz * D / 2;
+      add(g, cyl(0.46, 0.54, 1.1, 10), sand, x, 0.55, z);
+      add(g, cyl(0.52, 0.52, 0.14, 10), sandDark, x, 1.17, z);
+      add(g, cyl(0.22, 0.24, 0.5, 8), sand, x, 1.45, z);
+      add(g, new THREE.ConeGeometry(0.32, 0.55, 8), roof, x, 1.97, z);
+      const w = add(g, box(0.08, 0.2, 0.04), win, x + 0.36, 0.7, z + 0.36);
+      w.rotation.y = Math.PI / 4;
+      add(g, cyl(0.015, 0.015, 0.4, 4), M(0x5a4636), x, 2.35, z);
+      const fg = box(0.24, 0.14, 0.015);
+      fg.translate(0.12, 0, 0); // Drehpunkt am Mast, damit die Fahne weht
+      const f = add(g, fg, flagMat, x + 0.01, 2.46, z);
+      if (i === 3) waving = f;
+    });
+    // Häuser mit roten Dächern
+    [[-0.75, -0.45, 0], [0.8, 0.2, Math.PI / 2]].forEach(([x, z, r]) => {
+      const h = new THREE.Group();
+      h.position.set(x, 0, z);
+      h.rotation.y = r;
+      add(h, box(0.95, 0.5, 0.62), timber, 0, 0.3, 0);
+      const rf = add(h, new THREE.ConeGeometry(0.62, 0.45, 4), redRoof, 0, 0.77, 0);
+      rf.rotation.y = Math.PI / 4;
+      rf.scale.set(1.25, 1, 0.85);
+      const hw = add(h, box(0.16, 0.14, 0.02), win, 0.22, 0.32, 0.32);
+      hw.castShadow = false;
+      g.add(h);
+    });
+    // Schatztruhe
+    add(g, box(0.24, 0.14, 0.16), wood, 0.05, 0.12, 0.45);
+    add(g, box(0.26, 0.05, 0.18), M(COL.gold, { emissive: COL.gold, emissiveIntensity: 0.4 }), 0.05, 0.21, 0.45);
     const light = new THREE.PointLight(COL.gold, 0, 6, 2);
-    light.position.set(0, 2.4, 0.8);
+    light.position.set(0, 1.8, 1.2);
     g.add(light);
     register('castle', g, {
-      anchor: new THREE.Vector3(0, 3.5, 0), radius: 2.4,
+      anchor: new THREE.Vector3(0, 2.7, 0), radius: 2.3,
       glow: k => {
-        band.emissiveIntensity = 0.15 + k * 2.6;
+        roof.emissiveIntensity = k * 0.55;
+        redRoof.emissiveIntensity = k * 0.35;
+        flagMat.emissiveIntensity = k * 0.6;
         win.emissiveIntensity = 0.7 + k * 2.2;
-        roof.emissiveIntensity = k * 0.45;
         light.intensity = k * 14;
       }
     });
-    objects.castle.flag = flag;
+    objects.castle.flag = waving;
   })();
 
   // Retro-PC mit animiertem Terminal
@@ -280,8 +300,8 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   // Gummiente am Teich hinter der Burg
   const duck = (function duck() {
     const g = new THREE.Group();
-    g.position.set(-3.8, 0, -0.15);
-    const pond = add(world, cyl(0.62, 0.66, 0.06, 9), M(0x2b3a78, { emissive: COL.violet, emissiveIntensity: 0.12, roughness: 0.3 }), -3.8, 0.03, -0.15);
+    g.position.set(-4.1, 0, -2.55);
+    const pond = add(world, cyl(0.38, 0.42, 0.06, 9), M(0x3f8fc4, { emissive: 0x2a6fa8, emissiveIntensity: 0.35, roughness: 0.25 }), -4.1, 0.03, -2.55);
     pond.castShadow = false;
     const body = new THREE.Group();
     body.rotation.y = -Math.PI / 4;
@@ -312,50 +332,117 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     return { body, crown, spinT: -1, crownT: quack ? 1 : 0 };
   })();
 
-  /* ---------- Deko: Bäume, Steine, Pfad, Laterne, Zielscheibe ---------- */
-  const foliage = [M(0x2f8f7e), M(0x3a6fa0), M(0x5b4fa8)];
-  [[-3.75, 1.35, 0.9], [-3.5, 3.0, 0.75], [3.75, -0.2, 0.85], [0.3, -3.8, 1], [-0.4, 3.85, 0.65], [3.8, 3.7, 0.7], [1.1, -3.5, 0.65], [-3.6, -3.7, 0.9]].forEach(([x, z, s], i) => {
+  /* ---------- Deko aus Last Arrow: Bäume, Erdwege, Fluss, gegnerische Burg, Portal ---------- */
+  // Tannen in Türkis und runde Laubbäume in Violett
+  const pine = M(0x2f9a8a), pineDark = M(0x27806f), bark = M(0x5b4636);
+  const blossom = [M(0x8a5cc4), M(0xa36fd6), M(0x7a4fb5)];
+  function tree(x, z, s, kind) {
     const t = new THREE.Group();
     t.position.set(x, 0, z);
     t.scale.setScalar(s);
-    add(t, cyl(0.08, 0.11, 0.45, 5), M(0x5b4636), 0, 0.22, 0);
-    add(t, new THREE.ConeGeometry(0.48, 0.9, 6), foliage[i % 3], 0, 0.85, 0);
-    add(t, new THREE.ConeGeometry(0.36, 0.65, 6), foliage[i % 3], 0, 1.25, 0);
+    add(t, cyl(0.07, 0.1, 0.4, 5), bark, 0, 0.2, 0);
+    if (kind === 'pine') {
+      add(t, new THREE.ConeGeometry(0.46, 0.85, 6), pineDark, 0, 0.75, 0);
+      add(t, new THREE.ConeGeometry(0.34, 0.65, 6), pine, 0, 1.15, 0);
+    } else {
+      const m = blossom[Math.abs(Math.round(x * 7 + z * 3)) % 3];
+      add(t, new THREE.IcosahedronGeometry(0.4, 0), m, 0, 0.72, 0);
+      add(t, new THREE.IcosahedronGeometry(0.3, 0), m, 0.22, 0.88, 0.1);
+      add(t, new THREE.IcosahedronGeometry(0.28, 0), m, -0.2, 0.86, -0.12);
+    }
     world.add(t);
-  });
-  const rockMat = M(0x3a4466);
-  [[-0.9, 3.0, 0.2], [3.2, 0.7, 0.24], [0.4, 0.6, 0.14], [-2.4, 3.9, 0.2], [1.3, -0.5, 0.16]].forEach(([x, z, r]) => {
-    add(world, new THREE.DodecahedronGeometry(r, 0), rockMat, x, r * 0.6, z).rotation.set(x, z, 0);
-  });
-  // Pfad vom Burgtor nach vorne
-  const stoneMat = M(0x2a3459);
-  for (let i = 0; i < 6; i++) {
-    const s = add(world, box(0.46, 0.05, 0.4), stoneMat, -1.9 + Math.sin(i * 1.7) * 0.1, 0.025, 0.1 + i * 0.62);
-    s.rotation.y = Math.sin(i * 2.3) * 0.25;
-    s.castShadow = false;
   }
-  // Laterne
-  add(world, cyl(0.04, 0.05, 1.2, 6), M(0x4b5478), -1.05, 0.6, 0.95);
-  add(world, box(0.18, 0.2, 0.18), M(COL.gold, { emissive: COL.gold, emissiveIntensity: 1.6 }), -1.05, 1.28, 0.95);
-  const lamp = new THREE.PointLight(COL.gold, 4, 4, 2);
-  lamp.position.set(-1.05, 1.35, 0.95);
-  world.add(lamp);
-  // Zielscheibe mit Pfeil (Last Arrow)
-  const target = new THREE.Group();
-  target.position.set(-3.0, 0, 2.05);
-  target.rotation.y = Math.PI / 4;
-  add(target, box(0.07, 0.9, 0.07), M(0x5b4636), -0.25, 0.45, -0.1).rotation.z = 0.2;
-  add(target, box(0.07, 0.9, 0.07), M(0x5b4636), 0.25, 0.45, -0.1).rotation.z = -0.2;
-  [[0.42, 0xe9e4f5], [0.3, COL.violet], [0.18, 0xe9e4f5], [0.08, COL.gold]].forEach(([r, c], i) => {
-    add(target, cyl(r, r, 0.06, 12), M(c), 0, 0.85, i * 0.012).rotation.x = Math.PI / 2;
+  [[-3.6, -4.05, 0.85, 'pine'], [-2.9, -4.0, 0.75, 'round'], [-4.1, -1.6, 0.8, 'round'], [0.3, -3.9, 0.95, 'pine'],
+   [1.1, -3.6, 0.7, 'round'], [3.8, -0.2, 0.85, 'pine'], [3.9, 3.8, 0.75, 'round'], [3.95, 2.6, 0.7, 'pine'],
+   [-4.0, 1.9, 0.8, 'pine'], [-4.05, 4.0, 0.7, 'round'], [0.7, 4.05, 0.7, 'pine'], [-0.05, -3.2, 0.6, 'round']].forEach(([x, z, s, k]) => tree(x, z, s, k));
+
+  // Erdwege vom Burgtor zur gegnerischen Burg
+  const dirt = M(0x6b4a32), dirtDark = M(0x553a27);
+  function road(x1, z1, x2, z2) {
+    const len = Math.hypot(x2 - x1, z2 - z1);
+    const r = add(world, box(0.34, 0.03, len), dirt, (x1 + x2) / 2, 0.016, (z1 + z2) / 2);
+    r.rotation.y = Math.atan2(x2 - x1, z2 - z1);
+    r.castShadow = false;
+    const groove = add(world, box(0.06, 0.035, len), dirtDark, (x1 + x2) / 2, 0.018, (z1 + z2) / 2);
+    groove.rotation.y = r.rotation.y;
+    groove.castShadow = false;
+  }
+  road(-2.52, -0.35, -2.75, 1.1);
+  road(-1.28, -0.35, -1.6, 1.1);
+  road(-2.75, 1.1, -2.6, 2.0);
+  road(-1.6, 1.1, -2.1, 2.0);
+
+  // Fluss zwischen den Burgen, mit Holzbrücke
+  const water = M(0x3f8fc4, { emissive: 0x2a6fa8, emissiveIntensity: 0.35, roughness: 0.25 });
+  const riverPts = [[-4.5, 1.15], [-2.9, 1.35], [-1.3, 1.55], [-0.6, 2.4], [-0.45, 3.4], [-0.6, 4.5]];
+  for (let i = 0; i < riverPts.length - 1; i++) {
+    const [x1, z1] = riverPts[i], [x2, z2] = riverPts[i + 1];
+    const len = Math.hypot(x2 - x1, z2 - z1) + 0.12;
+    const w = add(world, box(0.5, 0.04, len), water, (x1 + x2) / 2, 0.022, (z1 + z2) / 2);
+    w.rotation.y = Math.atan2(x2 - x1, z2 - z1);
+    w.castShadow = false;
+  }
+  add(world, box(1.3, 0.06, 0.62), M(0x8a5a36), -2.2, 0.07, 1.42).rotation.y = -0.12;
+
+  // Gegnerische Burg: dunkler Stein, violette Dächer, unter einer Schutzkuppel
+  const enemy = new THREE.Group();
+  enemy.position.set(-2.4, 0, 3.15);
+  const dark = M(0x44465a), roofV = M(0x6a4bb0);
+  const ES = 1.3;
+  [[0, -ES / 2, ES, 0.18], [0, ES / 2, ES, 0.18], [-ES / 2, 0, 0.18, ES], [ES / 2, 0, 0.18, ES]].forEach(([x, z, w, d]) => add(enemy, box(w, 0.55, d), dark, x, 0.275, z));
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
+    add(enemy, box(0.3, 0.8, 0.3), dark, sx * ES / 2, 0.4, sz * ES / 2);
+    add(enemy, new THREE.ConeGeometry(0.26, 0.5, 4), roofV, sx * ES / 2, 1.05, sz * ES / 2).rotation.y = Math.PI / 4;
   });
-  const arrow = new THREE.Group();
-  add(arrow, cyl(0.015, 0.015, 0.6, 5), M(0xc9b28a), 0, 0, 0);
-  add(arrow, box(0.1, 0.12, 0.01), M(COL.mint), 0, 0.28, 0);
-  arrow.position.set(0.05, 0.88, 0.32);
-  arrow.rotation.set(Math.PI / 2 - 0.2, 0, 0.15);
-  target.add(arrow);
-  world.add(target);
+  add(enemy, box(0.5, 1.0, 0.5), dark, 0, 0.5, 0);
+  add(enemy, new THREE.ConeGeometry(0.42, 0.6, 4), roofV, 0, 1.3, 0).rotation.y = Math.PI / 4;
+  add(enemy, box(0.1, 0.1, 0.02), M(COL.mint, { emissive: COL.mint, emissiveIntensity: 1.2 }), 0.12, 0.62, 0.26);
+  // Kuppel aus Längen- und Breitengraden, wie der Schild im Spiel
+  const R = 1.25, domeLines = [];
+  for (let m = 0; m < 12; m++) {
+    const a = m / 12 * Math.PI * 2;
+    for (let j = 0; j < 8; j++) {
+      const t1 = j / 8 * Math.PI / 2, t2 = (j + 1) / 8 * Math.PI / 2;
+      domeLines.push(Math.cos(a) * Math.cos(t1) * R, Math.sin(t1) * R, Math.sin(a) * Math.cos(t1) * R,
+        Math.cos(a) * Math.cos(t2) * R, Math.sin(t2) * R, Math.sin(a) * Math.cos(t2) * R);
+    }
+  }
+  for (let p = 0; p < 4; p++) {
+    const t = p / 4 * Math.PI / 2, rr = Math.cos(t) * R, y = Math.sin(t) * R;
+    for (let j = 0; j < 32; j++) {
+      const a1 = j / 32 * Math.PI * 2, a2 = (j + 1) / 32 * Math.PI * 2;
+      domeLines.push(Math.cos(a1) * rr, y, Math.sin(a1) * rr, Math.cos(a2) * rr, y, Math.sin(a2) * rr);
+    }
+  }
+  const domeGeo = new THREE.BufferGeometry();
+  domeGeo.setAttribute('position', new THREE.Float32BufferAttribute(domeLines, 3));
+  const domeMat = new THREE.LineBasicMaterial({ color: COL.mint, transparent: true, opacity: 0.6, toneMapped: false });
+  enemy.add(new THREE.LineSegments(domeGeo, domeMat));
+  const shell = new THREE.Mesh(new THREE.SphereGeometry(R, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+    new THREE.MeshBasicMaterial({ color: COL.mint, transparent: true, opacity: 0.07, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
+  enemy.add(shell);
+  world.add(enemy);
+
+  // Steinkreis mit leuchtendem Portal (hier kommen die Kobolde her)
+  const portal = new THREE.Group();
+  portal.position.set(0.55, 0, 3.55);
+  const stoneM = M(0x4a4c5c);
+  for (let i = 0; i < 7; i++) {
+    const a = i / 7 * Math.PI * 2;
+    const st = add(portal, box(0.16, 0.42 + (i % 3) * 0.08, 0.14), stoneM, Math.cos(a) * 0.5, 0.22, Math.sin(a) * 0.5);
+    st.rotation.y = -a;
+  }
+  add(portal, cyl(0.3, 0.32, 0.06, 12), M(0x5a5c6c), 0, 0.03, 0);
+  const portalGlow = add(portal, cyl(0.2, 0.2, 0.02, 16), new THREE.MeshBasicMaterial({ color: COL.mint, toneMapped: false }), 0, 0.07, 0);
+  portalGlow.castShadow = false;
+  world.add(portal);
+
+  // Laterne am Weg
+  add(world, cyl(0.04, 0.05, 1.1, 6), M(0x4b5478), -0.85, 0.55, 0.45);
+  add(world, box(0.16, 0.18, 0.16), M(COL.gold, { emissive: COL.gold, emissiveIntensity: 1.6 }), -0.85, 1.18, 0.45);
+  const lamp = new THREE.PointLight(COL.gold, 4, 4, 2);
+  lamp.position.set(-0.85, 1.25, 0.45);
+  world.add(lamp);
 
   /* ---------- Trefferboxen und Hover-Ringe ---------- */
   world.updateMatrixWorld(true);
@@ -599,6 +686,8 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
 
     if (moving) {
       objects.castle.flag.rotation.y = Math.sin(time * 3) * 0.25;
+      domeMat.opacity = 0.5 + Math.sin(time * 1.6) * 0.15;
+      portalGlow.scale.setScalar(1 + Math.sin(time * 3) * 0.12);
       printer.update(time);
       // Ente schaukelt auf dem Teich
       duck.body.position.y = Math.sin(time * 2.1) * 0.03;
