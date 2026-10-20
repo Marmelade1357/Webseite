@@ -704,6 +704,23 @@ figcaption a { color: var(--text); }
 .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); transition-delay: calc(var(--d, 0) * 80ms); }
 .js [data-reveal].is-in { opacity: 1; transform: none; }
 
+/* Last-Arrow-Galerie: Karte groß, Burg und Gegnerburg daneben */
+.la-gallery { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto; gap: clamp(12px, 1.6vw, 20px); margin: 0 0 clamp(12px, 1.6vw, 20px); }
+.la-shot { position: relative; margin: 0; overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface-1); box-shadow: var(--shadow-card); }
+.la-shot-main { grid-row: span 2; }
+.la-shot a { display: block; height: 100%; }
+.la-shot img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease-out); }
+.la-shot:hover img { transform: scale(1.03); }
+.la-shot figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 32px 16px 12px; pointer-events: none;
+  font-size: var(--fs-sm); color: var(--text); background: linear-gradient(to top, rgba(10, 12, 14, 0.85), transparent);
+}
+.la-shot figcaption .mono-label { color: var(--accent); margin-right: 6px; }
+@media (max-width: 860px) {
+  .la-gallery { grid-template-columns: minmax(0, 1fr); }
+  .la-shot-main { grid-row: auto; }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .la-hero { grid-template-columns: 1fr; }

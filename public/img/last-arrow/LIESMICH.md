@@ -1,14 +1,14 @@
 # Last-Arrow-Bilder
 
-Screenshots aus Last Arrow für eine kleine Galerie im Abschnitt „Last Arrow“.
+Screenshots aus Last Arrow für die Galerie im Abschnitt „Last Arrow“ (`index.html` und `en/index.html`, Block `la-gallery`).
 
-Einfach hier hineinlegen (PNG oder JPG, gern in voller Auflösung, Claude verkleinert sie und wandelt sie in WebP um):
+| Datei                               | Inhalt                                      |
+|-------------------------------------|---------------------------------------------|
+| `uebersicht.webp` / `-800.webp`     | Gesamtansicht der Karte (großes Bild)       |
+| `burg.webp` / `-800.webp`           | Eigene Burg mit Schatztruhe                 |
+| `gegner.webp` / `-800.webp`         | Gegnerische Burg unter der Schutzkuppel     |
 
-| Datei            | Inhalt                                             |
-|------------------|----------------------------------------------------|
-| `burg.png`       | Deine Burg (Sandstein, orange Dächer, Schatzhof)   |
-| `gegner.png`     | Gegnerische Burg unter der Schutzkuppel            |
-| `uebersicht.png` | Gesamtansicht der Karte mit Fluss und Wegen        |
+Jedes Bild gibt es in 1600 px (Vollbild beim Anklicken) und 800 px Breite (für kleine Bildschirme).
 
-Weitere Bilder (Kampf, Bossgegner, Upgrades …) sind willkommen, Name egal.
-Danach Claude Bescheid geben, dann wird die Galerie eingebaut.
+Neue Screenshots einfach in voller Auflösung hier hochladen und Claude Bescheid geben:
+Dann werden sie verkleinert, in WebP umgewandelt und in die Galerie eingebaut.
