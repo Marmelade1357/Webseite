@@ -440,21 +440,21 @@
           </div>
         </article>
       </li>
-      <li class="proj span-12" data-tags="web tool finanzen banking dotnet csharp react typescript sqlite docker team" data-reveal>
+      <li class="proj span-12" data-tags="web tool finanzen banking dotnet csharp react typescript sqlite docker team tailscale vpn raspberry" data-reveal>
         <article class="card card-media card-wide">
           <figure class="shot-wrap"><img class="shot" src="img/projekte/finance-duck.webp" srcset="img/projekte/finance-duck-640.webp 528w, img/projekte/finance-duck.webp 1056w" sizes="(max-width: 860px) 92vw, 680px" alt="FinanceDuck: Monats-Dashboard mit Einnahmen, Ausgaben, Saldo, Sparquote und Kategorien samt Fixkosten, hier mit erfundenen Beispieldaten" width="1056" height="1176" loading="lazy" decoding="async"></figure>
           <div class="card-body">
             <p class="card-path">finance-duck/ <span class="mono-label">Teamprojekt · Beispieldaten</span></p>
             <h3 class="card-title">FinanceDuck</h3>
             <p class="card-lede">Wohin ist mein Geld diesen Monat geflossen?</p>
-            <p>Ein Finanz-Tool, das ich zusammen mit einem Kollegen baue: Es holt die eigenen Kontoumsätze, sortiert sie über selbst festgelegte Regeln in Kategorien und zeigt pro Monat auf einen Blick, wohin das Geld gegangen ist. Alles läuft selbst gehostet in Docker, die Bankdaten landen bei keinem fremden Cloud-Dienst.</p>
+            <p>Ein Finanz-Tool, das ich zusammen mit einem Kollegen baue: Es holt die eigenen Kontoumsätze, sortiert sie über selbst festgelegte Regeln in Kategorien und zeigt pro Monat auf einen Blick, wohin das Geld gegangen ist. Es läuft selbst gehostet in Docker auf meinem Raspberry Pi und ist nicht öffentlich im Netz: Zugriff gibt es nur über ein privates VPN (Tailscale). So landen die Bankdaten bei keinem fremden Cloud-Dienst.</p>
             <dl class="opts">
               <div><dt>--import</dt><dd>Direkt über die PSD2-Schnittstelle (Enable Banking) oder als CAMT.052/053-Export aus dem Online-Banking. Doppelte Buchungen werden erkannt.</dd></div>
               <div><dt>--regeln</dt><dd>Feste Zuordnungen wie „Fitnessstudio → Freizeit“. Bei PayPal zählt der Verwendungszweck, nicht der Zahlungsdienst. Wer eine Buchung umsortiert, kann daraus gleich eine Regel machen.</dd></div>
               <div><dt>--dashboard</dt><dd>Einnahmen, Ausgaben, Saldo und Sparquote, Kategorien mit Anteilen, Fixkosten gebündelt. Ein Klick auf eine Kategorie zeigt die passenden Buchungen.</dd></div>
-              <div><dt>--mein-teil</dt><dd>Dashboard-Redesign mit Kennzahlen und Kategorieliste, Datumsbereich-Kalender, Umsortieren direkt in der Buchungsliste, ein Fix für den CAMT.053-Import, das Handy-Layout und das Hosting: FinanceDuck läuft auf meinem Server.</dd></div>
+              <div><dt>--mein-teil</dt><dd>Dashboard-Redesign mit Kennzahlen und Kategorieliste, Datumsbereich-Kalender, Umsortieren direkt in der Buchungsliste, ein Fix für den CAMT.053-Import, das Handy-Layout und das Hosting auf meinem Raspberry Pi samt Zugang per Tailscale-VPN.</dd></div>
             </dl>
-            <ul class="tags"><li>C# · .NET 8</li><li>React</li><li>TypeScript</li><li>SQLite</li><li>Docker</li></ul>
+            <ul class="tags"><li>C# · .NET 8</li><li>React</li><li>TypeScript</li><li>SQLite</li><li>Docker</li><li>Tailscale</li></ul>
             <p class="card-links"><a class="link-arrow" href="https://github.com/DuckOfJustice/FinanceAgent" rel="noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
