@@ -29,7 +29,7 @@ public/
 ├── fonts/            Inter + Space Grotesk (Variable) + JetBrains Mono (OFL)
 ├── icons/            App-Icons (Startbildschirm, Manifest)
 ├── img/              Cosplay-Foto und Projekt-Screenshots (img/projekte/)
-└── og.png            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
+└── og.jpg            Vorschaubild für geteilte Links (WhatsApp, LinkedIn …)
 ```
 
 `modelle/` enthält Quelldateien (z. B. 3MF), die nicht ausgeliefert werden.
