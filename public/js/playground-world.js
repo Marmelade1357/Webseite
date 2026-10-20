@@ -483,6 +483,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     return Math.atan2(sg.x2 - sg.x1, sg.z2 - sg.z1);
   }
   const goblins = [], MAX_GOB = 7, GS = 1.8; // GS: Größe der Kobolde
+  let maxAlive = coarse ? 5 : MAX_GOB;        // wird bei schwacher Leistung reduziert
   function makeGoblin() {
     const g = new THREE.Group();
     add(g, gobGeo.body, gobMat, 0, 0.1, 0);
@@ -549,7 +550,10 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   const hint = root.querySelector('.pg-hint');
   function updateGoblins(dt) {
     spawnIn -= dt;
-    if (spawnIn <= 0 && introT > 1.2) { spawnGoblin(); spawnIn = 1.3 + Math.random() * 1.4; }
+    if (spawnIn <= 0 && introT > 1.2) {
+      if (goblins.filter(q => q.alive).length < maxAlive) spawnGoblin();
+      spawnIn = 1.3 + Math.random() * 1.4;
+    }
     goblins.forEach(gb => {
       if (gb.alive) {
         gb.d += dt * 0.42;
@@ -779,14 +783,42 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     });
   }
 
+  /* ---------- Automatische Qualität: ruckelt es, wird schrittweise abgespeckt ---------- */
+  let quality = 2, perfT = 0, perfFrames = 0;
+  function degrade() {
+    quality--;
+    if (quality === 1) {
+      renderer.shadowMap.enabled = false;
+      key.castShadow = false;
+      scene.traverse(o => { if (o.material) o.material.needsUpdate = true; });
+      renderer.setPixelRatio(1);
+      maxAlive = Math.min(maxAlive, 4);
+      dust.visible = false;
+    } else {
+      renderer.setPixelRatio(0.75);
+      maxAlive = 3;
+    }
+    resize();
+  }
+  function measure(rawDt) {
+    // Erst nach dem Intro messen, je 2 Sekunden; unter ~40 Bildern pro Sekunde eine Stufe runter
+    if (quality === 0 || introT < 3 || document.hidden) return;
+    perfT += rawDt; perfFrames++;
+    if (perfT < 2) return;
+    if (perfFrames / perfT < 40) degrade();
+    perfT = 0; perfFrames = 0;
+  }
+
   function frame(now) {
     if (!visible) return;
-    const dt = Math.min(0.05, (now - last) / 1000);
+    const rawDt = (now - last) / 1000;
+    const dt = Math.min(0.05, rawDt);
     last = now;
     const moving = !reduceMotion;
     if (!moving && !dirty && !parts.length && duck.spinT < 0) return;
     time += dt;
     dirty = false;
+    if (moving && rawDt < 1) measure(rawDt);
 
     if (pickPending && lastPointer) {
       pickPending = false;
