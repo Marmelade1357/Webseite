@@ -17,7 +17,7 @@ h1 { font-size: 27pt; line-height: 1; letter-spacing: -0.04em; font-weight: 700;
 .profile { padding: 3.5mm 0; border-bottom: 0.6pt solid var(--line); color: var(--ink-2); font-size: 9.2pt; line-height: 1.5; }
 .cols { display: grid; grid-template-columns: 1.55fr 1fr; gap: 8mm; padding-top: 4mm; }
 h2 { font-family: "JetBrains Mono", monospace; font-size: 8pt; font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 3mm; padding-bottom: 1.5mm; border-bottom: 0.6pt solid var(--line); }
-section + section { margin-top: 3mm; }
+section + section { margin-top: 2.5mm; }
 article { break-inside: avoid; margin-bottom: 2.8mm; padding-left: 4mm; border-left: 1.2pt solid var(--line); }
 article:first-of-type { border-left-color: var(--accent); }
 .when { font-size: 8.2pt; color: var(--ink-3); font-variant-numeric: tabular-nums; }
