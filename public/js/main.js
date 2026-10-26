@@ -14,7 +14,7 @@
       locale: 'de-DE',
       help: 'Verfügbare Befehle:\n  about        Wer ich bin\n  interessen   Woran ich mich festbeiße\n  ./last-arrow Mein aktuelles Spiel\n  ls projekte  Alles, was ich gebaut habe\n  cv           Lebenslauf als git log\n  kontakt      So erreichst du mich\n  makerworld   Meine 3D-Druck-Modelle\n  neofetch, whoami, date, uptime, achievements, clear',
       whoami: 'oualid: Einzelhandel bei Tag, Spiele, KI und 3D-Druck bei Nacht.',
-      about: 'Öffne about.md …', projects: '15 Einträge. Tipp: oben in der Liste mit grep filtern.', contact: 'Öffne kontakt.json …',
+      about: 'Öffne about.md …', projects: '{n} Einträge. Tipp: oben in der Liste mit grep filtern.', contact: 'Öffne kontakt.json …',
       lastArrow: 'Starte Last Arrow …\n[WARN] Kobolde nähern sich der Schatztruhe. Unten gibt es eine Mini-Demo.',
       makerworld: 'Öffne MakerWorld: Grav-Charge Mandalorian-Holster …', iphone: 'Öffne iphone.oualid.de …',
       neofetch: 'Der steht doch schon oben. ;)', uptime: 'duckpi: läuft, 13 Container, 0 Kobolde in der Schatzkammer.',
@@ -31,7 +31,7 @@
       locale: 'en-GB',
       help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           CV as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, achievements, clear',
       whoami: 'oualid: retail by day, games, AI and 3D printing by night.',
-      about: 'Opening about.md …', projects: '15 entries. Tip: filter the list with grep.', contact: 'Opening contact.json …',
+      about: 'Opening about.md …', projects: '{n} entries. Tip: filter the list with grep.', contact: 'Opening contact.json …',
       lastArrow: 'Starting Last Arrow …\n[WARN] Goblins are approaching the treasure chest. There is a mini demo below.',
       makerworld: 'Opening MakerWorld: Grav Charge Mandalorian holster …', iphone: 'Opening iphone.oualid.de …',
       neofetch: "It's right up there already. ;)", uptime: 'duckpi: up, 13 containers, 0 goblins in the vault.',
@@ -42,6 +42,21 @@
       quack: 'Quack. 🦆'
     }
   }[LANG];
+
+  /* ---------- Projektzahl aus der Liste zählen (Terminal, Konsole) ---------- */
+  var projCount = document.querySelectorAll('#projects > li').length;
+  if (projCount) document.querySelectorAll('[data-proj-count]').forEach(function (el) { el.textContent = projCount; });
+
+  /* ---------- Sprachumschalter: an derselben Stelle der anderen Sprache landen ---------- */
+  document.querySelectorAll('.lang-switch').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var mark = window.innerHeight * 0.4, id = '';
+      document.querySelectorAll('main > section[id]').forEach(function (sec) {
+        if (sec.getBoundingClientRect().top <= mark) id = sec.id;
+      });
+      a.href = a.getAttribute('href').split('#')[0] + (id ? '#' + id : '');
+    });
+  });
 
   /* ---------- Startsequenz im Terminal (läuft beim ersten Öffnen) ---------- */
   var booted = false;
@@ -331,7 +346,7 @@
     whoami: function () { print(T.whoami); },
     about: function () { print(T.about); go('about'); },
     interessen: function () { print('spieleentwicklung/  ki/  3d-druck/  cosplay/  tinkering/  brettspiele/'); go('interessen'); },
-    projekte: function () { print(T.projects); go('projekte'); },
+    projekte: function () { print(T.projects.replace('{n}', projCount)); go('projekte'); },
     cv: function () { print('git log --graph lebenslauf'); go('cv'); },
     kontakt: function () { print(T.contact); go('kontakt'); },
     'last-arrow': function () {

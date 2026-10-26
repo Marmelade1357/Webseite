@@ -12,9 +12,10 @@ const COL = {
 };
 const EN = document.documentElement.lang === 'en';
 // Bildschirm des Retro-PCs: listet die Projekte (Klick auf den PC führt zur Projektliste)
+const PROJ_N = document.querySelectorAll('#projects > li').length || 15;
 const SCREEN_LINES = EN
-  ? ['$ ls ~/projects', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'monopoly/  poker/  wizard/', '15 entries']
-  : ['$ ls ~/projekte', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'monopoly/  poker/  wizard/', '15 Einträge'];
+  ? ['$ ls ~/projects', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'monopoly/  poker/  wizard/', PROJ_N + ' entries']
+  : ['$ ls ~/projekte', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'monopoly/  poker/  wizard/', PROJ_N + ' Einträge'];
 const SCREEN_QUACK = EN
   ? ['$ ls ~/projects', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'rubber-duck/  <- found!', '>> QUACK MODE ACTIVATED']
   : ['$ ls ~/projekte', 'last-arrow/  finance-duck/', 'iphone/  liars-dice/  uno/', 'gummiente/  <- gefunden!', '>> QUACK MODE ACTIVATED'];
