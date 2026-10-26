@@ -43,8 +43,11 @@ Jeder Unterordner hat eine `LIESMICH.md`, was hineingehört.
 - Die 3D-Welt lädt nach dem ersten Rendern (ca. 170 KB three.js, gzip). Im Datensparmodus erst nach Klick,
   ohne WebGL erscheinen die vier Objekte als Kacheln. Bei `prefers-reduced-motion` steht die Szene still.
 - Alle Objekte sind auch per Tastatur erreichbar (Tab auf die Hotspots, Enter).
-- Das Achievement liegt nur im Browser (`localStorage`, Schlüssel `oualid.achievements`). Zurücksetzen:
-  `localStorage.removeItem('oualid.achievements')` in der Browser-Konsole.
+- Achievements (5): Quack Mode, Erster Kobold, Koboldjäger (10 Kobolde), Bossbezwinger, Entdecker.
+  Jeder sechste Kobold ist ein Boss (4 Treffer); nach seinem Sieg wächst die Burg um einen Turm.
+  Gespeichert nur im Browser (`localStorage`: `oualid.achievements`, `oualid.kills`, `oualid.explored`).
+  Zurücksetzen: diese drei Schlüssel in der Browser-Konsole mit `localStorage.removeItem(...)` löschen.
+  In der Konsole der Seite zeigen `achievements` und `kobolde` den Stand.
 
 ## Sicherheit (CSP)
 

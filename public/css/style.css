@@ -367,9 +367,25 @@ html:not(.js) .bite::after { transform: none; }
 .pg-hint, .pg-ach { padding: 4px 10px; border-radius: var(--r-pill); background: rgba(11, 16, 32, 0.66); border: 1px solid rgba(169, 181, 204, 0.14); }
 .pg-ach b { color: var(--pg-text); font-weight: 700; }
 .pg-ach-icon { filter: grayscale(1); opacity: 0.6; }
-.is-quack .pg-ach { color: var(--pg-gold); border-color: rgba(255, 191, 105, 0.45); }
-.is-quack .pg-ach b { color: var(--pg-gold); }
-.is-quack .pg-ach-icon { filter: none; opacity: 1; }
+.pg-ach.is-on { color: var(--pg-gold); border-color: rgba(255, 191, 105, 0.45); }
+.pg-ach.is-on b { color: var(--pg-gold); }
+.pg-ach.is-on .pg-ach-icon { filter: none; opacity: 1; }
+.pg-ach.is-complete { background: rgba(255, 191, 105, 0.14); }
+
+/* Achievement-Meldung: unten in der Mitte, egal wo man gerade ist */
+.ach-toast {
+  position: fixed; left: 50%; bottom: 20px; z-index: 70; display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px 10px 12px; border-radius: 14px; pointer-events: none;
+  background: rgba(21, 29, 50, 0.96); border: 1px solid rgba(255, 191, 105, 0.5);
+  box-shadow: 0 20px 50px -18px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 191, 105, 0.1);
+  opacity: 0; transform: translate(-50%, 16px); transition: opacity 240ms, transform 360ms var(--ease-out);
+}
+.ach-toast:empty { display: none; }
+.ach-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.ach-toast-icon { font-size: 22px; line-height: 1; }
+.ach-toast small { display: block; font-family: var(--font-mono); font-size: 11px; color: #ffbf69; }
+.ach-toast b { display: block; font-family: var(--font-display); font-size: 16px; color: #fff; }
+.ach-toast-count { font-family: var(--font-mono); font-size: 12px; color: var(--text-2); padding-left: 10px; border-left: 1px solid var(--line-strong); }
 
 /* Toast: „Quack?“ und QUACK MODE ACTIVATED */
 .pg-toast {
@@ -404,23 +420,33 @@ html:not(.js) .bite::after { transform: none; }
 .is-static .pg-hud { position: static; margin-top: 12px; }
 .is-static .pg-hint { display: none; }
 
-/* Hero: Tablet und Handy – 3D-Welt unter dem Text */
+/* Hero: Tablet und Handy – die 3D-Welt kommt direkt nach Titel und Untertitel,
+   damit man sie ohne langes Scrollen sieht. Die Textspalte löst sich dafür auf (display: contents). */
 @media (max-width: 960px) {
-  .pg-grid { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: var(--space-5); }
-  .playground { max-width: 620px; margin: 0 auto; aspect-ratio: 1 / 0.95; }
+  .pg-grid { display: flex; flex-direction: column; align-items: stretch; min-height: 0; gap: 0; }
+  .pg-copy { display: contents; }
+  .pg-hero .eyebrow { order: 1; align-self: flex-start; }
+  .pg-title { order: 2; }
+  .pg-sub { order: 3; margin-bottom: var(--space-3); }
+  .playground { order: 4; width: 100%; max-width: 620px; margin: 0 auto var(--space-5); aspect-ratio: 1 / 0.95; }
+  .pg-lead { order: 5; }
+  .hero-actions { order: 6; }
+  .pg-cmd { order: 7; }
 }
 @media (max-width: 640px) {
   .pg-lead { margin-bottom: var(--space-5); }
+  .pg-lead-extra { display: none; }
   .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
   .playground { aspect-ratio: 1 / 0.84; }
   .pg-hud { left: 8px; right: 8px; bottom: 6px; }
   .pg-pin { width: 28px; height: 28px; }
 }
-/* Touch: Kurzlabels immer zeigen, es gibt kein Hover */
+/* Touch: kleine Kurzlabels immer zeigen (es gibt kein Hover), ohne Pfeil, damit sie wenig verdecken */
 @media (hover: none) {
-  .pg-spot-item:not([data-spot="duck"]) .pg-tip { opacity: 1; transform: translate(-50%, 0) scale(0.86); padding: 5px 10px 6px; }
+  .pg-spot-item:not([data-spot="duck"]) .pg-tip { opacity: 0.92; transform: translate(-50%, 0); padding: 3px 8px 4px; border-radius: 8px; bottom: calc(100% + 6px); }
+  .pg-spot-item:not([data-spot="duck"]) .pg-tip::after { display: none; }
   .pg-spot-item:not([data-spot="duck"]) .pg-tip small { display: none; }
-  .pg-spot-item:not([data-spot="duck"]) .pg-tip b { font-size: 13px; }
+  .pg-spot-item:not([data-spot="duck"]) .pg-tip b { font-size: 11px; }
   .pg-hint { display: none; }
 }
 /* Am Seitenanfang liegt der Header durchsichtig auf dem Hero */

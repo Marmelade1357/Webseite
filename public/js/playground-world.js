@@ -25,7 +25,9 @@ const easeOut = t => 1 - Math.pow(1 - t, 3);
 const easeOutBack = t => { const c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
 const clamp01 = t => Math.min(1, Math.max(0, t));
 
-export function mount(root, { reduceMotion = false, quack = false } = {}) {
+// onGoblin({ boss }): Spieler hat einen Kobold erwischt (letzter Treffer per Klick)
+// onBoss({ helped }): ein Boss-Kobold ist besiegt; helped = Spieler hat ihn mindestens einmal getroffen
+export function mount(root, { reduceMotion = false, quack = false, onGoblin = () => {}, onBoss = () => {} } = {}) {
   const stage = root.querySelector('.pg-stage');
   const coarse = window.matchMedia('(pointer: coarse)').matches;
   const shadows = !coarse;
@@ -485,42 +487,103 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   }
   const goblins = [], MAX_GOB = 7, GS = 1.8; // GS: Größe der Kobolde
   let maxAlive = coarse ? 5 : MAX_GOB;        // wird bei schwacher Leistung reduziert
+  // Boss: größer, lila, mit Krone und Lebensleiste, braucht mehrere Treffer
+  const bossMat = M(0x8a4fc0), bossDark = M(0x5e3487), crownMat = M(COL.gold, { emissive: COL.gold, emissiveIntensity: 0.5, metalness: 0.4, roughness: 0.4 });
+  const BOSS_HP = 4, BOSS_SCALE = 1.6;
   function makeGoblin() {
     const g = new THREE.Group();
-    add(g, gobGeo.body, gobMat, 0, 0.1, 0);
-    add(g, gobGeo.head, gobMat, 0, 0.29, 0.01);
-    add(g, gobGeo.ear, gobDark, 0.1, 0.32, 0).rotation.z = -1.2;
-    add(g, gobGeo.ear, gobDark, -0.1, 0.32, 0).rotation.z = 1.2;
+    const skin = [add(g, gobGeo.body, gobMat, 0, 0.1, 0), add(g, gobGeo.head, gobMat, 0, 0.29, 0.01)];
+    const ears = [add(g, gobGeo.ear, gobDark, 0.1, 0.32, 0), add(g, gobGeo.ear, gobDark, -0.1, 0.32, 0)];
+    ears[0].rotation.z = -1.2; ears[1].rotation.z = 1.2;
     add(g, gobGeo.eye, gobEye, 0.035, 0.31, 0.09);
     add(g, gobGeo.eye, gobEye, -0.035, 0.31, 0.09);
     add(g, gobGeo.sack, M(0x9a7a4e), 0, 0.16, -0.1); // leerer Beutel für den Schatz
+    const crown = add(g, cyl(0.07, 0.08, 0.06, 6), crownMat, 0, 0.41, 0.01);
+    crown.visible = false;
+    // Lebensleiste (nur beim Boss sichtbar), dreht sich zur Kamera
+    const bar = new THREE.Group();
+    bar.position.y = 0.55;
+    bar.add(new THREE.Mesh(box(0.34, 0.045, 0.01), new THREE.MeshBasicMaterial({ color: 0x1b1f33, toneMapped: false })));
+    const fill = new THREE.Mesh(box(0.32, 0.03, 0.012), new THREE.MeshBasicMaterial({ color: 0xff6b6b, toneMapped: false }));
+    fill.geometry.translate(0.16, 0, 0); fill.position.x = -0.16;
+    bar.add(fill);
+    bar.visible = false;
+    g.add(bar);
     const hit = new THREE.Mesh(gobHitGeo, gobHitMat);
     hit.position.y = 0.25;
     g.add(hit);
     world.add(g);
-    const gob = { g, hit, route: ROUTES[0], d: 0, alive: false, dieT: -1, popT: 0, phase: 0, targeted: false };
+    const gob = { g, hit, skin, ears, crown, bar, fill, route: ROUTES[0], d: 0, alive: false, dieT: -1, popT: 0, phase: 0,
+      targeted: false, boss: false, hp: 1, userHit: false, flashT: -1, size: GS };
     hit.userData.goblin = gob;
     return gob;
   }
   for (let i = 0; i < MAX_GOB; i++) { const gb = makeGoblin(); gb.g.visible = false; goblins.push(gb); }
   const gobHits = goblins.map(gb => gb.hit);
   const tmpG = new THREE.Vector3();
+  let spawned = 0;
   function spawnGoblin(d) {
     const gb = goblins.find(q => !q.alive && q.dieT < 0);
     if (!gb) return null;
+    spawned++;
+    // Jeder sechste Kobold ist ein Boss, aber nie zwei gleichzeitig
+    const boss = !d && !reduceMotion && spawned % 6 === 0 && !goblins.some(q => q.alive && q.boss);
+    gb.boss = boss; gb.hp = boss ? BOSS_HP : 1; gb.userHit = false; gb.flashT = -1;
+    gb.size = boss ? GS * BOSS_SCALE : GS;
+    gb.skin.forEach(m => { m.material = boss ? bossMat : gobMat; });
+    gb.ears.forEach(m => { m.material = boss ? bossDark : gobDark; });
+    gb.crown.visible = boss; gb.bar.visible = boss; gb.fill.scale.x = 1;
     gb.route = ROUTES[Math.random() < 0.5 ? 0 : 1];
     gb.d = d || 0; gb.alive = true; gb.dieT = -1; gb.popT = d ? 1 : 0; gb.targeted = false;
     gb.phase = Math.random() * 6;
     gb.g.visible = true;
-    gb.g.scale.setScalar(d ? GS : 0.001);
+    gb.g.scale.setScalar(d ? gb.size : 0.001);
     gb.g.rotation.set(0, routePos(gb.route, gb.d, gb.g.position), 0);
     return gb;
   }
   function killGoblin(gb, colors) {
     if (!gb.alive) return;
     gb.alive = false; gb.dieT = 0;
-    spawn(tmpG.copy(gb.g.position).setY(gb.g.position.y + 0.4), colors || [0x72c04c, 0xffe066], 14, 1.8);
+    spawn(tmpG.copy(gb.g.position).setY(gb.g.position.y + 0.4), colors || [0x72c04c, 0xffe066], gb.boss ? 40 : 14, gb.boss ? 2.8 : 1.8);
     dirty = true;
+  }
+  // Ein Treffer (Pfeil oder Klick). Gibt true zurück, wenn der Kobold dadurch fällt.
+  function damage(gb, byUser) {
+    if (!gb.alive) return false;
+    gb.hp--;
+    if (byUser) gb.userHit = true;
+    gb.flashT = 0;
+    gb.fill.scale.x = Math.max(0.001, gb.hp / BOSS_HP);
+    if (gb.hp > 0) { spawn(tmpG.copy(gb.g.position).setY(gb.g.position.y + 0.6), [0xff6b6b, 0xffffff], 6, 1.2); return false; }
+    if (gb.boss) {
+      killGoblin(gb, [0x8a4fc0, COL.gold, 0xffffff]);
+      growCastle();
+      onBoss({ helped: gb.userHit });
+    } else {
+      killGoblin(gb, byUser ? [0x72c04c, 0xffe066, 0xffffff] : undefined);
+    }
+    return true;
+  }
+
+  // Nach jedem Boss wächst die Burg um einen Turm (wie im Spiel), höchstens drei pro Besuch
+  const GROW_SPOTS = [[0, -1.2], [-1.6, 0], [1.6, 0]];
+  const growing = [];
+  const growSand = M(0xd8b88a), growRoof = M(0xf08a4b), growFlag = M(0xf07a3a);
+  function growCastle() {
+    const spot = GROW_SPOTS[growing.length];
+    if (!spot) return;
+    const t = new THREE.Group();
+    t.position.set(spot[0], 0, spot[1]);
+    add(t, cyl(0.3, 0.36, 1.45, 10), growSand, 0, 0.72, 0);
+    add(t, cyl(0.34, 0.34, 0.12, 10), M(0xbf9a6c), 0, 1.45, 0);
+    add(t, new THREE.ConeGeometry(0.4, 0.6, 8), growRoof, 0, 1.8, 0);
+    add(t, cyl(0.015, 0.015, 0.35, 4), M(0x5a4636), 0, 2.25, 0);
+    const fg = box(0.22, 0.13, 0.015); fg.translate(0.11, 0, 0);
+    add(t, fg, growFlag, 0.01, 2.35, 0);
+    t.scale.set(1, 0.001, 1);
+    objects.castle.group.add(t);
+    growing.push({ t, k: 0 });
+    objects.castle.pokeT = 0;
   }
 
   // Pfeile von den beiden vorderen Ecktürmen
@@ -547,8 +610,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     const tower = TOWERS[Math.abs(best.g.position.x - TOWERS[0].x) < Math.abs(best.g.position.x - TOWERS[1].x) ? 0 : 1];
     ar.from.copy(tower); ar.prev.copy(tower); ar.target = best; ar.t = 0; ar.a.visible = true; ar.a.position.copy(tower);
   }
-  let spawnIn = 0.8, fireIn = 1.4, kills = 0;
-  const hint = root.querySelector('.pg-hint');
+  let spawnIn = 0.8, fireIn = 1.4;
   function updateGoblins(dt) {
     spawnIn -= dt;
     if (spawnIn <= 0 && introT > 1.2) {
@@ -557,23 +619,37 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
     }
     goblins.forEach(gb => {
       if (gb.alive) {
-        gb.d += dt * 0.42;
-        if (gb.popT < 1) { gb.popT = Math.min(1, gb.popT + dt * 3); gb.g.scale.setScalar(Math.max(0.001, GS * easeOutBack(gb.popT))); }
+        gb.d += dt * (gb.boss ? 0.26 : 0.42);
+        if (gb.popT < 1) { gb.popT = Math.min(1, gb.popT + dt * 3); gb.g.scale.setScalar(Math.max(0.001, gb.size * easeOutBack(gb.popT))); }
+        // Kurz zusammenzucken bei Treffer
+        if (gb.flashT >= 0) {
+          gb.flashT += dt;
+          const f = clamp01(gb.flashT / 0.2);
+          gb.g.scale.setScalar(gb.size * (1 + 0.18 * Math.sin(f * Math.PI)));
+          if (f >= 1) gb.flashT = -1;
+        }
+        if (gb.boss) gb.bar.rotation.y = az - gb.g.rotation.y;
         const yaw = routePos(gb.route, gb.d, gb.g.position);
         gb.g.rotation.y = yaw;
         gb.g.position.y += Math.abs(Math.sin(time * 14 + gb.phase)) * 0.035;
         gb.g.rotation.z = Math.sin(time * 14 + gb.phase) * 0.12;
         // Am Tor angekommen: kurzer Funkenregen, dann weg
         if (gb.d >= gb.route.total) { killGoblin(gb, [0xf07a3a, COL.gold]); objects.castle.pokeT = 0; }
+        if (gb.boss) gb.bar.rotation.y = az - gb.g.rotation.y;
       } else if (gb.dieT >= 0) {
         gb.dieT += dt;
         const p = clamp01(gb.dieT / 0.25);
-        gb.g.scale.setScalar(Math.max(0.001, GS * (1 - p)));
+        gb.g.scale.setScalar(Math.max(0.001, gb.size * (1 - p)));
         if (p >= 1) { gb.dieT = -1; gb.g.visible = false; }
       }
     });
     fireIn -= dt;
     if (fireIn <= 0) { fireArrow(); fireIn = 0.9 + Math.random() * 0.5; }
+    growing.forEach(gr => {
+      if (gr.k >= 1) return;
+      gr.k = Math.min(1, gr.k + dt / 0.9);
+      gr.t.scale.set(1, Math.max(0.001, easeOutBack(gr.k)), 1);
+    });
     arrows.forEach(ar => {
       if (ar.t < 0) return;
       ar.t += dt / 0.7;
@@ -585,7 +661,7 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
       ar.prev.copy(ar.a.position);
       if (p >= 1) {
         ar.t = -1; ar.a.visible = false;
-        if (tgt.alive) killGoblin(tgt); else tgt.targeted = false;
+        if (!damage(tgt, false)) tgt.targeted = false;
       }
     });
   }
@@ -749,10 +825,9 @@ export function mount(root, { reduceMotion = false, quack = false } = {}) {
   renderer.domElement.addEventListener('click', e => {
     const k = pick(e.clientX, e.clientY);
     if (k && typeof k === 'object') {
-      // Kobold selbst erwischt
-      killGoblin(k, [0x72c04c, 0xffe066, 0xffffff]);
-      kills++;
-      if (hint) hint.textContent = (EN ? 'Goblins zapped: ' : 'Kobolde erwischt: ') + kills;
+      // Kobold selbst getroffen; beim letzten Treffer zählt er als erwischt
+      const wasBoss = k.boss;
+      if (damage(k, true)) onGoblin({ boss: wasBoss });
       return;
     }
     if (k && spots[k]) spots[k].querySelector('button').click();

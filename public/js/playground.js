@@ -13,38 +13,90 @@
   var L = EN ? {
     ready: '[ OK ] world loaded', static: '[ OK ] static mode', quack1: 'Quack?', quack2: 'Quack! Quack!',
     quackMode: 'QUACK MODE ACTIVATED', achievement: 'Achievement unlocked: Quack Mode',
-    quackAgain: 'Quack! 🦆', duckTitle: 'Quack Mode', duckSub: 'Achievement unlocked'
+    quackAgain: 'Quack! 🦆', duckTitle: 'Quack Mode', duckSub: 'Achievement unlocked',
+    unlocked: 'Achievement unlocked', kills: 'Goblins zapped: '
   } : {
     ready: '[ OK ] Welt geladen', static: '[ OK ] statischer Modus', quack1: 'Quack?', quack2: 'Quack! Quack!',
     quackMode: 'QUACK MODE ACTIVATED', achievement: 'Achievement freigeschaltet: Quack Mode',
-    quackAgain: 'Quack! 🦆', duckTitle: 'Quack Mode', duckSub: 'Achievement freigeschaltet'
+    quackAgain: 'Quack! 🦆', duckTitle: 'Quack Mode', duckSub: 'Achievement freigeschaltet',
+    unlocked: 'Achievement freigeschaltet', kills: 'Kobolde erwischt: '
   };
 
-  /* ---------- Achievements (localStorage, kann im privaten Modus fehlen) ---------- */
-  var STORE = 'oualid.achievements';
-  function loadAch() {
-    try { var v = JSON.parse(localStorage.getItem(STORE) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+  /* ---------- Achievements (localStorage, kann im privaten Modus fehlen) ----------
+     Alles bleibt im Browser, nichts wird übertragen. */
+  var STORE = 'oualid.achievements', KILLS = 'oualid.kills', EXPLORED = 'oualid.explored';
+  var ACH = [
+    { id: 'quack-mode', de: ['Quack Mode', 'Die Ente dreimal angeklickt'], en: ['Quack Mode', 'Clicked the duck three times'] },
+    { id: 'first-goblin', de: ['Erster Kobold', 'Einen Kobold selbst erwischt'], en: ['First goblin', 'Zapped a goblin yourself'] },
+    { id: 'goblin-hunter', de: ['Koboldjäger', '10 Kobolde erwischt'], en: ['Goblin hunter', 'Zapped 10 goblins'] },
+    { id: 'boss', de: ['Bossbezwinger', 'Beim Sieg über einen Boss-Kobold mitgeholfen'], en: ['Boss slayer', 'Helped defeat a boss goblin'] },
+    { id: 'explorer', de: ['Entdecker', 'Burg, PC und 3D-Drucker angeklickt'], en: ['Explorer', 'Clicked the castle, the PC and the 3D printer'] }
+  ];
+  function readJSON(key, fallback) {
+    try { var v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; } catch (e) { return fallback; }
   }
+  function writeJSON(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) {} }
+  function loadAch() { var v = readJSON(STORE, []); return Array.isArray(v) ? v : []; }
   function hasAch(id) { return loadAch().indexOf(id) !== -1; }
-  function addAch(id) {
+  function achName(id) { var a = ACH.filter(function (x) { return x.id === id; })[0]; return a ? a[EN ? 'en' : 'de'][0] : id; }
+  // Gibt true zurück, wenn das Achievement neu ist
+  function unlock(id, silent) {
     var list = loadAch();
-    if (list.indexOf(id) === -1) list.push(id);
-    try { localStorage.setItem(STORE, JSON.stringify(list)); } catch (e) {}
+    if (list.indexOf(id) !== -1) return false;
+    list.push(id);
+    writeJSON(STORE, list);
+    renderAch();
+    if (!silent) achToast(achName(id));
+    return true;
   }
+  function kills() { return +readJSON(KILLS, 0) || 0; }
+  // Für die Konsole in main.js (Befehle achievements und kobolde)
+  window.PG_ACH = { list: ACH, has: hasAch, kills: kills, lang: EN ? 'en' : 'de' };
 
   var countEl = root.querySelector('.pg-ach-count');
+  var achChip = root.querySelector('.pg-ach');
+  var hint = root.querySelector('.pg-hint');
   var duckBtn = root.querySelector('.pg-spot-duck');
   function renderAch() {
-    var on = hasAch('quack-mode');
-    countEl.textContent = (on ? 1 : 0) + '/1';
-    root.classList.toggle('is-quack', on);
-    if (on) {
+    var n = ACH.filter(function (a) { return hasAch(a.id); }).length;
+    countEl.textContent = n + '/' + ACH.length;
+    achChip.classList.toggle('is-on', n > 0);
+    achChip.classList.toggle('is-complete', n === ACH.length);
+    var quack = hasAch('quack-mode');
+    root.classList.toggle('is-quack', quack);
+    if (quack) {
       duckBtn.querySelector('.pg-tip b').textContent = L.duckTitle;
       duckBtn.querySelector('.pg-tip small').textContent = L.duckSub;
       duckBtn.querySelector('.pg-pin').textContent = '🦆';
     }
   }
+  function renderKills() {
+    var k = kills();
+    if (k > 0 && hint) hint.textContent = L.kills + k;
+  }
   renderAch();
+  renderKills();
+
+  /* ---------- Achievement-Meldung unten im Bild (sichtbar, egal wohin gescrollt wurde) ---------- */
+  var achBox = document.createElement('div');
+  achBox.className = 'ach-toast';
+  achBox.setAttribute('role', 'status');
+  achBox.setAttribute('aria-live', 'polite');
+  document.body.appendChild(achBox);
+  var achTimer;
+  function achToast(name) {
+    clearTimeout(achTimer);
+    achBox.textContent = '';
+    var i = document.createElement('span'); i.className = 'ach-toast-icon'; i.textContent = '🏆'; i.setAttribute('aria-hidden', 'true');
+    var t = document.createElement('span');
+    var sm = document.createElement('small'); sm.textContent = L.unlocked;
+    var nb = document.createElement('b'); nb.textContent = name;
+    t.appendChild(sm); t.appendChild(nb);
+    var c = document.createElement('span'); c.className = 'ach-toast-count'; c.textContent = countEl.textContent;
+    achBox.appendChild(i); achBox.appendChild(t); achBox.appendChild(c);
+    achBox.classList.remove('is-on'); void achBox.offsetWidth; achBox.classList.add('is-on');
+    achTimer = setTimeout(function () { achBox.classList.remove('is-on'); }, 3800);
+  }
 
   /* ---------- Toast ---------- */
   var toast = root.querySelector('.pg-toast'), toastTimer;
@@ -85,17 +137,25 @@
       if (duckClicks === 1) showToast(L.quack1, '', 'small');
       else if (duckClicks === 2) showToast(L.quack2, '', 'small');
       else {
-        addAch('quack-mode');
-        renderAch();
+        unlock('quack-mode', true); // eigene große Meldung in der Szene
         showToast(L.quackMode, '🏆 ' + L.achievement, 'quack', 3600);
         if (world) world.quack();
       }
     }
   };
 
+  function explore(key) {
+    if (key === 'duck') return;
+    var seen = readJSON(EXPLORED, []);
+    if (!Array.isArray(seen)) seen = [];
+    if (seen.indexOf(key) === -1) { seen.push(key); writeJSON(EXPLORED, seen); }
+    if (['castle', 'pc', 'printer'].every(function (k) { return seen.indexOf(k) !== -1; })) unlock('explorer');
+  }
+
   root.querySelectorAll('.pg-spot').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var key = btn.dataset.spot;
+      explore(key);
       if (world) world.poke(key);
       actions[key]();
     });
@@ -139,7 +199,17 @@
     startBtn.hidden = true;
     import('./playground-world.js')
       .then(function (mod) {
-        return mod.mount(root, { reduceMotion: reduceMotion, quack: hasAch('quack-mode') });
+        return mod.mount(root, {
+          reduceMotion: reduceMotion, quack: hasAch('quack-mode'),
+          onGoblin: function () {
+            var k = kills() + 1;
+            writeJSON(KILLS, k);
+            renderKills();
+            unlock('first-goblin');
+            if (k >= 10) unlock('goblin-hunter');
+          },
+          onBoss: function (e) { if (e.helped) unlock('boss'); }
+        });
       })
       .then(function (ctrl) {
         world = ctrl;

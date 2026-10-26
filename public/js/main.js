@@ -12,7 +12,7 @@
       viewerFail: 'Der 3D-Viewer konnte nicht geladen werden.',
       trailer: 'Trailer abspielen', trailerNote: 'Beim Abspielen wird ein Video von YouTube geladen.',
       locale: 'de-DE',
-      help: 'Verfügbare Befehle:\n  about        Wer ich bin\n  interessen   Woran ich mich festbeiße\n  ./last-arrow Mein aktuelles Spiel\n  ls projekte  Alles, was ich gebaut habe\n  cv           Lebenslauf als git log\n  kontakt      So erreichst du mich\n  makerworld   Meine 3D-Druck-Modelle\n  neofetch, whoami, date, uptime, achievements, clear',
+      help: 'Verfügbare Befehle:\n  about        Wer ich bin\n  interessen   Woran ich mich festbeiße\n  ./last-arrow Mein aktuelles Spiel\n  ls projekte  Alles, was ich gebaut habe\n  cv           Lebenslauf als git log\n  kontakt      So erreichst du mich\n  makerworld   Meine 3D-Druck-Modelle\n  neofetch, whoami, date, uptime, achievements, kobolde, clear',
       whoami: 'oualid: Einzelhandel bei Tag, Spiele, KI und 3D-Druck bei Nacht.',
       about: 'Öffne about.md …', projects: '{n} Einträge. Tipp: oben in der Liste mit grep filtern.', contact: 'Öffne kontakt.json …',
       lastArrow: 'Starte Last Arrow …\n[WARN] Kobolde nähern sich der Schatztruhe. Unten gibt es eine Mini-Demo.',
@@ -21,7 +21,8 @@
       exit: 'Hier gibt es keinen Ausgang. Nur noch mehr Projekte.', sudo: 'oualid ist nicht in der sudoers-Datei. Dieser Vorfall wird gemeldet. 🦆',
       rm: 'Nö.', vim: 'Du kommst hier nicht mehr raus. Versuch es mit :q!', quit: 'Gerettet.',
       notFound: ': Befehl nicht gefunden. Tippe help.',
-      achYes: '🏆 1/1  Quack Mode: Du hast die Ente gefunden.', achNo: '🏆 0/1  ???  Irgendwo im Playground versteckt sich etwas.',
+      achHead: '🏆 Achievements {n}/{t}', achHidden: '??? (noch geheim)', achNone: 'Der Playground ist oben auf der Seite.',
+      kills: 'Kobolde erwischt: {k}. Tipp: oben im Playground auf die grünen Kerle klicken.',
       quack: 'Quack. 🦆'
     },
     en: {
@@ -29,7 +30,7 @@
       viewerFail: 'The 3D viewer could not be loaded.',
       trailer: 'Play trailer', trailerNote: 'Playing loads a video from YouTube.',
       locale: 'en-GB',
-      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           CV as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, achievements, clear',
+      help: 'Available commands:\n  about        Who I am\n  interests    What I sink my teeth into\n  ./last-arrow My current game\n  ls projects  Everything I have built\n  cv           CV as git log\n  contact      How to reach me\n  makerworld   My 3D printing models\n  neofetch, whoami, date, uptime, achievements, goblins, clear',
       whoami: 'oualid: retail by day, games, AI and 3D printing by night.',
       about: 'Opening about.md …', projects: '{n} entries. Tip: filter the list with grep.', contact: 'Opening contact.json …',
       lastArrow: 'Starting Last Arrow …\n[WARN] Goblins are approaching the treasure chest. There is a mini demo below.',
@@ -38,7 +39,8 @@
       exit: 'There is no exit here. Only more projects.', sudo: 'oualid is not in the sudoers file. This incident will be reported. 🦆',
       rm: 'Nope.', vim: "You can't get out of here. Try :q!", quit: 'Saved.',
       notFound: ': command not found. Type help.',
-      achYes: '🏆 1/1  Quack Mode: you found the duck.', achNo: '🏆 0/1  ???  Something is hiding in the playground.',
+      achHead: '🏆 Achievements {n}/{t}', achHidden: '??? (still secret)', achNone: 'The playground is at the top of the page.',
+      kills: 'Goblins zapped: {k}. Tip: click the green fellows in the playground at the top.',
       quack: 'Quack. 🦆'
     }
   }[LANG];
@@ -363,10 +365,19 @@
     },
     neofetch: function () { print(T.neofetch); },
     achievements: function () {
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem('oualid.achievements') || '[]'); } catch (e) {}
-      print(list.indexOf('quack-mode') !== -1 ? T.achYes : T.achNo);
+      // Liste und Stand kommen aus playground.js (window.PG_ACH)
+      var A = window.PG_ACH;
+      if (!A) { print(T.achNone); return; }
+      var got = A.list.filter(function (a) { return A.has(a.id); }).length;
+      var lines = [T.achHead.replace('{n}', got).replace('{t}', A.list.length)];
+      A.list.forEach(function (a) {
+        var on = A.has(a.id), txt = a[A.lang];
+        // Die Ente bleibt geheim, bis sie gefunden ist
+        lines.push('  ' + (on ? '[x] ' : '[ ] ') + (on || a.id !== 'quack-mode' ? txt[0] + ' – ' + txt[1] : T.achHidden));
+      });
+      print(lines.join('\n'));
     },
+    kobolde: function () { print(T.kills.replace('{k}', window.PG_ACH ? window.PG_ACH.kills() : 0)); },
     quack: function () { print(T.quack); },
     date: function () { print(new Date().toLocaleString(T.locale, { dateStyle: 'full', timeStyle: 'short' })); },
     uptime: function () { print(T.uptime); },
@@ -383,7 +394,7 @@
     'cat about.md': 'about', 'cat kontakt.json': 'kontakt', 'git log': 'cv', 'lebenslauf': 'cv',
     './last-arrow': 'last-arrow', 'man last-arrow': 'last-arrow', 'play': 'last-arrow',
     '?': 'help', 'hilfe': 'help', 'contact': 'kontakt', 'projects': 'projekte', 'ls projects': 'projekte',
-    'interests': 'interessen', 'ls interests': 'interessen', 'resume': 'cv', 'cat contact.json': 'kontakt'
+    'interests': 'interessen', 'goblins': 'kobolde', 'kobold': 'kobolde', 'ls interests': 'interessen', 'resume': 'cv', 'cat contact.json': 'kontakt'
   };
 
   var history = [], hIdx = 0;
